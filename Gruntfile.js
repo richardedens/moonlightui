@@ -54,7 +54,7 @@ module.exports = function(grunt) {
             },
             my_target: {
                 files: {
-                    './dist/js/moonlightui.min.js': ['./dist/js/moonlightui.js']
+                    './dist/js/moonlightui.min.js': ['./dist/js/moonlightui.js'],
                 }
             }
         },
