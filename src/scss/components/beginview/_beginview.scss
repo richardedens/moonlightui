@@ -1,0 +1,13 @@
+/* Moonlight UI begin view */
+.moonlightui-beginview {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: $grey-supersoniclight;
+  webkit-box-shadow: inset 2px 2px 5px 0px $drop-shadow-grey;
+  -moz-box-shadow: inset 2px 2px 5px 0px $drop-shadow-grey;
+  box-shadow: inset 2px 2px 5px 0px $drop-shadow-grey;
+  font-family: $font-family;
+}

@@ -1,0 +1,28 @@
+/* Moonlight UI Main System Settings */
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html {
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+body {
+  display: block;
+  margin: 0;
+}
+
+.moonlightui {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: $grey-dimergrey; /* Old browsers */
+}
+
+/* Hidden */
+.hidden {
+  display: none;
+}

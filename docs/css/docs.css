@@ -1,0 +1,42 @@
+.moonlightui-modal.demo-moonlight {
+    position: relative;
+    width: 1024px;
+    height: 650px;
+    left: 50%;
+    margin-left: -512px;
+    text-align: left;
+}
+body {
+    background-image: url('../images/moonlight-wallpapers.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+    color: white;
+    text-align: center;
+    background-color: #000207;
+}
+header {
+    height: 200px;
+    width: 100%;
+    padding-top: 100px;
+    vertical-align: middle;
+    margin-bottom: 100px;
+}
+header h1 {
+    font-size: 60px;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+}
+footer {
+    height: 400px;
+    width: 100%;
+    padding-top: 200px;
+    vertical-align: middle;
+}
+footer h1 {
+    font-size: 30px;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+}

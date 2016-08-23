@@ -1,0 +1,41 @@
+/* Moonlight UI Layouts */
+.moonlightui-layout-top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 45px;
+  font-family: $font-family;
+}
+.moonlightui-layout-left {
+  position: absolute;
+  left: 0;
+  top: 45px;
+  bottom: 20px;
+  width: 250px;
+  font-family: $font-family;
+}
+.moonlightui-layout-middle {
+  position: absolute;
+  left: 250px;
+  top: 45px;
+  bottom: 20px;
+  right: 300px;
+  font-family: $font-family;
+}
+.moonlightui-layout-right {
+  position: absolute;
+  bottom: 20px;
+  top: 45px;
+  right: 0;
+  width: 300px;
+  font-family: $font-family;
+}
+.moonlightui-layout-bottom {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  font-family: $font-family;
+}

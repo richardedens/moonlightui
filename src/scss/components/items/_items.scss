@@ -1,0 +1,63 @@
+.moonlightui-overview {
+  border-top: 1px solid $grey-ultralight;
+  position: absolute;
+  left: 0;
+  top: 30px;
+  right: 0;
+  bottom: 0;
+  background-color: $grey-lighter;
+  overflow: hidden;
+  font-family: $font-family;
+}
+.moonlightui-item {
+  height: 33px;
+  background-color: $grey-shallowergrey;
+  border-bottom: 1px solid $grey-ultralight;
+  vertical-align: middle;
+  line-height: 30px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+  font-family: $font-family;
+}
+.moonlightui-item.selected {
+  background-color: $selected;
+}
+.moonlightui-item-transparent {
+  height: 33px;
+  vertical-align: middle;
+  line-height: 33px;
+  font-family: $font-family;
+}
+.moonlightui-item-icon {
+  width: 28px;
+  height: 28px;
+  background-color: $grey-ultralighter;
+  border: 1px solid $black;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 33px;
+  margin-right: 5px;
+  margin-left: 10px;
+}
+.moonlightui-item-icon i {
+  font-size: 16px;
+  padding-left: 6px;
+}
+.moonlightui-new-item {
+  width: 150px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.moonlightui-new-item-ok {
+  width: 30px;
+  position: absolute;
+  left: 142px;
+  top: 3px;
+  bottom: 0;
+  font-family: $font-family;
+}

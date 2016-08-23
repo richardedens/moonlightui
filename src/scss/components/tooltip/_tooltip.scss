@@ -1,0 +1,15 @@
+/* Moonlight UI Tooltip */
+.moonlightui-tooltip {
+  position: absolute;
+  left: -1000px;
+  top: -1000px;
+  color: white;
+  background-image: url('../images/moonlightui-tooltip.png');
+  background-repeat: repeat;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-family: $font-family;
+  font-size: 11px;
+}

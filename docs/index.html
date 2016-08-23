@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="css/docs.css" media="all" rel="stylesheet">
+        <link href="css/moonlightui.min.css" media="all" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <h1><img src="images/moonlightui-logo.svg" width="80" height="80" style="vertical-align: middle"> moonlightui.com</h1>
+            <p>&nbsp;</p>
+            <p>A fresh new HTML / CSS / JavaScript user interface library.</p>
+        </header>
+
+        <!-- MOONLIGHTUI - Modal example -->
+        <section class="moonlightui-modal demo-moonlight">
+            <div class="moonlightui-modal-header">
+                <div class="moonlightui-modal-close moonlightui-modal-disable"></div>
+                <div class="moonlightui-modal-min"></div>
+                <div class="moonlightui-modal-max"></div>
+            </div>
+            <div class="moonlightui-modal-body">
+
+                <!-- MOONLIGHTUI - Middle Layout -->
+                <div class="moonlightui-layout-middle">
+                    <div class="moonlightui-component-full-height">
+                        <div class="moonlightui-component-body moonlightui-full-height moonlightui-innershadow moonlightui-scrollbar-inner">
+
+                            <div id="mainTab1" class="moonlightui-component-body-content moonlightui-beginview active">
+                                <p><h1>Content of tab 1</h1></p>
+                            </div>
+
+                            <div id="mainTab2" class="moonlightui-component-body-content moonlightui-beginview moonlightui-checkerboard">
+                                <p><h1>Content of tab 2</h1></p>
+                            </div>
+
+                            <div id="mainTab3" class="moonlightui-component-body-content moonlightui-beginview">
+                                <p><h1>Content of tab 3</h1></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="moonlightui-component-title middle">
+                        <div id="mainTabSelector1" class="moonlightui-main-tab active" data-ml-tab="mainTab1">
+                            <span>Main Tab</span>
+                        </div>
+                        <div id="mainTabSelector2" class="moonlightui-main-tab" data-ml-tab="mainTab2" data-ml-action="demoShowDialog">
+                            <span>Second Tab</span>
+                        </div>
+                        <div id="mainTabSelector3" class="moonlightui-main-tab" data-ml-tab="mainTab3">
+                            <span>Third Tab</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MOONLIGHTUI - Top Layout -->
+                <div class="moonlightui-layout-top">
+                    <!-- Moonlight Navbar -->
+                    <div class="moonlightui-navbar">
+                        <div class="moonlightui-logo"><img src="images/moonlightui-logo.svg" width="24" height="24"></div>
+                    </div>
+                </div>
+
+                <!-- MOONLIGHTUI - Left Layout -->
+                <div class="moonlightui-layout-left">
+
+                    <div class="moonlightui-component">
+                        <div class="moonlightui-component-body moonlightui-component-left-right moonlightui-scrollbar-inner">
+                            <div class="moonlightui-tree hidden">
+                                <ul>
+                                    <li class="moonlightui-tab-switch" data-ml-tab-switch="mainTabSelector2" id="treeExample" data-jstree='{"icon":"fa fa-cogs"}'>Example tree
+                                        <ul>
+                                            <li data-jstree='{"icon":"fa fa-cog"}'>Example tree node 1</li>
+                                            <li data-jstree='{"icon":"fa fa-cog"}'><a href="#">Example tree node 2</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="moonlightui-component-title">
+                            <i class="moonlightui-component-plane"></i>
+                            <ul class="moonlightui-component-title-main-options">
+                                <li class="moonlightui-tab active" data-ml-tab="tab1">Treeview</li>
+                            </ul>
+                            <div class="moonlightui-component-options">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="moonlightui-component moonlightui-component-draggable">
+                        <div class="moonlightui-component-body moonlightui-component-left-right moonlightui-scrollbar-inner">
+                            <div class="moonlightui-component-body-options active" id="tab1">
+                                <div class="moonlightui-component-body-options-content">
+                                    <div class="moonlightui-input">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                        <input type="text" id="tablesSearch">
+                                    </div>
+                                    <div class="moonlightui-overview moonlightui-scrollbar-inner">
+                                        <div class="moonlightui-item">
+                                            <div class="moonlightui-item-icon">
+                                                <i class="fa fa-table" aria-hidden="true"></i>
+                                            </div>...
+                                        </div>
+                                        <div class="moonlightui-item-transparent"></div>
+                                    </div>
+                                </div>
+                                <div class="moonlightui-component-body-bottom-options">
+                                    <div class="moonlightui-component-body-bottom-options-left">
+
+                                    </div>
+                                    <div class="moonlightui-component-body-bottom-options-right">
+                                        <div class="moonlightui-component-body-bottom-item"><div class="moonlightui-component-body-bottom-item-btn" data-tooltip-active="true" data-tooltip="Add new table"><i class="fa fa-table" aria-hidden="true"></i></div></div>
+                                        <div class="moonlightui-component-body-bottom-item"><div class="moonlightui-component-body-bottom-item-btn" data-tooltip-active="true" data-tooltip="Delete table"><i class="fa fa-trash" aria-hidden="true"></i></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="moonlightui-component-body-options" id="tab2">
+                                <div class="moonlightui-component-body-options-content">
+                                    tab2
+                                </div>
+                            </div>
+                            <div class="moonlightui-component-body-options" id="tab3">
+                                <div class="moonlightui-component-body-options-content">
+                                    tab3
+                                </div>
+                            </div>
+                            <div class="moonlightui-component-body-options" id="tab4">
+                                <div class="moonlightui-component-body-options-content">
+                                    tab4
+                                </div>
+                            </div>
+                        </div>
+                        <div class="moonlightui-component-title">
+                            <i class="moonlightui-component-plane"></i>
+                            <ul class="moonlightui-component-title-main-options">
+                                <li class="moonlightui-tab active" data-ml-tab="tab1">Tab 1</li>
+                                <li class="moonlightui-tab" data-ml-tab="tab2">Tab 2</li>
+                                <li class="moonlightui-tab" data-ml-tab="tab3">Tab 3</li>
+                                <li class="moonlightui-tab" data-ml-tab="tab4">Tab 4</li>
+                            </ul>
+                            <div class="moonlightui-component-options">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MOONLIGHTUI - Right Layout -->
+                <div class="moonlightui-layout-right">
+
+                </div>
+
+                <!-- MOONLIGHTUI - Bottom Layout -->
+                <div class="moonlightui-layout-bottom">
+
+                </div>
+
+            </div>
+        </section>
+        <footer>
+            <h1>Still working hard on all the components...</h1>
+        </footer>
+        <!-- Modal Dialog -->
+        <div id="demoDialog" class="moonlightui-modal moonlightui-modal-fixed hidden" style="width: 350px; height: 250px;">
+            <div class="moonlightui-modal-header">
+                <div class="moonlightui-modal-close"></div>
+                <div class="moonlightui-modal-min"></div>
+                <div class="moonlightui-modal-max moonlightui-modal-disable"></div>
+            </div>
+            <div class="moonlightui-modal-body">
+                This dialog just popped up because you selected it with a tab action.
+            </div>
+        </div>
+        <script type="text/javascript" src="js/moonlightui.min.js"></script>
+        <script type="text/javascript" src="js/demo.js"></script>
+    </body>
+</html>

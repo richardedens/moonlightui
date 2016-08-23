@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 450 450" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,-26.7492,-10.6381)">
+        <g transform="matrix(1.21537,0,0,1.21537,6.06114,126.429)">
+            <circle cx="201.541" cy="88.629" r="176.444" style="fill:rgb(0,152,209);"/>
+        </g>
+        <g transform="matrix(0.674099,0.131564,-0.185064,0.948221,55.7075,-14.1433)">
+            <path d="M429.324,8.635C429.324,8.635 429.324,8.635 429.324,8.635C542.729,8.635 634.799,100.705 634.799,214.11C634.799,327.515 542.729,419.585 429.324,419.585C315.92,419.585 223.849,327.515 223.849,214.11C223.849,100.705 315.92,8.635 429.324,8.635Z" style="fill:rgb(0,109,150);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,93.2192,355.696)">
+            <text x="0px" y="0px" style="font-family:'Arial-Black', 'Arial Black', sans-serif;font-weight:900;font-size:347.813px;fill:rgb(10,73,123);">M</text>
+        </g>
+        <g transform="matrix(1,0,0,1,86.2192,355.696)">
+            <text x="0px" y="0px" style="font-family:'Arial-Black', 'Arial Black', sans-serif;font-weight:900;font-size:347.813px;fill:white;">M</text>
+        </g>
+    </g>
+</svg>

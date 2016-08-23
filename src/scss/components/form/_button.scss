@@ -1,0 +1,47 @@
+
+.moonlightui-btn {
+  border: 1px solid $grey-ultralight;
+  background-color: #3D3D3D;
+  border-radius: 3px;
+  min-width: 100px;
+  width: 100px;
+  height: 20px;
+  position: relative;
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+  cursor: pointer;
+  font-family: $font-family;
+}
+.moonlightui-btn.small {
+  min-width: 30px;
+  width: 30px;
+}
+.moonlightui-btn-inner {
+  border-top: 1px solid $btn-grey-one;
+  background-color: $btn-grey-two;
+  height: 100%;
+  line-heigh: 20px;
+  vertical-align: middle;
+  text-align: center;
+  width: 100%;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+  text-shadow: 1px 1px 2px $black;
+  cursor: pointer;
+  font-family: $font-family;
+}
+.moonlightui-btn-inner.down {
+  background: $btn-grey-gradient-one; /* Old browsers */
+  background: -moz-linear-gradient(top,  $btn-grey-gradient-two 0%, $btn-grey-gradient-one 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  $btn-grey-gradient-two 0%,$btn-grey-gradient-one 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  $btn-grey-gradient-two 0%,$btn-grey-gradient-one 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$btn-grey-gradient-two', endColorstr='$btn-grey-gradient-one',GradientType=0 ); /* IE6-9 */
+}

@@ -1,0 +1,209 @@
+/* Moonlight UI Compontent */
+.moonlightui-component {
+  height: 270px;
+  position: relative;
+  display: block;
+}
+.moonlightui-component-options {
+  float: right;
+}
+.moonlightui-component-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 20px;
+  color: white;
+  padding: 3px;
+  font-family: $font-family;
+  font-size: 11px;
+  background-color: $grey-dim;
+}
+.moonlightui-component-plane {
+  background-image: url('../images/moonlightui-plane.png');
+  background-repeat: no-repeat;
+  width: 15px;
+  height: 10px;
+  margin-top: 5px;
+  margin-right: 3px;
+  display: inline-block;
+  float: left;
+}
+.moonlightui-component-title.middle {
+  background-color: $grey-light;
+}
+.moonlightui-component-title span {
+  pointer-events: none;
+}
+.moonlightui-component-title .moonlightui-tab.active {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  line-height: 10px;
+  height: 10px;
+  border-right: 1px solid black;
+  background-color: $grey-dark;
+}
+ul.moonlightui-component-title-main-options {
+  float: left;
+  list-style-type: none;
+  margin: 4px 0px 0px 0px;
+  vertical-align: middle;
+  padding: 0;
+  line-height: 10px;
+  height: 10px;
+}
+ul.moonlightui-component-title-main-options li {
+  cursor: pointer;
+  display: inline;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.moonlightui-component-title img.plane {
+  float: left;
+  vertical-align: middle;
+  padding-top: 3px;
+  margin-right: 3px;
+  line-height: 20px;
+}
+.moonlightui-component-body {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: $grey-dark;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  font-family: $font-family;
+  font-size: 12px;
+}
+.moonlightui-component-body-content {
+  display: none;
+}
+.moonlightui-component-body-content.active {
+  display: block;
+}
+.moonlightui-component-body.moonlightui-component-left-right {
+  height: 250px;
+  overflow: hidden;
+  color: white;
+}
+.moonlightui-component-body.moonlightui-full-height {
+  background-color: rgb(200, 200, 200);
+  bottom: 0;
+}
+.moonlightui-component-body.moonlightui-innershadow {
+  -webkit-box-shadow: inset 2px 2px 5px 0px $drop-shadow-grey;
+  -moz-box-shadow: inset 2px 2px 5px 0px $drop-shadow-grey;
+  box-shadow: inset 2px 2px 5px 0px $drop-shadow-grey;
+  overflow: hidden;
+}
+.moonlightui-component-body-options {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-bottom: 1px solid $grey-dark;
+  display: none;
+}
+.moonlightui-component-body-options.active {
+  display: block;
+}
+.moonlightui-component-body-bottom-options {
+  background-color: $grey-darker;
+  border-top: 1px solid $grey-ultralight;
+  border-bottom: 1px solid $grey-shallowgrey;
+  height: 30px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  vertical-align: middle;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  position: absolute;
+}
+.moonlightui-component-body-bottom-options-right {
+  float: right;
+}
+.moonlightui-component-body-bottom-options-left {
+  float: left;
+}
+.moonlightui-component-body-options-content {
+  padding: 5px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 30px;
+  position: absolute;
+}
+.moonlightui-component-body-bottom-item {
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.moonlightui-component-body-bottom-item-btn {
+  color: white;
+}
+
+/* Moonlight UI component parts */
+.moonlightui-component-tab {
+  border-top: 1px solid $grey-ultralight;
+  position: absolute;
+  left: 0;
+  top: 30px;
+  right: 0;
+  bottom: 0;
+  background-color: $grey-lighter;
+  overflow: hidden;
+}
+.moonlightui-component-tab-item {
+  height: 33px;
+  background-color: $grey-shallowergrey;
+  border-bottom: 1px solid $grey-ultralight;
+  vertical-align: middle;
+  line-height: 30px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+}
+.moonlightui-component-tab-item.selected {
+  background-color: $selected;
+}
+.moonlightui-component-tab-item-transparent {
+  height: 33px;
+  vertical-align: middle;
+  line-height: 33px;
+}
+.moonlightui-component-tab-item-icon {
+  width: 28px;
+  height: 28px;
+  background-color: $grey-ultralighter;
+  border: 1px solid $black;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 33px;
+  margin-right: 5px;
+  margin-left: 10px;
+}
+.moonlightui-component-tab-item-icon i {
+  font-size: 16px;
+  padding-left: 6px;
+}
+.moonlightui-component-tab-new-item {
+  width: 150px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+.moonlightui-component-tab-new-item-ok {
+  width: 30px;
+  position: absolute;
+  left: 142px;
+  top: 3px;
+  bottom: 0;
+}

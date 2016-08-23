@@ -1,0 +1,29 @@
+{
+  "name": "moonlightui",
+  "description": "Moonlight UI gives you the power to create beautiful user interfaces",
+  "main": "dist/js/moonlightui.js",
+  "authors": [
+    "Gerhard Richard Edens"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Moonlight",
+    "UI"
+  ],
+  "homepage": "http://moonlightui.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "jquery-ui": "jqueryui#^1.12.0",
+    "jquery.scrollbar": "^0.2.10",
+    "animate.css": "^3.5.2",
+    "jstree": "^3.3.2"
+  }
+}

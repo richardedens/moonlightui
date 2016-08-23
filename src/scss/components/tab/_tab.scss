@@ -1,0 +1,14 @@
+/* Moonlight UI Tab */
+.moonlightui-main-tab {
+  display: inline-block;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 3px;
+  cursor: pointer;
+}
+.moonlightui-main-tab.active {
+  background-color: $grey-dimgrey;
+  color: white;
+  cursor: pointer;
+}
