@@ -58009,7 +58009,30 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             modules[tempModule].models[name] = model();
             return this;
         },
-        url: window.location
+        url: window.location,
+        removeSelect: function(){
+            $(this).each(function(){
+                $(this).removeClass('selected');
+            });
+        },
+        addSelect: function(){
+            $(this).each(function(){
+                $(this).addClass('selected');
+            });
+        },
+        removeHidden: function(){
+            $(this).each(function(){
+                $(this).removeClass('hidden');
+            });
+        },
+        addHidden: function(){
+            $(this).each(function(){
+                $(this).addClass('hidden');
+            });
+        },
+        scrollToElement: function(){
+            $(this).get(0).scrollIntoView();
+        }
     });
     window.$ml = window.moonlightui = $.noConflict();
 }));
