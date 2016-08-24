@@ -1,45 +1,45 @@
-/* Moonlight UI with jQuery / jQuery UI and */
-$ml('document').ready(function() {
+/* MOONLIGHT UI */
+moonlightui('document').ready(function() {
 
     /* MOONLIGHT UI - Tree's */
-    $ml('.moonlightui-tree').trees();
+    moonlightui('.moonlightui-tree').trees();
 
     /* MOONLIGHT UI - Tab's */
-    $ml('.moonlightui-component-title-main-options').sortable();
-    $ml('.moonlightui-tab').tabs();
+    moonlightui('.moonlightui-component-title-main-options').sortable();
+    moonlightui('.moonlightui-tab').tabs();
 
     /* MOONLIGHT UI - Main tabs */
-    $ml('.moonlightui-main-tab').tabs();
+    moonlightui('.moonlightui-main-tab').tabs();
 
     /* MOONLIGHT UI - Tab switches */
-    $ml('.moonlightui-tab-switch').tabSwitch();
+    moonlightui('.moonlightui-tab-switch').tabSwitch();
 
     /* MOONLIGHT UI - Show items */
-    $ml('.moonlightui-show').showComponents();
+    moonlightui('.moonlightui-show').showComponents();
 
     /* MOONLIGHT UI - Hide items */
-    $ml('.moonlightui-hide').hideComponents();
+    moonlightui('.moonlightui-hide').hideComponents();
 
     /* MOONLIGHT UI - Draggable components */
-    $ml('.moonlightui').draggableComponents();
+    moonlightui('.moonlightui').draggableComponents();
 
     /* MOONLIGHT UI - Buttons */
-    $ml('.moonlightui-btn-inner').buttons();
+    moonlightui('.moonlightui-btn-inner').buttons();
 
     /* Init all scrollbars */
-    $ml('.moonlightui-scrollbar-inner').scrollbar();
+    moonlightui('.moonlightui-scrollbar-inner').scrollbar();
 
     /* MOONLIGHT UI - Activate all tooltips */
-    $ml('.moonlightui').tooltips();
+    moonlightui('.moonlightui').tooltips();
 
     /* MOONLIGHT UI - Enable all modal dialogs */
-    $ml('.moonlightui').modals();
+    moonlightui('.moonlightui').modals();
 
     /* MOONLIGHT UI - Register a callback, hook any moonlight component to an action. */
-    $ml('.moonlightui').registerCallback('demoShowDialog', function(element){
-        $ml('#demoDialog').css('top', ($ml(element).offset().top) + 'px');
-        $ml('#demoDialog').css('left', ($ml(element).offset().left) + 'px');
-        $ml('#demoDialog').css('margin-left', '0px');
-        $ml('#demoDialog').removeClass('hidden');
+    moonlightui('.moonlightui').registerCallback('demoShowDialog', function(element){
+        moonlightui('#demoDialog').css('top', ($ml(element).offset().top) + 'px');
+        moonlightui('#demoDialog').css('left', ($ml(element).offset().left) + 'px');
+        moonlightui('#demoDialog').css('margin-left', '0px');
+        moonlightui('#demoDialog').removeClass('hidden');
     });
 });

@@ -2237,7 +2237,13 @@
   webkit-box-shadow: inset 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: inset 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
   box-shadow: inset 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
+  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial;
+  padding-left: 20px;
+  padding-right: 20px; }
+
+.moonlightui-beginview h1 {
+  font-weight: 100;
+  font-size: 25px; }
 
 /* Moonlight UI Checkerboard */
 .moonlightui-checkerboard {
@@ -2935,6 +2941,10 @@ body {
 .hidden {
   display: none; }
 
+code[class*="language-"],
+pre[class*="language-"] {
+  border-radius: 0; }
+
 /* Moonlight UI Tab */
 .moonlightui-main-tab {
   display: inline-block;
@@ -2948,6 +2958,12 @@ body {
   background-color: #323333;
   color: white;
   cursor: pointer; }
+
+.jstree-default .jstree-clicked {
+  color: #000000; }
+
+.jstree-default .jstree-hovered {
+  color: #000000; }
 
 /* Moonlight UI Tooltip */
 .moonlightui-tooltip {

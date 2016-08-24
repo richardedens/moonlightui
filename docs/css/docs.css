@@ -40,3 +40,72 @@ footer h1 {
     margin: 0;
     padding: 0;
 }
+.demo-main-section {
+    margin-top: 100px;
+    display: inline-block;
+    min-height: 250px;
+    position: relative;
+}
+.demo-main-section h1 {
+    font-size: 35px;
+}
+.demo-main-section h2 {
+    font-size: 25px;
+}
+.demo-main-section h3 {
+    font-size: 15px;
+}
+.demo-main-section h1,
+.demo-main-section h2,
+.demo-main-section h3
+{
+    font-weight: 100;
+}
+.demo-text-section {
+    width: 73%;
+    position: absolute;
+    right: 50px;
+}
+.half-size {
+    width: 50%;
+    min-height: 350px;
+}
+.align-left {
+    float: left;
+}
+.align-right {
+    float: right;
+}
+.text-align-right {
+    text-align: right;
+}
+.text-align-left {
+    text-align: left;
+}
+.text-align-center {
+    text-align: center;
+}
+.logo-sum {
+    width: 500px;
+    height: 400px;
+    position: absolute;
+    left: 50%;
+    margin-left: -250px;
+    top: 50%;
+    margin-top: -200px;
+}
+.logo-sum p {
+    margin-bottom: 20px;
+}
+.steel-plate {
+    background-image: url('../images/bg_steelplate.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 500px;
+}
+.max-width-50 {
+    width: 50%;
+}
+.full-width {
+    width: 100%;
+}

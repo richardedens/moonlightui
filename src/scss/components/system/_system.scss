@@ -26,3 +26,8 @@ body {
 .hidden {
   display: none;
 }
+
+code[class*="language-"],
+pre[class*="language-"] {
+  border-radius: 0;
+}

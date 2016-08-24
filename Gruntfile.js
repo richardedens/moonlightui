@@ -46,7 +46,7 @@ module.exports = function(grunt) {
                     jQuery: true
                 }
             },
-            uses_defaults: ['src/js/*.js']
+            uses_defaults: ['src/js/moonlightui.js']
         },
         uglify: {
             options: {
@@ -60,11 +60,11 @@ module.exports = function(grunt) {
         },
         concat: {
             js: {
-                src: ['src/lib/jquery/dist/jquery.js', 'src/lib/jquery-ui/jquery-ui.js', 'src/lib/jsPlumb/dist/js/jsPlumb-2.1.5.js', 'src/lib/jquery.scrollbar/jquery.scrollbar.js', 'src/lib/jstree/dist/jstree.js', 'src/js/moonlightui.js'],
+                src: ['src/lib/jquery/dist/jquery.js', 'src/lib/jquery-ui/jquery-ui.js', 'src/lib/jsPlumb/dist/js/jsPlumb-2.1.5.js', 'src/lib/jquery.scrollbar/jquery.scrollbar.js', 'src/lib/jstree/dist/jstree.js', 'src/js/prism.js', 'src/js/moonlightui.js'],
                 dest: 'dist/js/moonlightui.js'
             },
             css: {
-                src: ['src/lib/jquery-ui/themes/base/jquery-ui.css', 'src/lib/animate.css/animate.css', 'src/lib/jquery.scrollbar/jquery.scrollbar.css', 'src/lib/jstree/dist/themes/default/style.css', 'src/css/moonlightui.css'],
+                src: ['src/lib/jquery-ui/themes/base/jquery-ui.css', 'src/lib/animate.css/animate.css', 'src/lib/jquery.scrollbar/jquery.scrollbar.css', 'src/lib/jstree/dist/themes/default/style.css', 'src/css/prism.css', 'src/css/moonlightui.css'],
                 dest: 'dist/css/moonlightui.css'
             }
         },

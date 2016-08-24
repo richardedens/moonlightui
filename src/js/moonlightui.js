@@ -222,5 +222,5 @@
             });
         }
     });
-    window.$ml = $.noConflict();
+    window.$ml = window.moonlightui = $.noConflict();
 }));

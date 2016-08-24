@@ -10,4 +10,10 @@
   -moz-box-shadow: inset 2px 2px 5px 0px $drop-shadow-grey;
   box-shadow: inset 2px 2px 5px 0px $drop-shadow-grey;
   font-family: $font-family;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.moonlightui-beginview h1 {
+  font-weight: 100;
+  font-size: 25px;
 }

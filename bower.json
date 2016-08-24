@@ -24,6 +24,9 @@
     "jquery-ui": "jqueryui#^1.12.0",
     "jquery.scrollbar": "^0.2.10",
     "animate.css": "^3.5.2",
-    "jstree": "^3.3.2"
+    "jstree": "^3.3.2",
+    "ckeditor": "^4.5.10",
+    "ace": "^1.2.5",
+    "ace-builds": "^1.2.5"
   }
 }
