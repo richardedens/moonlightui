@@ -2,7 +2,7 @@
 /* Modal dailog */
 .moonlightui-modal {
   z-index: 10000;
-  background-color: $grey-dark;
+  background-color: $modal-main-end;
   position: absolute;
   left: 50%;
   top: 50px;
@@ -18,6 +18,24 @@
   background-color: $modal-grey-header;
   height: 22px;
   border-radius: 3px 3px 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  line-height: 22px;
+  vertical-align: middle;
+  height: 22px;
+}
+.moonlightui-modal-header.moonlightui-modal-app-header {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,7db9e8+100 */
+  background: $modal-main-begin; /* Old browsers */
+  background: -moz-linear-gradient(top, $modal-main-begin 0%, $modal-main-end 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, $modal-main-begin 0%,$modal-main-end 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, $modal-main-begin 0%,$modal-main-end 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$modal-main-begin', endColorstr='$modal-main-end',GradientType=0 ); /* IE6-9 */
+  height: 22px;
+  border-radius: 3px 3px 0 0;
+  border-top: 1px solid $modal-main-begin-border;
   position: absolute;
   top: 0;
   left: 0;

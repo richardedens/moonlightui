@@ -5,17 +5,18 @@
         <link href="css/moonlightui.min.css" media="all" rel="stylesheet">
     </head>
     <body>
+
         <header>
             <h1><img src="images/moonlightui-logo.svg" width="80" height="80" style="vertical-align: middle"> moonlightui.com</h1>
             <p>&nbsp;</p>
             <p>A fresh new HTML / CSS / JavaScript user interface library.</p>
         </header>
 
-        <main>
+        <main data-ml-module="core" data-ml-controller="mainController">
             <section>
                 <!-- MOONLIGHTUI - Modal example -->
                 <div class="moonlightui-modal demo-moonlight">
-                    <div class="moonlightui-modal-header">
+                    <div class="moonlightui-modal-header moonlightui-modal-app-header">
                         <div class="moonlightui-modal-close moonlightui-modal-disable"></div>
                         <div class="moonlightui-modal-min"></div>
                         <div class="moonlightui-modal-max"></div>
@@ -100,7 +101,7 @@
                                             <div class="moonlightui-overview moonlightui-scrollbar-inner">
                                                 <div class="moonlightui-item">
                                                     <div class="moonlightui-item-icon">
-                                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                                        <i class="fa fa-file" aria-hidden="true"></i>
                                                     </div>...
                                                 </div>
                                                 <div class="moonlightui-item-transparent"></div>
@@ -108,11 +109,23 @@
                                         </div>
                                         <div class="moonlightui-component-body-bottom-options">
                                             <div class="moonlightui-component-body-bottom-options-left">
-
+                                                <div class="moonlightui-new-item">
+                                                    <div class="moonlightui-input">
+                                                        <i class="fa fa-file" aria-hidden="true"></i>
+                                                        <input type="text" id="addTable" data-ml-tooltip-active="true" data-ml-tooltip="This is a tooltip that is working!">
+                                                    </div>
+                                                </div>
+                                                <div class="moonlightui-new-item-ok">
+                                                    <div class="moonlightui-btn small">
+                                                        <div class="moonlightui-btn-inner">
+                                                            ok
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="moonlightui-component-body-bottom-options-right">
-                                                <div class="moonlightui-component-body-bottom-item"><div class="moonlightui-component-body-bottom-item-btn" data-tooltip-active="true" data-tooltip="Add new table"><i class="fa fa-table" aria-hidden="true"></i></div></div>
-                                                <div class="moonlightui-component-body-bottom-item"><div class="moonlightui-component-body-bottom-item-btn" data-tooltip-active="true" data-tooltip="Delete table"><i class="fa fa-trash" aria-hidden="true"></i></div></div>
+                                                <div class="moonlightui-component-body-bottom-item"><div class="moonlightui-component-body-bottom-item-btn" data-ml-tooltip-active="true" data-ml-tooltip="Add new file"><i class="fa fa-file" aria-hidden="true"></i></div></div>
+                                                <div class="moonlightui-component-body-bottom-item"><div class="moonlightui-component-body-bottom-item-btn" data-ml-tooltip-active="true" data-ml-tooltip="Delete file"><i class="fa fa-trash" aria-hidden="true"></i></div></div>
                                             </div>
                                         </div>
                                     </div>
@@ -154,7 +167,7 @@
 
                         <!-- MOONLIGHTUI - Bottom Layout -->
                         <div class="moonlightui-layout-bottom">
-
+                            <span class="moonlightui-status"><strong>status</strong></span>
                         </div>
 
                     </div>
@@ -210,7 +223,7 @@
 
                 </code></pre>
             </section>
-            <section class="demo-main-section half-size align-left text-align-right">
+            <section class="demo-main-section half-size align-left text-align-right" style="height: 1450px">
                 <div class="text-align-left demo-text-section">
                     <h2>How to use?</h2>
                     <p>MoonlightUI components are a set of HTML elements that have MoonlightUI CSS class names on them.
@@ -221,10 +234,10 @@
                     <p>MoonlightUI is still in the development fase. So CSS classnames or HTML markup might change rappidly.</p>
                 </div>
             </section>
-            <section class="demo-main-section half-size align-right">
+            <section class="demo-main-section half-size align-right" style="height: 1450px">
                 <pre><code class="language-javascript">
 /* MOONLIGHT UI */
-moonlightui('document').ready(function() {
+moonlightui().onready(function() {
 
     /* MOONLIGHT UI - Tree's */
     moonlightui('.moonlightui-tree').trees();
@@ -248,6 +261,9 @@ moonlightui('document').ready(function() {
     /* MOONLIGHT UI - Draggable components */
     moonlightui('.moonlightui').draggableComponents();
 
+    /* MOONLIGHT UI - Will activate all custom click */
+    moonlightui('.moonlightui').actions();
+
     /* MOONLIGHT UI - Buttons */
     moonlightui('.moonlightui-btn-inner').buttons();
 
@@ -260,10 +276,65 @@ moonlightui('document').ready(function() {
     /* MOONLIGHT UI - Enable all modal dialogs */
     moonlightui('.moonlightui').modals();
 
-    /* MOONLIGHT UI - Register a callback, hook any moonlight component to an action. */
-    moonlightui('.moonlightui').registerCallback('demoShowDialog', function(element){
+    /* MOONLIGHT UI - Register a module and a controller on the module. */
+    moonlightui().module('core').controller('mainController', function(){
+
+        var mainController = {
+
+            demoShowDialog: function(element) {
+                moonlightui('#demoDialog').css('top', (moonlightui(element).offset().top) + 'px');
+                moonlightui('#demoDialog').css('left', (moonlightui(element).offset().left) + 'px');
+                moonlightui('#demoDialog').css('margin-left', '0px');
+                moonlightui('#demoDialog').removeClass('hidden');
+            }
+
+        };
+
+        return mainController;
+
     });
 });</code></pre>
+            </section>
+            <section class="demo-main-section half-size align-left text-align-right" style="height: 400px">
+                <div class="text-align-left demo-text-section">
+                    <h2>External libraries</h2>
+                    <p>Aldo MoonlightUI in its core is jQuery. Some external libraries need to be loaded completely before extra scripts that you create can be executed. To know when MoonlightUI is ready you must use:
+                    <pre><code class="language-javascript">moonlightui().onready(function(){});</code></pre></p>
+                    <p>All external libraries are already weaven on top of MoonlightUI. In MoonlightUI you have jsTree / PrismJS and all jQuery UI widgets and options.</p>
+                </div>
+            </section>
+            <section class="demo-main-section half-size align-right" style="height: 400px">
+<pre><code class="language-javascript">
+/* MOONLIGHT UI - use the onready to have also jsPlumb be loaded and ready */
+moonlightui().onready(function(){
+    console.log('Show that jsPlumb is loaded');
+});
+
+/* MOONLIGHT UI - AsyncJS Example */
+moonlightui().async.waterfall([
+    function(cb) {
+        console.log('This will be printed in the console.log.');
+        cb();
+    }
+}, function(){
+   console.log('Done with the async waterfall method.');
+});</code></pre>
+            </section>
+            <section class="demo-main-section half-size align-left text-align-right">
+                <div class="text-align-left demo-text-section">
+                    <h2>Actions</h2>
+                    <p>MoonlightUI allows any HTML element to have an "data-ml-action" or "data-ml-click" attribute that can execute JavaScript.</p>
+                    <p>This comes in handy when you want to do more then just showing or hiding MoonlightUI components. Notice that MoonlightUI works perfectly alongside ReactJS and Angular 1.x and 2.x.</p>
+                </div>
+            </section>
+            <section class="demo-main-section half-size align-right">
+                <pre><code class="language-html">&lt;div data-ml-action="window.showAlert"&gt;&lt;/div&gt;</code></pre>
+                <pre><code class="language-javascript">
+/* Action on the global scope  */
+window.showAlert = function(){
+    alert('');
+}
+</code></pre>
             </section>
 
             <section class="demo-main-section text-align-center full-width steel-plate">
@@ -274,7 +345,9 @@ moonlightui('document').ready(function() {
                     <p><img src="images/jquery_ui_logo.svg" width="100" align="right">jQuery UI</p>
                     <p><img src="images/jstree-logo.png" width="100" align="right">jsTree</p>
                     <p><img src="images/jsplumb-white.png" width="100" align="right">jsPlumb</p>
+                    <p><img src="images/async-logo-white.svg" width="100" align="right">AsyncJS</p>
                     <p>PrismJS</p>
+                    <p><img src="images/moonlightui-logo.svg" width="80" align="right">MoonlightUI Core</p>
                     <!--<p><img src="images/ace-logo.png" height="40" align="right">ACE Cloud9</p>
                     <p><img src="images/ckeditor_logo.png" width="100" align="right">CKEditor</p>-->
                 </div>
@@ -284,6 +357,9 @@ moonlightui('document').ready(function() {
         <footer>
             <h1>Still working hard on all the components...</h1>
         </footer>
+
+        <!-- MOONLIGHTUI - Tooltip -->
+        <div class="moonlightui-tooltip"></div>
 
         <!-- Modal Dialog -->
         <div id="demoDialog" class="moonlightui-modal moonlightui-modal-fixed hidden" style="width: 350px; height: 250px;">
@@ -296,7 +372,7 @@ moonlightui('document').ready(function() {
                 This dialog just popped up because you selected it with a tab action.
             </div>
         </div>
-        <script type="text/javascript" src="js/moonlightui.min.js"></script>
+        <script type="text/javascript" src="js/moonlightui.js"></script>
         <script type="text/javascript" src="js/demo.js"></script>
     </body>
 </html>

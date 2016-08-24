@@ -6,10 +6,69 @@
         factory(root.jQuery);
     }
 }(this, function ($) {
-    var callbacks = [];
+    var callbacks = [],
+        modules = {},
+        tempModule;
     $.fn.extend({
         registerCallback: function(identifier, fn) {
             callbacks[identifier] = fn;
+        },
+        actions: function(){
+            function findModuleAndController(element, fnc)
+            {
+                var controller = $(element).closest('[data-ml-controller]').data('ml-controller');
+                var module = $(element).closest('[data-ml-module]').data('ml-module');
+                if (typeof modules[module] === 'undefined') {
+                    console.error('MOONLIGHTUI - Module "' + module + '" is not defined');
+                    return true;
+                }
+                if (typeof modules[module].controllers[controller] === 'undefined') {
+                    console.error('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" is not defined');
+                    return true;
+                } else {
+                    if (typeof modules[module].controllers[controller][fnc] === 'undefined') {
+                        console.error('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" with function "' + fnc + '" is not defined');
+                        return true;
+                    }
+                }
+                return false;
+            }
+            $('[data-ml-action]').each(function(){
+                $(this).on('click', function(){
+                    var tabAction = $(this).data('ml-action'),
+                        controller = $(this).closest('[data-ml-controller]').data('ml-controller'),
+                        module = $(this).closest('[data-ml-module]').data('ml-module');
+                    var error = findModuleAndController(this, tabAction);
+                    if (error === false) {
+                        if (tabAction.indexOf(',') !== -1) {
+                            var tabActions = tabAction.split(',');
+                            for (var i = 0; i < tabActions.length; i++) {
+                                modules[module].controllers[controller][tabActions[i]](this);
+                            }
+                        } else {
+                            modules[module].controllers[controller][tabAction](this);
+                        }
+                    }
+                });
+            });
+            $('[data-ml-click]').each(function(){
+                $(this).on('click', function(){
+                    var tabClick = $(this).data('ml-click'),
+                        controller = $(this).closest('[data-ml-controller]').data('ml-controller'),
+                        module = $(this).closest('[data-ml-module]').data('ml-module');
+                    var error = findModuleAndController(this, tabClick);
+                    if (error === false) {
+                        if (tabClick.indexOf(',') !== -1) {
+                            var tabClicks = tabClick.split(',');
+                            for (var i = 0; i < tabClicks.length; i++) {
+                                modules[module].controllers[controller][tabClicks[i]](this);
+                            }
+                        } else {
+                            modules[module].controllers[controller][tabClick](this);
+                        }
+                    }
+                });
+            });
         },
         tabs : function() {
             $(this).each(function(){
@@ -17,12 +76,8 @@
                     $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
                     var tab = $(this).data('ml-tab');
-                    var tabAction = $(this).data('ml-action');
                     $('#' + tab).parent().find('.active').removeClass('active');
                     $('#' + tab).addClass('active');
-                    if (tabAction !== null) {
-                        callbacks[tabAction](this);
-                    }
                 });
             });
         },
@@ -220,7 +275,31 @@
                     }
                 }
             });
-        }
+        },
+        async: async,
+        onready: function(cb) {
+            jsPlumb.ready(cb);
+        },
+        module: function(name) {
+            tempModule = name;
+            if (typeof modules[name] === 'undefined') {
+                modules[name] = {
+                    controllers: {},
+                    models: {},
+                    views: {}
+                };
+            }
+            return this;
+        },
+        controller: function(name, controller) {
+            modules[tempModule].controllers[name] = controller();
+            return this;
+        },
+        model: function(name, model) {
+            modules[tempModule].models[name] = model();
+            return this;
+        },
+        url: window.location
     });
     window.$ml = window.moonlightui = $.noConflict();
 }));
