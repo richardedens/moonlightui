@@ -227,10 +227,10 @@
                 <div class="text-align-left demo-text-section">
                     <h2>How to use?</h2>
                     <p>MoonlightUI components are a set of HTML elements that have MoonlightUI CSS class names on them.
-                    <p>MoonlightUI is borrowing allot of concepts of AngularJS 1.5. One of them is that the markup also contains special data attributes that create interactivity between the MoonlightUI components.</p>
+                    <p>MoonlightUI is borrowing allot of concepts of AngularJS 1.x. One of them is that the markup also contains special data attributes that create interactivity between the MoonlightUI components.</p>
                     <p>Notice how in the following example we have added "data-ml-tab" as an extra attribute to the LI. This will create an onclick interaction on the tab to show the content of a div with the ID "tab1".</p>
                     <p><pre><code class="language-html">&lt;li class="moonlightui-tab active" data-ml-tab="tab1"&gt;&lt;/li&gt;</code></pre></p>
-                    <p>To activate the MoonlightUI functionality so far in your MoonlightUI interface, use the following code in your own script "system.js" file.</p>
+                    <p>To activate the MoonlightUI functionality in your interface, use the following code on the right in your own startup script file.</p>
                     <p>MoonlightUI is still in the development fase. So CSS classnames or HTML markup might change rappidly.</p>
                 </div>
             </section>
@@ -323,17 +323,31 @@ moonlightui().async.waterfall([
             <section class="demo-main-section half-size align-left text-align-right">
                 <div class="text-align-left demo-text-section">
                     <h2>Actions</h2>
-                    <p>MoonlightUI allows any HTML element to have an "data-ml-action" or "data-ml-click" attribute that can execute JavaScript.</p>
-                    <p>This comes in handy when you want to do more then just showing or hiding MoonlightUI components. Notice that MoonlightUI works perfectly alongside ReactJS and Angular 1.x and 2.x.</p>
+                    <p>MoonlightUI allows any HTML element to have a "data-ml-action" or "data-ml-click" attribute that can execute JavaScript when clicking on the element.</p>
+                    <p>But before it can actually execute JavaScript code you need to add a "data-ml-module" and "data-ml-controller" to eighter the same or a parent HTML element to set the registered module and controller to use when executing the JavaScript code.</p>
+                    <p>Once you have done that you will also need to create the module and controller in JavaScript. This is done almost the same as in AngularJS 1.x. The good thing is that MoonlightUI is NOT AngularJS so you can combine both AngularJS with your MoonlightUI JavaScript code together in one project.</p>
                 </div>
             </section>
             <section class="demo-main-section half-size align-right">
-                <pre><code class="language-html">&lt;div data-ml-action="window.showAlert"&gt;&lt;/div&gt;</code></pre>
+                <pre><code class="language-html">&lt;div data-ml-module="core" data-ml-controller="mainController" data-ml-action="demoShowDialog"&gt;&lt;/div&gt;</code></pre>
                 <pre><code class="language-javascript">
 /* Action on the global scope  */
-window.showAlert = function(){
-    alert('');
-}
+moonlightui().module('core').controller('mainController', function(){
+
+    var mainController = {
+
+        demoShowDialog: function(element) {
+            moonlightui('#demoDialog').css('top', (moonlightui(element).offset().top) + 'px');
+            moonlightui('#demoDialog').css('left', (moonlightui(element).offset().left) + 'px');
+            moonlightui('#demoDialog').css('margin-left', '0px');
+            moonlightui('#demoDialog').removeClass('hidden');
+        }
+
+    };
+
+    return mainController;
+
+});
 </code></pre>
             </section>
 
