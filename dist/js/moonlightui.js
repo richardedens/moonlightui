@@ -57871,7 +57871,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             modules[tempModule].models[name] = mdl;
 
             // Attach two-way databinding
-            $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model="' + model + '.*"]').each(function(){
+            $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model*="' + name + '."]').each(function(){
                 if ($(this).data('ml-model').indexOf('.') !== -1) {
                     var modelParameter = $(this).data('ml-model').split('.'),
                         model = modelParameter[0],
