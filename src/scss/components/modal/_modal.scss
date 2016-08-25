@@ -13,6 +13,7 @@
   -webkit-box-shadow: 2px 3px 15px 0px $drop-shadow-grey;
   -moz-box-shadow: 2px 3px 15px 0px $drop-shadow-grey;
   box-shadow: 2px 3px 15px 0px $drop-shadow-grey;
+  font-family: $font-family;
 }
 .moonlightui-modal-header {
   background-color: $modal-grey-header;
@@ -24,7 +25,8 @@
   right: 0;
   line-height: 22px;
   vertical-align: middle;
-  height: 22px;
+  font-family: $font-family;
+  color: white;
 }
 .moonlightui-modal-header.moonlightui-modal-app-header {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,7db9e8+100 */
@@ -95,6 +97,23 @@
   top: 22px;
   right: 0;
   bottom: 0;
+  font-family: $font-family;
+  color: white;
+}
+.moonlightui-modal-body-btn-bottom-fixed {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 30px;
+  border-top: 1px solid gray;
+  background-color: dimgrey;
+  border-radius: 0 0 3px 3px;
+  padding-top: 2px;
+}
+.moonlightui-modal-body-btn-bottom-fixed .moonlightui-btn {
+  float: right;
+  padding-right: 5px;
 }
 
 /* jQuery Resizable */

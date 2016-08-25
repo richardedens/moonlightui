@@ -36,6 +36,16 @@
                 $(this).addClass('hidden');
             });
         },
+        removeErrorInput: function(){
+            $(this).each(function(){
+                $(this).removeClass('error-input');
+            });
+        },
+        addErrorInput: function(){
+            $(this).each(function(){
+                $(this).addClass('error-input');
+            });
+        },
         scrollToElement: function(){
             $(this).get(0).scrollIntoView();
         },
@@ -129,7 +139,33 @@
 
             // Attach new variables and new functions. Will override existing functions.
             mdl.__name = name;
+            mdl.__error = '';
             mdl.__module = tempModule;
+            mdl.removeError = function() {
+                modules[tempModule].models[name].__error = '';
+                $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
+                    if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                        $(this).val('');
+                    } else {
+                        $(this).html('');
+                    }
+                    $(this).addHidden();
+                });
+            };
+            mdl.addError = function(value) {
+                modules[tempModule].models[name].__error = value;
+                $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
+                    if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                        $(this).val(modules[tempModule].models[name].__error);
+                    } else {
+                        $(this).html(modules[tempModule].models[name].__error);
+                    }
+                    $(this).removeHidden();
+                });
+            };
+            mdl.getError = function(value) {
+                return modules[tempModule].models[name].__error;
+            };
             mdl.get = function(param) {
                 if (typeof modules[tempModule].models[name][param] !== 'undefined') {
                     return modules[tempModule].models[name][param];
@@ -139,8 +175,14 @@
             };
             mdl.set = function(param, value) {
                 mdl[param] = value;
-                var modelParam = $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]');
-                $(modelParam).val(value);
+                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function()
+                {
+                    if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                        $(this).val(value);
+                    } else {
+                        $(this).html(value);
+                    }
+                });
             };
             mdl.__on = {};
             mdl.receive = function(cb) {
@@ -232,8 +274,10 @@
                 });
                 $(this).on('mouseup', function () {
                     $(this).removeClass('down');
-                    var click = $(this).data('click');
-                    click();
+                    if (typeof $(this).data('click') !== 'undefined') {
+                        var click = $(this).data('click');
+                        click();
+                    }
                 });
             });
         },
@@ -307,6 +351,10 @@
                 $('.moonlightui-tooltip').html('');
                 $('.moonlightui-tooltip').addClass('hidden');
             });
+        },
+        centerModal: function () {
+            $(this).css({top:'50%',left:'50%',margin:'-'+($(this).height() / 2)+'px 0 0 -'+($(this).width() / 2)+'px'});
+            return this;
         },
         modals: function(){
             var bottomScale = false;

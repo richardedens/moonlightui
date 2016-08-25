@@ -9259,7 +9259,8 @@ ul.moonlightui-component-title-main-options li {
   border-radius: 3px;
   -webkit-box-shadow: 2px 3px 15px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 2px 3px 15px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 2px 3px 15px 0px rgba(0, 0, 0, 0.75); }
+  box-shadow: 2px 3px 15px 0px rgba(0, 0, 0, 0.75);
+  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
 
 .moonlightui-modal-header {
   background-color: #373737;
@@ -9271,7 +9272,8 @@ ul.moonlightui-component-title-main-options li {
   right: 0;
   line-height: 22px;
   vertical-align: middle;
-  height: 22px; }
+  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial;
+  color: white; }
 
 .moonlightui-modal-header.moonlightui-modal-app-header {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,7db9e8+100 */
@@ -9346,7 +9348,24 @@ ul.moonlightui-component-title-main-options li {
   left: 0;
   top: 22px;
   right: 0;
-  bottom: 0; }
+  bottom: 0;
+  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial;
+  color: white; }
+
+.moonlightui-modal-body-btn-bottom-fixed {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 30px;
+  border-top: 1px solid gray;
+  background-color: dimgrey;
+  border-radius: 0 0 3px 3px;
+  padding-top: 2px; }
+
+.moonlightui-modal-body-btn-bottom-fixed .moonlightui-btn {
+  float: right;
+  padding-right: 5px; }
 
 /* jQuery Resizable */
 .ui-resizable {
@@ -9705,5 +9724,26 @@ pre[class*="language-"] {
   top: 3px;
   bottom: 0;
   font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
+
+.error {
+  background-color: rgba(255, 0, 0, 0.5);
+  color: white;
+  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial;
+  font-size: 12px;
+  padding: 5px;
+  padding-left: 10px;
+  border-top: 1px solid rgba(200, 0, 0, 0.5);
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  position: absolute; }
+
+.error-input {
+  background-color: rgba(255, 0, 0, 0.3);
+  border: 1px solid rgba(200, 0, 0, 0.3); }
+
+.error-input input {
+  border: none; }
 
 /*# sourceMappingURL=moonlightui.css.map */
