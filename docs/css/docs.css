@@ -109,3 +109,7 @@ footer h1 {
 .full-width {
     width: 100%;
 }
+.demo-show-model-example {
+    height: 350px;
+    background-color: #1d5987;
+}

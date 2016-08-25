@@ -2,41 +2,7 @@
 moonlightui('document').ready(function() {
 
     /* MOONLIGHT UI - Tree's */
-    moonlightui('.moonlightui-tree').trees();
-
-    /* MOONLIGHT UI - Tab's */
-    moonlightui('.moonlightui-component-title-main-options').sortable();
-    moonlightui('.moonlightui-tab').tabs();
-
-    /* MOONLIGHT UI - Main tabs */
-    moonlightui('.moonlightui-main-tab').tabs();
-
-    /* MOONLIGHT UI - Tab switches */
-    moonlightui('.moonlightui-tab-switch').tabSwitch();
-
-    /* MOONLIGHT UI - Show items */
-    moonlightui('.moonlightui-show').showComponents();
-
-    /* MOONLIGHT UI - Hide items */
-    moonlightui('.moonlightui-hide').hideComponents();
-
-    /* MOONLIGHT UI - Draggable components */
-    moonlightui('.moonlightui').draggableComponents();
-
-    /* MOONLIGHT UI - Will activate all custom click */
-    moonlightui('.moonlightui-show').actions();
-
-    /* MOONLIGHT UI - Buttons */
-    moonlightui('.moonlightui-btn-inner').buttons();
-
-    /* Init all scrollbars */
-    moonlightui('.moonlightui-scrollbar-inner').scrollbar();
-
-    /* MOONLIGHT UI - Activate all tooltips */
-    moonlightui('.moonlightui').tooltips();
-
-    /* MOONLIGHT UI - Enable all modal dialogs */
-    moonlightui('.moonlightui').modals();
+    moonlightui('.moonlightui-tree').energize();
 
     /* MOONLIGHT UI - Register a module and a controller on the module. */
     moonlightui().module('core').controller('mainController', function(){
@@ -53,6 +19,44 @@ moonlightui('document').ready(function() {
         };
 
         return mainController;
+
+    });
+
+    moonlightui().module('demo').model('demoModel', function() {
+
+        var demoModel = {
+            greeting: ''
+        };
+
+        return demoModel;
+
+    });
+
+    /* MOONLIGHT UI - Register a module and a controller on the module. */
+    moonlightui().module('demo').controller('demoController', function(){
+
+        /*
+         * Using a model can be achieved by using the method getModel.
+         * Notice that you can also easily grab a model from a different module?
+         * The first parameter is the module.
+         * So you can use this model in every controller of every module if you wish.
+         */
+        var demoModel = moonlightui().getModel('demo','demoModel');
+
+        var demoController = {
+
+            init: function() {
+
+                demoModel.receive(function(name){
+                    console.log('Got new value from "' + name + '": ' + demoModel.get(name));
+                });
+
+            }
+
+        };
+        demoController.init();
+
+        return demoController;
 
     });
 });

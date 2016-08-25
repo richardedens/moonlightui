@@ -10,6 +10,35 @@
         modules = {},
         tempModule;
     $.fn.extend({
+        /* MOONLIGHTUI - System */
+        onready: function(cb) {
+            jsPlumb.ready(cb);
+        },
+        url: window.location,
+        /* MOONLIGHTUI - Interaction from modules and controller */
+        removeSelect: function(){
+            $(this).each(function(){
+                $(this).removeClass('selected');
+            });
+        },
+        addSelect: function(){
+            $(this).each(function(){
+                $(this).addClass('selected');
+            });
+        },
+        removeHidden: function(){
+            $(this).each(function(){
+                $(this).removeClass('hidden');
+            });
+        },
+        addHidden: function(){
+            $(this).each(function(){
+                $(this).addClass('hidden');
+            });
+        },
+        scrollToElement: function(){
+            $(this).get(0).scrollIntoView();
+        },
         registerCallback: function(identifier, fn) {
             callbacks[identifier] = fn;
         },
@@ -19,15 +48,15 @@
                 var controller = $(element).closest('[data-ml-controller]').data('ml-controller');
                 var module = $(element).closest('[data-ml-module]').data('ml-module');
                 if (typeof modules[module] === 'undefined') {
-                    console.error('MOONLIGHTUI - Module "' + module + '" is not defined');
+                    console.warn('MOONLIGHTUI - Module "' + module + '" is not defined');
                     return true;
                 }
                 if (typeof modules[module].controllers[controller] === 'undefined') {
-                    console.error('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" is not defined');
+                    console.warn('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" is not defined');
                     return true;
                 } else {
                     if (typeof modules[module].controllers[controller][fnc] === 'undefined') {
-                        console.error('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" with function "' + fnc + '" is not defined');
+                        console.warn('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" with function "' + fnc + '" is not defined');
                         return true;
                     }
                 }
@@ -70,6 +99,91 @@
                 });
             });
         },
+        /* MOONLIGHTUI - MVC mechanism */
+        module: function(name) {
+            tempModule = name;
+            if (typeof modules[name] === 'undefined') {
+                modules[name] = {
+                    controllers: {},
+                    models: {},
+                    views: {}
+                };
+            }
+            return this;
+        },
+        controller: function(name, controller) {
+            var ctrl = controller();
+            ctrl.__module = tempModule;
+            modules[tempModule].controllers[name] = ctrl;
+            return this;
+        },
+        model: function(name, model) {
+            // Instantiate new model
+            var mdl = model();
+
+            // Attach new variables and new functions. Will override existing functions.
+            mdl.__name = name;
+            mdl.__module = tempModule;
+            mdl.get = function(param) {
+                if (typeof modules[tempModule].models[name][param] !== 'undefined') {
+                    return modules[tempModule].models[name][param];
+                } else {
+                    console.warn('MOONLIGHTUI - Model "' + mdl.__name + '" in module "' + mdl.__module + '" does not have property "' + param + '"');
+                }
+            };
+            mdl.set = function(param, value) {
+                mdl[param] = value;
+                var modelParam = $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]');
+                $(modelParam).val(value);
+            };
+            mdl.__on = {};
+            mdl.receive = function(cb) {
+                mdl.__on = cb;
+            };
+            mdl.__broadcast = function(model, param){
+                $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
+                    if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                        $(this).val(modules[tempModule].models[model][param]);
+                    } else {
+                        $(this).html(modules[tempModule].models[model][param]);
+                    }
+                });
+                modules[tempModule].models[model].__on(param);
+            };
+
+            // Save model into the module.
+            modules[tempModule].models[name] = mdl;
+
+            // Attach two-way databinding
+            $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model]').each(function(){
+                if ($(this).data('ml-model').indexOf('.') !== -1) {
+                    var modelParameter = $(this).data('ml-model').split('.'),
+                        model = modelParameter[0],
+                        param = modelParameter[1];
+                    if (typeof modules[tempModule].models[model][param] !== 'undefined'){
+                        if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                            $(this).val(modules[tempModule].models[model][param]);
+                            $(this).on('keyup', function () {
+                                modules[tempModule].models[model][param] = $(this).val();
+                                modules[tempModule].models[model].__broadcast(model, param);
+                            });
+                        } else {
+                            $(this).html(modules[tempModule].models[model][param]);
+                        }
+                    }
+                } else {
+                    console.warn('MOONLIGHTUI - You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + tempModule + '"');
+                }
+            });
+            return this;
+        },
+        getModel: function(parent, name)
+        {
+            if (typeof modules[parent].models[name] !== 'undefined') {
+                return modules[parent].models[name];
+            }
+        },
+        /* MOONLIGHTUI - UI components */
         tabs : function() {
             $(this).each(function(){
                 $(this).on('click', function(){
@@ -276,52 +390,49 @@
                 }
             });
         },
+        /* MOONLIGHTUI - External Libraries */
         async: async,
-        onready: function(cb) {
-            jsPlumb.ready(cb);
-        },
-        module: function(name) {
-            tempModule = name;
-            if (typeof modules[name] === 'undefined') {
-                modules[name] = {
-                    controllers: {},
-                    models: {},
-                    views: {}
-                };
-            }
-            return this;
-        },
-        controller: function(name, controller) {
-            modules[tempModule].controllers[name] = controller();
-            return this;
-        },
-        model: function(name, model) {
-            modules[tempModule].models[name] = model();
-            return this;
-        },
-        url: window.location,
-        removeSelect: function(){
-            $(this).each(function(){
-                $(this).removeClass('selected');
-            });
-        },
-        addSelect: function(){
-            $(this).each(function(){
-                $(this).addClass('selected');
-            });
-        },
-        removeHidden: function(){
-            $(this).each(function(){
-                $(this).removeClass('hidden');
-            });
-        },
-        addHidden: function(){
-            $(this).each(function(){
-                $(this).addClass('hidden');
-            });
-        },
-        scrollToElement: function(){
-            $(this).get(0).scrollIntoView();
+        jsPlumb: jsPlumb,
+        /* MOONLIGHTUI - Lets GO */
+        energize: function() {
+
+            /* MOONLIGHT UI - Tree's */
+            $('.moonlightui-tree').trees();
+
+            /* MOONLIGHT UI - Tab's */
+            $('.moonlightui-component-title-main-options').sortable();
+            $('.moonlightui-tab').tabs();
+
+            /* MOONLIGHT UI - Main tabs */
+            $('.moonlightui-main-tab').tabs();
+
+            /* MOONLIGHT UI - Tab switches */
+            $('.moonlightui-tab-switch').tabSwitch();
+
+            /* MOONLIGHT UI - Show items */
+            $('.moonlightui-show').showComponents();
+
+            /* MOONLIGHT UI - Hide items */
+            $('.moonlightui-hide').hideComponents();
+
+            /* MOONLIGHT UI - Draggable components */
+            $('.moonlightui').draggableComponents();
+
+            /* MOONLIGHT UI - Will activate all custom click */
+            $('.moonlightui').actions();
+
+            /* MOONLIGHT UI - Buttons */
+            $('.moonlightui-btn-inner').buttons();
+
+            /* Init all scrollbars */
+            $('.moonlightui-scrollbar-inner').scrollbar();
+
+            /* MOONLIGHT UI - Activate all tooltips */
+            $('.moonlightui').tooltips();
+
+            /* MOONLIGHT UI - Enable all modal dialogs */
+            $('.moonlightui').modals();
+
         }
     });
     window.$ml = window.moonlightui = $.noConflict();
