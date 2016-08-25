@@ -117,6 +117,12 @@
             modules[tempModule].controllers[name] = ctrl;
             return this;
         },
+        view: function(name, view) {
+            var vw = view();
+            vw.__module = tempModule;
+            modules[tempModule].views[name] = vw;
+            return this;
+        },
         model: function(name, model) {
             // Instantiate new model
             var mdl = model();
@@ -155,12 +161,12 @@
             modules[tempModule].models[name] = mdl;
 
             // Attach two-way databinding
-            $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model]').each(function(){
+            $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model="' + model + '.*"]').each(function(){
                 if ($(this).data('ml-model').indexOf('.') !== -1) {
                     var modelParameter = $(this).data('ml-model').split('.'),
                         model = modelParameter[0],
                         param = modelParameter[1];
-                    if (typeof modules[tempModule].models[model][param] !== 'undefined'){
+                    if (typeof modules[tempModule].models[model] !== 'undefined' && typeof modules[tempModule].models[model][param] !== 'undefined'){
                         if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
                             $(this).val(modules[tempModule].models[model][param]);
                             $(this).on('keyup', function () {
