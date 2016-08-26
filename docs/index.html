@@ -309,20 +309,18 @@ moonlightui().module('core').controller('mainController', function(){
             </section>
             <section class="demo-main-section half-size align-right">
                 <div class="demo-show-model-example">
-                    <div id="demoDialogModel" class="moonlightui-modal moonlightui-modal-fixed" style="width: 500px; height: 250px;">
-                        <div class="moonlightui-modal-header">
-                            <div class="moonlightui-modal-close moonlightui-modal-disable"></div>
-                            <div class="moonlightui-modal-min moonlightui-modal-disable"></div>
-                            <div class="moonlightui-modal-max moonlightui-modal-disable"></div>
-                        </div>
-                        <div class="moonlightui-modal-body" data-ml-module="demo" data-ml-controller="demoController">
-                            <h4>The following example will show two-way databinding in action.</h4>
-                            <h1 data-ml-model="demoModel.greeting"></h1>
-                            <div style="position: relative">
-                                <div class="moonlightui-input">
-                                    <i class="fa fa-text" aria-hidden="true"></i>
-                                    <input type="text" data-ml-model="demoModel.greeting" data-ml-tooltip-active="true" data-ml-tooltip="Type in some text.">
-                                </div>
+                    <div class="moonlightui-modal-header">
+                        <div class="moonlightui-modal-close moonlightui-modal-disable"></div>
+                        <div class="moonlightui-modal-min moonlightui-modal-disable"></div>
+                        <div class="moonlightui-modal-max moonlightui-modal-disable"></div>
+                    </div>
+                    <div class="moonlightui-modal-body" data-ml-module="demo" data-ml-controller="demoController">
+                        <h4>The following example will show two-way databinding in action.</h4>
+                        <h1 data-ml-model="demoModel.greeting"></h1>
+                        <div style="position: relative">
+                            <div class="moonlightui-input">
+                                <i class="fa fa-text" aria-hidden="true"></i>
+                                <input type="text" data-ml-model="demoModel.greeting" data-ml-tooltip-active="true" data-ml-tooltip="Type in some text.">
                             </div>
                         </div>
                     </div>

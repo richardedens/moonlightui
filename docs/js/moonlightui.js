@@ -58045,16 +58045,16 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             $('.moonlightui-component-draggable').draggable({revert: true, scroll: false});
         },
         tooltips: function() {
-            $('[data-ml-tooltip-active="true"]').mouseover(function () {
+            $('[data-ml-tooltip-active="true"]').on('mouseover', function () {
                 var title = $(this).data('ml-tooltip');
                 $('.moonlightui-tooltip').html(title);
                 $('.moonlightui-tooltip').removeClass('hidden');
             });
-            $('[data-ml-tooltip-active="true"]').mousemove(function (event) {
+            $('[data-ml-tooltip-active="true"]').on('mousemove', function (event) {
                 $('.moonlightui-tooltip').css('left', event.pageX + 'px');
                 $('.moonlightui-tooltip').css('top', (event.pageY + 10) + 'px');
             });
-            $('[data-ml-tooltip-active="true"]').mouseout(function () {
+            $('[data-ml-tooltip-active="true"]').on('mouseout', function () {
                 var title = $(this).data('ml-tooltip');
                 $('.moonlightui-tooltip').css('left', '-1000px');
                 $('.moonlightui-tooltip').css('top', '-1000px');
@@ -58062,8 +58062,15 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 $('.moonlightui-tooltip').addClass('hidden');
             });
         },
+        showModal: function() {
+            this.css({top:'50%',left:'50%',margin:'-'+($(this).height() / 2)+'px 0 0 -'+($(this).width() / 2)+'px'});
+            this.removeHidden();
+        },
+        hideModal: function() {
+            this.addHidden();
+        },
         centerModal: function () {
-            $(this).css({top:'50%',left:'50%',margin:'-'+($(this).height() / 2)+'px 0 0 -'+($(this).width() / 2)+'px'});
+            this.css({top:'50%',left:'50%',margin:'-'+($(this).height() / 2)+'px 0 0 -'+($(this).width() / 2)+'px'});
             return this;
         },
         modals: function(){
@@ -58158,6 +58165,50 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         async: async,
         jsPlumb: jsPlumb,
         /* MOONLIGHTUI - Lets GO */
+        reenergize: function() {
+
+            /* MOONLIGHT UI - Tree's */
+            $('.moonlightui-tree').trees();
+
+            /* MOONLIGHT UI - Tab's */
+            $('.moonlightui-component-title-main-options').sortable();
+            $('.moonlightui-tab').off();
+            $('.moonlightui-tab').tabs();
+
+            // Attach tab switches again
+            $('.moonlightui-tab-switch').tabSwitch();
+            $('.moonlightui-tab-switch').tabSwitch();
+
+            // Attach show components
+            $('.moonlightui-show').off();
+            $('.moonlightui-show').showComponents();
+
+            // Attach show components
+            $('.moonlightui-hide').off();
+            $('.moonlightui-hide').hideComponents();
+
+            // Attach actions and clicks again.
+            $('[data-ml-click]').off();
+            $('[data-ml-action]').off();
+            $('.moonlightui').actions();
+
+            // Attach buttons
+            $('.moonlightui-btn-inner').off();
+            $('.moonlightui-btn-inner').buttons();
+
+            // Attach tooltips
+            $('[data-ml-tooltip-active="true"]').off();
+            $('.moonlightui').tooltips();
+
+            // Attach modals
+            $('.moonlightui-modal .moonlightui-modal-close').off();
+            $('.moonlightui-modal .moonlightui-modal-min').off();
+            $('.moonlightui-modal .moonlightui-modal-max').off();
+            $('.moonlightui').modals();
+
+            /* Init all scrollbars */
+            $('.moonlightui-overview.moonlightui-scrollbar-inner').scrollbar();
+        },
         energize: function() {
 
             /* MOONLIGHT UI - Tree's */
