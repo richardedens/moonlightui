@@ -57876,11 +57876,15 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             mdl.getError = function(value) {
                 return modules[tempModule].models[name].__error;
             };
-            mdl.get = function(param) {
+            mdl.get = function(param, defaultValue) {
+                if (typeof defaultValue === 'undefined') {
+                    defaultValue = '';
+                }
                 if (typeof modules[tempModule].models[name][param] !== 'undefined') {
                     return modules[tempModule].models[name][param];
                 } else {
                     console.warn('MOONLIGHTUI - Model "' + mdl.__name + '" in module "' + mdl.__module + '" does not have property "' + param + '"');
+                    return defaultValue;
                 }
             };
             mdl.set = function(param, value) {
@@ -57908,17 +57912,13 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 });
                 modules[tempModule].models[model].__on(param);
             };
-
-            // Save model into the module.
-            modules[tempModule].models[name] = mdl;
-
-            // Attach two-way databinding
-            $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model*="' + name + '."]').each(function(){
-                if ($(this).data('ml-model').indexOf('.') !== -1) {
-                    var modelParameter = $(this).data('ml-model').split('.'),
-                        model = modelParameter[0],
-                        param = modelParameter[1];
-                    if (typeof modules[tempModule].models[model] !== 'undefined' && typeof modules[tempModule].models[model][param] !== 'undefined'){
+            mdl.__initTwoWayBinding = function(){
+                // Attach two-way databinding
+                $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model*="' + name + '."]').each(function(){
+                    if ($(this).data('ml-model').indexOf('.') !== -1) {
+                        var modelParameter = $(this).data('ml-model').split('.'),
+                            model = modelParameter[0],
+                            param = modelParameter[1];
                         if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
                             $(this).val(modules[tempModule].models[model][param]);
                             $(this).on('keyup', function () {
@@ -57928,17 +57928,30 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         } else {
                             $(this).html(modules[tempModule].models[model][param]);
                         }
+                    } else {
+                        console.warn('MOONLIGHTUI - You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + tempModule + '"');
                     }
-                } else {
-                    console.warn('MOONLIGHTUI - You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + tempModule + '"');
-                }
-            });
+                });
+            };
+
+            // Save model into the module.
+            modules[tempModule].models[name] = mdl;
+
+            mdl.__initTwoWayBinding();
+
+
             return this;
         },
         getModel: function(parent, name)
         {
             if (typeof modules[parent].models[name] !== 'undefined') {
                 return modules[parent].models[name];
+            }
+        },
+        getController: function(parent, name)
+        {
+            if (typeof modules[parent].controllers[name] !== 'undefined') {
+                return modules[parent].controllers[name];
             }
         },
         /* MOONLIGHTUI - UI components */
@@ -58167,47 +58180,51 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         /* MOONLIGHTUI - Lets GO */
         reenergize: function() {
 
-            /* MOONLIGHT UI - Tree's */
-            $('.moonlightui-tree').trees();
-
             /* MOONLIGHT UI - Tab's */
-            $('.moonlightui-component-title-main-options').sortable();
             $('.moonlightui-tab').off();
-            $('.moonlightui-tab').tabs();
+
+            /* MOONLIGHT UI - Main tabs */
+            $('.moonlightui-main-tab').off();
 
             // Attach tab switches again
-            $('.moonlightui-tab-switch').tabSwitch();
-            $('.moonlightui-tab-switch').tabSwitch();
+            $('.moonlightui-tab-switch').off();
 
             // Attach show components
             $('.moonlightui-show').off();
-            $('.moonlightui-show').showComponents();
 
             // Attach show components
             $('.moonlightui-hide').off();
-            $('.moonlightui-hide').hideComponents();
 
             // Attach actions and clicks again.
             $('[data-ml-click]').off();
             $('[data-ml-action]').off();
-            $('.moonlightui').actions();
 
             // Attach buttons
             $('.moonlightui-btn-inner').off();
-            $('.moonlightui-btn-inner').buttons();
 
             // Attach tooltips
             $('[data-ml-tooltip-active="true"]').off();
-            $('.moonlightui').tooltips();
 
             // Attach modals
             $('.moonlightui-modal .moonlightui-modal-close').off();
             $('.moonlightui-modal .moonlightui-modal-min').off();
             $('.moonlightui-modal .moonlightui-modal-max').off();
-            $('.moonlightui').modals();
 
-            /* Init all scrollbars */
-            $('.moonlightui-overview.moonlightui-scrollbar-inner').scrollbar();
+            /* Detach all events */
+            $('.moonlightui').off();
+
+            /* Detach two-way databinding */
+            $('[data-ml-model]').off();
+
+            /* Attach model two way databinding */
+            for (var module in modules) {
+                for (var model in modules[module].models) {
+                    modules[module].models[model].__initTwoWayBinding();
+                }
+            }
+
+            this.energize();
+
         },
         energize: function() {
 

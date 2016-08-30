@@ -2625,16 +2625,19 @@ ul.moonlightui-component-title-main-options li {
 
 .moonlightui-modal-header {
   background-color: #373737;
-  height: 22px;
   border-radius: 3px 3px 0 0;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   line-height: 22px;
-  vertical-align: middle;
+  height: 22px;
   font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial;
-  color: white; }
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 11px;
+  font-weight: bold; }
 
 .moonlightui-modal-header.moonlightui-modal-app-header {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,7db9e8+100 */
@@ -2648,7 +2651,6 @@ ul.moonlightui-component-title-main-options li {
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$modal-main-begin', endColorstr='$modal-main-end',GradientType=0 );
   /* IE6-9 */
-  height: 22px;
   border-radius: 3px 3px 0 0;
   border-top: 1px solid #575757;
   position: absolute;
@@ -2656,8 +2658,13 @@ ul.moonlightui-component-title-main-options li {
   left: 0;
   right: 0;
   line-height: 22px;
+  height: 22px;
+  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial;
+  color: white;
+  text-align: center;
   vertical-align: middle;
-  height: 22px; }
+  font-size: 11px;
+  font-weight: bold; }
 
 .moonlightui-modal-close {
   border-radius: 12px;
