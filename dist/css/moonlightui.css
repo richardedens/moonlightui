@@ -9208,6 +9208,9 @@ ul.moonlightui-component-title-main-options li {
   width: 250px;
   font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
 
+.moonlightui-layout-left-navbar {
+  width: 55px; }
+
 .moonlightui-layout-middle {
   position: absolute;
   left: 250px;
@@ -9216,6 +9219,14 @@ ul.moonlightui-component-title-main-options li {
   right: 300px;
   font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
 
+.moonlightui-layout-middle-navbar,
+.moonlightui-layout-middle-navbar-left {
+  left: 55px; }
+
+.moonlightui-layout-middle-navbar-right {
+  left: 300px;
+  right: 55px; }
+
 .moonlightui-layout-right {
   position: absolute;
   bottom: 20px;
@@ -9223,6 +9234,9 @@ ul.moonlightui-component-title-main-options li {
   right: 0;
   width: 300px;
   font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
+
+.moonlightui-layout-right-navbar {
+  width: 55px; }
 
 .moonlightui-layout-bottom {
   position: absolute;
@@ -9455,6 +9469,49 @@ ul.moonlightui-component-title-main-options li {
   color: white;
   line-height: 40px;
   width: 100%;
+  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
+
+.moonlightui-navbar-left {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  margin-top: 10px; }
+
+.moonlightui-navbar-left li {
+  list-style-type: none;
+  list-style: none;
+  display: block;
+  margin-bottom: 5px;
+  padding: 0; }
+
+.moonlightui-navbar-left li.moonlightui-navbar-left-item {
+  border: 1px solid #292929;
+  border-radius: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 35px;
+  height: 30px;
+  margin-right: 10px;
+  margin-top: 8px;
+  text-align: center;
+  margin-left: -30px;
+  font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
+
+.moonlightui-navbar-left li.moonlightui-navbar-left-item.active {
+  border: 1px solid #000;
+  background-color: #292929;
+  border-radius: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 35px;
+  height: 30px;
+  margin-right: 10px;
+  margin-top: 8px;
+  text-align: center;
+  margin-left: -30px;
   font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial; }
 
 /*************** SCROLLBAR BASE CSS ***************/

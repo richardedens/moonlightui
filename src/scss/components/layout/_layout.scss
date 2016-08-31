@@ -15,6 +15,9 @@
   width: 250px;
   font-family: $font-family;
 }
+.moonlightui-layout-left-navbar {
+  width: 55px;
+}
 .moonlightui-layout-middle {
   position: absolute;
   left: 250px;
@@ -23,6 +26,14 @@
   right: 300px;
   font-family: $font-family;
 }
+.moonlightui-layout-middle-navbar,
+.moonlightui-layout-middle-navbar-left {
+  left: 55px;
+}
+.moonlightui-layout-middle-navbar-right {
+  left: 300px;
+  right: 55px;
+}
 .moonlightui-layout-right {
   position: absolute;
   bottom: 20px;
@@ -30,6 +41,9 @@
   right: 0;
   width: 300px;
   font-family: $font-family;
+}
+.moonlightui-layout-right-navbar {
+  width: 55px;
 }
 .moonlightui-layout-bottom {
   position: absolute;
