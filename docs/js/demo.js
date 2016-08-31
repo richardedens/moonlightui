@@ -2,7 +2,7 @@
 moonlightui('document').ready(function() {
 
     /* MOONLIGHT UI - Tree's */
-    moonlightui('.moonlightui-tree').energize();
+    moonlightui().energize('.moonlightui-main');
 
     /* MOONLIGHT UI - Register a module and a controller on the module. */
     moonlightui().module('core').controller('mainController', function(){
@@ -22,6 +22,25 @@ moonlightui('document').ready(function() {
 
     });
 
+    /* MOONLIGHT UI - Demo view one */
+    moonlightui().module('demo').view('viewOne', function(){
+        var viewOne = {
+            container: '#demoView',
+            templateURL: 'demoView.html'
+        };
+        return viewOne;
+    });
+
+    /* MOONLIGHT UI - Demo view two */
+    moonlightui().module('demo').view('viewTwo', function(){
+        var viewTwo = {
+            container: '#demoView',
+            template: 'This is a template from a string.'
+        };
+        return viewTwo;
+    });
+
+    /* MOONLIGHTUI - Demo model */
     moonlightui().module('demo').model('demoModel', function() {
 
         var demoModel = {
@@ -44,6 +63,20 @@ moonlightui('document').ready(function() {
         var demoModel = moonlightui().getModel('demo','demoModel');
 
         var demoController = {
+
+            demoShowViewOne: function() {
+                var viewOne = moonlightui().getView('demo', 'viewOne');
+                viewOne.render(function(template, container){
+                    console.log('Altered view to view one.');
+                });
+            },
+
+            demoShowViewTwo: function() {
+                var viewTwo = moonlightui().getView('demo', 'viewTwo');
+                viewTwo.render(function(template, container){
+                    console.log('Altered view to view one.');
+                });
+            },
 
             init: function() {
 

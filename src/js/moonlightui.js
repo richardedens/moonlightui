@@ -72,7 +72,7 @@
                 }
                 return false;
             }
-            $('[data-ml-action]').each(function(){
+            this.each(function(){
                 $(this).on('click', function(){
                     var tabAction = $(this).data('ml-action'),
                         controller = $(this).closest('[data-ml-controller]').data('ml-controller'),
@@ -86,24 +86,6 @@
                             }
                         } else {
                             modules[module].controllers[controller][tabAction](this);
-                        }
-                    }
-                });
-            });
-            $('[data-ml-click]').each(function(){
-                $(this).on('click', function(){
-                    var tabClick = $(this).data('ml-click'),
-                        controller = $(this).closest('[data-ml-controller]').data('ml-controller'),
-                        module = $(this).closest('[data-ml-module]').data('ml-module');
-                    var error = findModuleAndController(this, tabClick);
-                    if (error === false) {
-                        if (tabClick.indexOf(',') !== -1) {
-                            var tabClicks = tabClick.split(',');
-                            for (var i = 0; i < tabClicks.length; i++) {
-                                modules[module].controllers[controller][tabClicks[i]](this);
-                            }
-                        } else {
-                            modules[module].controllers[controller][tabClick](this);
                         }
                     }
                 });
@@ -122,28 +104,122 @@
             return this;
         },
         controller: function(name, controller) {
-            var ctrl = controller();
-            ctrl.__module = tempModule;
+            var ctrl = controller(),
+                module = tempModule.slice(0);
+            ctrl.__module = module;
             modules[tempModule].controllers[name] = ctrl;
             return this;
         },
         view: function(name, view) {
-            var vw = view();
-            vw.__module = tempModule;
-            modules[tempModule].views[name] = vw;
+            var vw = view(),
+                engine = this,
+                module = tempModule.slice(0);
+            vw.__name = name;
+            vw.__error = '';
+            vw.__module = module;
+            vw.__template = false;
+            vw.__containerId = false;
+            vw.__container = false;
+            vw.__models = false;
+            vw.__initialized = false;
+            vw.__render = function(html) {
+                return html;
+            };
+            vw.render = function(cb) {
+                if (modules[module].views[name].__template === false) {
+                    console.warn(
+                        'MOONLIGHTUI - The template is eighter not set with the variable "template" or "templateURL".'
+                    );
+                }
+                if (modules[module].views[name].__container === false) {
+                    console.warn(
+                        'MOONLIGHTUI - The view does not have a property "container". Inside the variable "container" needs to be a CSS selector for an HTML element.'
+                    );
+                }
+                if (typeof cb === "undefined") {
+                    modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                    if (modules[module].views[name].__initialized === true) {
+                        engine.reenergize(modules[module].views[name].container);
+                    } else {
+                        engine.energize(modules[module].views[name].container);
+                    }
+                } else {
+                    modules[module].views[name].__loadTemplate(function(){
+                        modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                        if (modules[module].views[name].__initialized === true) {
+                            engine.reenergize(modules[module].views[name].container);
+                        } else {
+                            engine.energize(modules[module].views[name].container);
+                        }
+                        cb(modules[module].views[name].__template, modules[module].views[name].__container);
+                    });
+                }
+            };
+            vw.__loadTemplate = function(cb) {
+                if (typeof modules[module].views[name].templateURL !== 'undefined') {
+                    $.ajax({
+                        url: modules[module].views[name].templateURL,
+                        type: 'GET'
+                    }).done(function(data){
+                        modules[module].views[name].__template = data;
+                        if (typeof cb !== "undefined") {
+                            cb(data);
+                        } else {
+                            return data;
+                        }
+                    }).fail(function(){
+                        console.warn('MOONLIGHTUI - We cant load template with url: ' + this.templateURL);
+                        if (typeof cb !== "undefined") {
+                            cb("");
+                        } else {
+                            return "";
+                        }
+                    });
+                }
+                if (typeof this.template !== 'undefined') {
+                    modules[module].views[name].__template = this.template;
+                    if (typeof cb !== "undefined") {
+                        cb(this.template);
+                    } else {
+                        return this.template;
+                    }
+                }
+                return this.__template;
+            };
+            vw.__loadModels = function(cb) {
+                if (typeof this.models !== 'undefined') {
+                    modules[module].views[name].__models = this.models;
+                }
+                cb();
+            };
+            vw.__init = function() {
+                if (typeof modules[module].views[name].container !== 'undefined') {
+                    modules[module].views[name].__container = $(modules[module].views[name].container);
+                }
+                var self = this;
+                this.__loadTemplate(function(){
+                    self.__loadModels(function(){
+                        self.render();
+                        self.__initialized = true;
+                    });
+                });
+            };
+            modules[module].views[name] = vw;
+            vw.__init();
             return this;
         },
         model: function(name, model) {
             // Instantiate new model
-            var mdl = model();
+            var mdl = model(),
+                module = tempModule.slice(0);
 
             // Attach new variables and new functions. Will override existing functions.
             mdl.__name = name;
             mdl.__error = '';
-            mdl.__module = tempModule;
+            mdl.__module = module;
             mdl.removeError = function() {
-                modules[tempModule].models[name].__error = '';
-                $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
+                modules[module].models[name].__error = '';
+                $('[data-ml-module="' + module+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
                     if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
                         $(this).val('');
                     } else {
@@ -153,25 +229,25 @@
                 });
             };
             mdl.addError = function(value) {
-                modules[tempModule].models[name].__error = value;
-                $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
+                modules[module].models[name].__error = value;
+                $('[data-ml-module="' + module+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
                     if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
-                        $(this).val(modules[tempModule].models[name].__error);
+                        $(this).val(modules[module].models[name].__error);
                     } else {
-                        $(this).html(modules[tempModule].models[name].__error);
+                        $(this).html(modules[module].models[name].__error);
                     }
                     $(this).removeHidden();
                 });
             };
             mdl.getError = function(value) {
-                return modules[tempModule].models[name].__error;
+                return modules[module].models[name].__error;
             };
             mdl.get = function(param, defaultValue) {
                 if (typeof defaultValue === 'undefined') {
                     defaultValue = '';
                 }
-                if (typeof modules[tempModule].models[name][param] !== 'undefined') {
-                    return modules[tempModule].models[name][param];
+                if (typeof modules[module].models[name][param] !== 'undefined') {
+                    return modules[module].models[name][param];
                 } else {
                     console.warn('MOONLIGHTUI - Model "' + mdl.__name + '" in module "' + mdl.__module + '" does not have property "' + param + '"');
                     return defaultValue;
@@ -193,39 +269,39 @@
                 mdl.__on = cb;
             };
             mdl.__broadcast = function(model, param){
-                $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
+                $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
                     if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
-                        $(this).val(modules[tempModule].models[model][param]);
+                        $(this).val(modules[module].models[model][param]);
                     } else {
-                        $(this).html(modules[tempModule].models[model][param]);
+                        $(this).html(modules[module].models[model][param]);
                     }
                 });
-                modules[tempModule].models[model].__on(param);
+                modules[module].models[model].__on(param);
             };
             mdl.__initTwoWayBinding = function(){
                 // Attach two-way databinding
-                $('[data-ml-module="' + tempModule+ '"]').find('[data-ml-model*="' + name + '."]').each(function(){
+                $('[data-ml-module="' + module+ '"]').find('[data-ml-model*="' + name + '."]').each(function(){
                     if ($(this).data('ml-model').indexOf('.') !== -1) {
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0],
                             param = modelParameter[1];
                         if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
-                            $(this).val(modules[tempModule].models[model][param]);
+                            $(this).val(modules[module].models[model][param]);
                             $(this).on('keyup', function () {
-                                modules[tempModule].models[model][param] = $(this).val();
-                                modules[tempModule].models[model].__broadcast(model, param);
+                                modules[module].models[model][param] = $(this).val();
+                                modules[module].models[model].__broadcast(model, param);
                             });
                         } else {
-                            $(this).html(modules[tempModule].models[model][param]);
+                            $(this).html(modules[module].models[model][param]);
                         }
                     } else {
-                        console.warn('MOONLIGHTUI - You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + tempModule + '"');
+                        console.warn('MOONLIGHTUI - You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + module + '"');
                     }
                 });
             };
 
             // Save model into the module.
-            modules[tempModule].models[name] = mdl;
+            modules[module].models[name] = mdl;
 
             mdl.__initTwoWayBinding();
 
@@ -242,6 +318,12 @@
         {
             if (typeof modules[parent].controllers[name] !== 'undefined') {
                 return modules[parent].controllers[name];
+            }
+        },
+        getView: function(parent, name)
+        {
+            if (typeof modules[parent].views[name] !== 'undefined') {
+                return modules[parent].views[name];
             }
         },
         /* MOONLIGHTUI - UI components */
@@ -468,43 +550,42 @@
         async: async,
         jsPlumb: jsPlumb,
         /* MOONLIGHTUI - Lets GO */
-        reenergize: function() {
+        reenergize: function(element) {
 
             /* MOONLIGHT UI - Tab's */
-            $('.moonlightui-tab').off();
+            $(element + ' .moonlightui-tab').off();
 
             /* MOONLIGHT UI - Main tabs */
-            $('.moonlightui-main-tab').off();
+            $(element + ' .moonlightui-main-tab').off();
 
             // Attach tab switches again
-            $('.moonlightui-tab-switch').off();
+            $(element + ' .moonlightui-tab-switch').off();
 
             // Attach show components
-            $('.moonlightui-show').off();
+            $(element + ' .moonlightui-show').off();
 
             // Attach show components
-            $('.moonlightui-hide').off();
+            $(element + ' .moonlightui-hide').off();
 
             // Attach actions and clicks again.
-            $('[data-ml-click]').off();
-            $('[data-ml-action]').off();
+            $(element).find('[data-ml-action]').off();
 
             // Attach buttons
-            $('.moonlightui-btn-inner').off();
+            $(element + ' .moonlightui-btn-inner').off();
 
             // Attach tooltips
-            $('[data-ml-tooltip-active="true"]').off();
+            $(element).find('[data-ml-tooltip-active="true"]').off();
 
             // Attach modals
-            $('.moonlightui-modal .moonlightui-modal-close').off();
-            $('.moonlightui-modal .moonlightui-modal-min').off();
-            $('.moonlightui-modal .moonlightui-modal-max').off();
+            $(element + ' .moonlightui-modal .moonlightui-modal-close').off();
+            $(element + ' .moonlightui-modal .moonlightui-modal-min').off();
+            $(element + ' .moonlightui-modal .moonlightui-modal-max').off();
 
             /* Detach all events */
-            $('.moonlightui').off();
+            $(element).off();
 
             /* Detach two-way databinding */
-            $('[data-ml-model]').off();
+            $(element).find('[data-ml-model]').off();
 
             /* Attach model two way databinding */
             for (var module in modules) {
@@ -513,47 +594,47 @@
                 }
             }
 
-            this.energize();
+            $(element).energize(element);
 
         },
-        energize: function() {
+        energize: function(element) {
 
             /* MOONLIGHT UI - Tree's */
-            $('.moonlightui-tree').trees();
+            $(element + ' .moonlightui-tree').trees();
 
             /* MOONLIGHT UI - Tab's */
-            $('.moonlightui-component-title-main-options').sortable();
-            $('.moonlightui-tab').tabs();
+            $(element + ' .moonlightui-component-title-main-options').sortable();
+            $(element + ' .moonlightui-tab').tabs();
 
             /* MOONLIGHT UI - Main tabs */
-            $('.moonlightui-main-tab').tabs();
+            $(element + ' .moonlightui-main-tab').tabs();
 
             /* MOONLIGHT UI - Tab switches */
-            $('.moonlightui-tab-switch').tabSwitch();
+            $(element + ' .moonlightui-tab-switch').tabSwitch();
 
             /* MOONLIGHT UI - Show items */
-            $('.moonlightui-show').showComponents();
+            $(element + ' .moonlightui-show').showComponents();
 
             /* MOONLIGHT UI - Hide items */
-            $('.moonlightui-hide').hideComponents();
+            $(element + ' .moonlightui-hide').hideComponents();
 
             /* MOONLIGHT UI - Draggable components */
-            $('.moonlightui').draggableComponents();
+            $(element + ' moonlightui').draggableComponents();
 
             /* MOONLIGHT UI - Will activate all custom click */
-            $('.moonlightui').actions();
+            $(element).find('[data-ml-action]').actions();
 
             /* MOONLIGHT UI - Buttons */
-            $('.moonlightui-btn-inner').buttons();
+            $(element + ' .moonlightui-btn-inner').buttons();
 
             /* Init all scrollbars */
-            $('.moonlightui-scrollbar-inner').scrollbar();
+            $(element + ' .moonlightui-scrollbar-inner').scrollbar();
 
             /* MOONLIGHT UI - Activate all tooltips */
-            $('.moonlightui').tooltips();
+            $(element + ' .moonlightui').tooltips();
 
             /* MOONLIGHT UI - Enable all modal dialogs */
-            $('.moonlightui').modals();
+            $(element + ' .moonlightui').modals();
 
         }
     });

@@ -60,7 +60,30 @@ module.exports = function(grunt) {
         },
         concat: {
             js: {
-                src: ['src/lib/jquery/dist/jquery.js', 'src/lib/jquery-ui/jquery-ui.js', 'src/lib/jsPlumb/dist/js/jsPlumb-2.1.5.js', 'src/lib/jquery.scrollbar/jquery.scrollbar.js', 'src/lib/jstree/dist/jstree.js', 'src/js/prism.js', 'src/lib/async/dist/async.js', 'src/js/moonlightui.js'],
+                src: [
+                    // jQuery.
+                    'src/lib/jquery/dist/jquery.js',
+
+                    // Special version of jQuery UI.
+                    'src/js/jquery-ui.js',
+
+                    // jsPlumb
+                    'src/lib/jsPlumb/dist/js/jsPlumb-2.1.5.js',
+
+                    // jquery scrollbar
+                    'src/lib/jquery.scrollbar/jquery.scrollbar.js',
+
+                    // jsTree
+                    'src/lib/jstree/dist/jstree.js',
+
+                    // PrismJS
+                    'src/js/prism.js',
+
+                    // async
+                    'src/lib/async/dist/async.js',
+
+                    // jsMore
+                    'src/js/moonlightui.js'],
                 dest: 'dist/js/moonlightui.js'
             },
             css: {

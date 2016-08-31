@@ -12,7 +12,7 @@
             <p>A fresh new HTML / CSS / JavaScript user interface library.</p>
         </header>
 
-        <main data-ml-module="core" data-ml-controller="mainController">
+        <main class="moonlightui-main" data-ml-module="core" data-ml-controller="mainController">
             <section>
                 <!-- MOONLIGHTUI - Modal example -->
                 <div class="moonlightui-modal demo-moonlight">
@@ -192,7 +192,7 @@
             </section>
 
             <!-- How to setup? -->
-            <section class="demo-main-section half-size align-left text-align-right">
+            <section class="demo-main-section half-size align-left text-align-right" style="height: 400px;">
                 <div class="text-align-left demo-text-section">
                     <h2>How to setup?</h2>
                     <p>
@@ -207,17 +207,17 @@
                     </p>
                 </div>
             </section>
-            <section class="demo-main-section half-size align-right">
+            <section class="demo-main-section half-size align-right" style="height: 400px;">
                 <pre><code class="language-html">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
         &lt;script type="text/javascript" src="dist/js/moonlightui.min.js"&gt;&lt;/script&gt;
-        &lt;script type="text/javascript" src="system.js"&gt;&lt;/script&gt;
         &lt;link href="dist/css/moonlightui.min.css" media="all" rel="stylesheet"&gt;&lt;/link&gt;
     &lt;/head&gt;
     &lt;body&gt;
         ... markup for moonlighui ...
+        &lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
     &lt;/body&gt;
 &lt;/html&gt;
 
@@ -240,7 +240,7 @@
 moonlightui().onready(function() {
 
     /* MOONLIGHT UI - Start using moonlightui. */
-    moonlightui().energize();
+    moonlightui().energize('.moonlightui');
 
 });</code></pre>
             </section>
@@ -299,7 +299,7 @@ moonlightui().module('core').controller('mainController', function(){
 });
 </code></pre>
             </section>
-            <section class="demo-main-section half-size align-left text-align-right">
+            <section class="demo-main-section half-size align-left text-align-right" style="height: 1650px;">
                 <div class="text-align-left demo-text-section">
                     <h2>Models</h2>
                     <p>MoonlightUI has the ability to also use models and two-way databinding.</p>
@@ -307,7 +307,7 @@ moonlightui().module('core').controller('mainController', function(){
                     <p>This implementation of MVC is very light weight. But can do just the trick to attach multiple MoonlightUI components together. On the right you will see a small example in inaction.</p>
                 </div>
             </section>
-            <section class="demo-main-section half-size align-right">
+            <section class="demo-main-section half-size align-right" style="height: 1650px;">
                 <div class="demo-show-model-example">
                     <div class="moonlightui-modal-header">
                         <div class="moonlightui-modal-close moonlightui-modal-disable"></div>
@@ -339,7 +339,7 @@ moonlightui().module('demo').model('demoModel', function(){
      * The model is extended with functions so you can set and get properties and receive UI changes.
      */
     var model = {
-        greeting : ';
+        greeting : '';
     }
 
     return model;
@@ -353,14 +353,92 @@ moonlightui().module('demo').controller('demoController', function(){
      * The first parameter is the module.
      * So you can use this model in every controller of every module if you wish.
      */
-    var demoModel = moonlightui().getModel('demo','demoModel');
 
     var demoController = {
 
         init: function() {
 
+            var demoModel = moonlightui().getModel('demo','demoModel');
+
              demoModel.receive(function(name){
                  console.log('Got new value from "' + name + '": ' + demoModel.get(name));
+             });
+
+        }
+
+    };
+    demoController.init();
+
+    return demoController;
+
+});
+</code></pre>
+            </section>
+            <section class="demo-main-section half-size align-left text-align-right" style="height: 1500px">
+                <div class="text-align-left demo-text-section">
+                    <h2>Views</h2>
+                    <p>MoonlightUI also enables you to use views.</p>
+                    <p>Views also have two-way databinding, actions and all the that moonlightui provides.</p>
+                    <p>A view begins with a state and its rendering is done at this stage serverside. MoonlightUI does not have a template engine yet but has the ability for you to manipulate the outcome of the HTML inside the render function.</p>
+                </div>
+            </section>
+            <section class="demo-main-section half-size align-right" style="height: 1500px">
+                <div class="demo-show-model-example">
+                    <div class="moonlightui-modal-header">
+                        <div class="moonlightui-modal-close moonlightui-modal-disable"></div>
+                        <div class="moonlightui-modal-min moonlightui-modal-disable"></div>
+                        <div class="moonlightui-modal-max moonlightui-modal-disable"></div>
+                    </div>
+                    <div class="moonlightui-modal-body" data-ml-module="demo" data-ml-controller="demoController">
+                        <h4>The following example will show the rendering of views.</h4>
+                        <div id="demoView"></div>
+                        <div class="moonlightui-modal-body-btn-bottom-fixed">
+                            <div class="moonlightui-btn" data-ml-action="demoShowViewOne" style="font-size: 11px;">
+                                <div class="moonlightui-btn-inner">
+                                    one
+                                </div>
+                            </div>
+                            <div class="moonlightui-btn" data-ml-action="demoShowViewTwo" style="font-size: 11px;">
+                                <div class="moonlightui-btn-inner">
+                                    two
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <pre><code class="language-html">&lt;div id="theView"&gt;&lt;/div&gt;</code></pre>
+                <pre><code class="language-javascript">
+/* Action on the global scope  */
+moonlightui().module('demo').view('mainView', function(){
+
+    var mainView = {
+        container: 'theView',
+        templateURL: '...url to template...'
+    };
+
+    return mainView;
+
+});
+
+/* Using a view inside your controller. */
+moonlightui().module('demo').controller('demoController', function(){
+
+    /*
+     * When you registering a view it's automaticly added to the HTML.
+     * And all the actions, tab switchs, tabs, scrollbars etc are initiated.
+     * Using views helps with registering and unregistering moonlightui events on a view.
+     */
+
+    var demoController = {
+
+        init: function() {
+
+             var viewOne = moonlightui().getView('demo','viewOne');
+
+             viewOne.render(function(template, container) {
+
+                // You will get in the callback the template and container id.
+
              });
 
         }

@@ -110,6 +110,7 @@ footer h1 {
     width: 100%;
 }
 .demo-show-model-example {
+    position: relative;
     height: 350px;
     background-color: #333333;
 }
