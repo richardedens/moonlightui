@@ -20,7 +20,7 @@ Download the latest MoonlightUI release from github: https://github.com/richarde
 
 MoonlightUI can be installed as a bower package with:
 
-    bower install twig.js
+    bower install moonlightui
 
 Include moonlightui in your page with the following code:
 
