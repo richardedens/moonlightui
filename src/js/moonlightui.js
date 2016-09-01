@@ -546,6 +546,10 @@
                 }
             });
         },
+        /* MOONLIGHTUI - lodash */
+        lodash: _,
+        /* MOONLIGHTUI - TWIG template engine */
+        twig: twig,
         /* MOONLIGHTUI - External Libraries */
         async: async,
         jsPlumb: jsPlumb,

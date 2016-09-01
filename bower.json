@@ -1,7 +1,7 @@
 {
   "name": "moonlightui",
-  "description": "Moonlight UI gives you the power to create beautiful user interfaces",
-  "main": "dist/js/moonlightui.js",
+  "description": "Moonlight UI is a lightweight SPA and user interfaces framework.",
+  "main": "dist/js/moonlightui.min.js",
   "authors": [
     "Gerhard Richard Edens"
   ],
@@ -27,6 +27,7 @@
     "jstree": "^3.3.2",
     "ckeditor": "^4.5.10",
     "ace-builds": "^1.2.5",
-    "async": "^2.0.1"
+    "async": "^2.0.1",
+    "lodash": "^4.15.0"
   }
 }

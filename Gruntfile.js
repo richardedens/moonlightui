@@ -82,6 +82,9 @@ module.exports = function(grunt) {
                     // async
                     'src/lib/async/dist/async.js',
 
+                    // LoDash
+                    'src/lib/lodash/dist/lodash.js',
+
                     // jsMore
                     'src/js/moonlightui.js'],
                 dest: 'dist/js/moonlightui.js'
