@@ -2,7 +2,7 @@
 
 # moonlightui
 
-The MoonlightUI framework is created to make beautiful desktop and web user interfaces based on JavaScript / CSS and HTML.
+Moonlight UI is a lightweight SPA and user interfaces framework based on JavaScript / CSS and HTML.
 
 ### Docs
 
