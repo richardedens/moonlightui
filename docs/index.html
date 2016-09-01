@@ -252,7 +252,6 @@
         &lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
     &lt;/body&gt;
 &lt;/html&gt;
-
                 </code></pre>
             </section>
             <section class="demo-main-section half-size align-left text-align-right" style="height: 700px">
@@ -483,6 +482,81 @@ moonlightui().module('demo').controller('demoController', function(){
 });
 </code></pre>
             </section>
+
+            <!-- Laravel -->
+            <section class="demo-main-section half-size align-left text-align-right" style="height: 1500px">
+                <div class="text-align-left demo-text-section">
+                    <h2>Integrating with laravel</h2>
+                    <p>MoonlightUI has a helper function to swiftly connect to laravel.</p>
+                    <p>Especially when using POST's, PUT's and DELETE's you will need a csrfToken.</p>
+                    <p>The following code on the right can be added to the page to prepare MoonlightUI to send GET / POST / PUT / DELETE calls to a Laravel API.</p>
+                </div>
+            </section>
+            <section class="demo-main-section half-size align-right" style="height: 1500px">
+                <pre><code class="language-html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;script type="text/javascript" src="dist/js/moonlightui.min.js"&gt;&lt;/script&gt;
+        &lt;link href="dist/css/moonlightui.min.css" media="all" rel="stylesheet"&gt;&lt;/link&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        ... markup for moonlighui ...
+        &lt;script type="text/javascript"&gt;
+            moonlightui().module('moonlightui').model('settings', function() {
+                return {
+                    'csrfToken': '{{ csrf_token() }}';
+                };
+            });
+        &lt;/script&gt;
+        &lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                </code></pre>
+                <pre><code class="language-javascript">
+/* Using a view inside your controller. */
+moonlightui().module('demo').controller('demoController', function(){
+
+    /*
+     * To send something to the server simple use the following code:
+     */
+
+    var demoController = {
+
+        sendToServer: function() {
+
+             moonlightui().laravel.http.post(
+
+                    // The API url
+                    'http://....',
+
+                    // The data to send
+                    {
+                       ... data to send in json format ...
+                    },
+
+                    // The done function
+                    function() {
+                        ... do something ...
+                    },
+
+                    // The fails function
+                    function() {
+                        ... do something on fail ...
+                    }
+
+             );
+
+        }
+
+    };
+
+    return demoController;
+
+});
+</code></pre>
+            </section>
+
 
             <section class="demo-main-section text-align-center full-width steel-plate">
                 <div class="text-align-left logo-sum">

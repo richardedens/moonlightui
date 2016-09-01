@@ -62339,7 +62339,11 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             mdl.removeError = function() {
                 modules[module].models[name].__error = '';
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
-                    if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                    if ($(this).is( "input" ) ||
+                        $(this).is( "textarea" ) ||
+                        $(this).is( "select" ) ||
+                        $(this).is( "checkbox" ) ||
+                        $(this).is( "radio" )) {
                         $(this).val('');
                     } else {
                         $(this).html('');
@@ -62350,7 +62354,11 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             mdl.addError = function(value) {
                 modules[module].models[name].__error = value;
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
-                    if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                    if ($(this).is( "input" ) ||
+                        $(this).is( "textarea" ) ||
+                        $(this).is( "select" ) ||
+                        $(this).is( "checkbox" ) ||
+                        $(this).is( "radio" )) {
                         $(this).val(modules[module].models[name].__error);
                     } else {
                         $(this).html(modules[module].models[name].__error);
@@ -62376,7 +62384,11 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 mdl[param] = value;
                 $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function()
                 {
-                    if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                    if ($(this).is( "input" ) ||
+                        $(this).is( "textarea" ) ||
+                        $(this).is( "select" ) ||
+                        $(this).is( "checkbox" ) ||
+                        $(this).is( "radio" )) {
                         $(this).val(value);
                     } else {
                         $(this).html(value);
@@ -62389,7 +62401,11 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             };
             mdl.__broadcast = function(model, param){
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
-                    if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                    if ($(this).is( "input" ) ||
+                        $(this).is( "textarea" ) ||
+                        $(this).is( "select" ) ||
+                        $(this).is( "checkbox" ) ||
+                        $(this).is( "radio" )) {
                         $(this).val(modules[module].models[model][param]);
                     } else {
                         $(this).html(modules[module].models[model][param]);
@@ -62404,12 +62420,26 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0],
                             param = modelParameter[1];
-                        if ($(this).is( "input" ) || $(this).is( "textarea" ) || $(this).is( "select" )) {
+                        if ($(this).is( "input" ) ||
+                            $(this).is( "textarea" ) ||
+                            $(this).is( "select" ) ||
+                            $(this).is( "checkbox" ) ||
+                            $(this).is( "radio" )) {
                             $(this).val(modules[module].models[model][param]);
-                            $(this).on('keyup', function () {
-                                modules[module].models[model][param] = $(this).val();
-                                modules[module].models[model].__broadcast(model, param);
-                            });
+                            if ($(this).is( "input" ) || $(this).is( "textarea" )) {
+                                $(this).on('keyup', function () {
+                                    modules[module].models[model][param] = $(this).val();
+                                    modules[module].models[model].__broadcast(model, param);
+                                });
+                            }
+                            if ($(this).is( "select" ) ||
+                                $(this).is( "checkbox" ) ||
+                                $(this).is( "radio" )) {
+                                $(this).on('change', function () {
+                                    modules[module].models[model][param] = $(this).val();
+                                    modules[module].models[model].__broadcast(model, param);
+                                });
+                            }
                         } else {
                             $(this).html(modules[module].models[model][param]);
                         }
@@ -62729,6 +62759,63 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         /* MOONLIGHTUI - External Libraries */
         async: async,
         jsPlumb: jsPlumb,
+        /* MOONLIGHTUI - Laravel API automation */
+        laravel: {
+            http: {
+                get: function (url, data, cb, fail) {
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        data: data,
+                        context: document.body
+                    }).done(function (data) {
+                        cb(data);
+                    }).fail(function (data) {
+                        fail(data);
+                    });
+                },
+                post: function (url, data, cb, fail) {
+                    var settings = $().getModel('moonlightui', 'settings');
+                    data._token = settings.get('csrfToken');
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: data,
+                        context: document.body
+                    }).done(function (data) {
+                        cb(data);
+                    }).fail(function (data) {
+                        fail(data);
+                    });
+                },
+                put: function (url, data, cb, fail) {
+                    data._token = window.csrfToken;
+                    $.ajax({
+                        url: url,
+                        method: 'PUT',
+                        data: data,
+                        context: document.body
+                    }).done(function (data) {
+                        cb(data);
+                    }).fail(function (data) {
+                        fail(data);
+                    });
+                },
+                delete: function (url, data, cb, fail) {
+                    data._token = window.csrfToken;
+                    $.ajax({
+                        url: url,
+                        method: 'DELETE',
+                        data: data,
+                        context: document.body
+                    }).done(function (data) {
+                        cb(data);
+                    }).fail(function (data) {
+                        fail(data);
+                    });
+                }
+            }
+        },
         /* MOONLIGHTUI - Lets GO */
         reenergize: function(element) {
 
