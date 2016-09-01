@@ -576,7 +576,7 @@
                         title +
                         '</div>' +
                         '<div class="moonlightui-modal-body table-add">' +
-                        '<iframe src="' + url + '" class="moonlightui-modal-help-iframe"></iframe>' +
+                        '<iframe src="' + url + '" target="_parent" class="moonlightui-modal-help-iframe"></iframe>' +
                         '<div class="moonlightui-modal-body-btn-bottom-fixed">' +
                         '<div id="fillableAddOk" class="moonlightui-btn moonlightui-modal-ok-btn destroy">' +
                         '<div class="moonlightui-btn-inner">ok</div>' +
