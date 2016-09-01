@@ -1,0 +1,1882 @@
+.moonlightui-layout.grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  padding: 0em;
+}
+
+
+/* Preserve Rows Spacing on Consecutive Grids */
+.moonlightui-layout.grid + .grid {
+  margin-top: $consecutiveGridDistance;
+}
+
+/*-------------------
+       Columns
+--------------------*/
+
+/* Standard 16 column */
+.moonlightui-layout.grid > .column:not(.row),
+.moonlightui-layout.grid > .row > .column {
+  position: relative;
+  display: inline-block;
+
+  width: $oneWide;
+  padding-left: ($gutterWidth / 2);
+  padding-right: ($gutterWidth / 2);
+  vertical-align: top;
+}
+
+.moonlightui-layout.grid > * {
+  padding-left: ($gutterWidth / 2);
+  padding-right: ($gutterWidth / 2);
+}
+
+/*-------------------
+        Rows
+--------------------*/
+
+.moonlightui-layout.grid > .row {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: inherit;
+  align-items: stretch;
+  width: 100% !important;
+  padding: 0rem;
+  padding-top: ($rowSpacing / 2);
+  padding-bottom: ($rowSpacing / 2);
+}
+
+/*-------------------
+       Columns
+--------------------*/
+
+/* Vertical padding when no rows */
+.moonlightui-layout.grid > .column:not(.row) {
+  padding-top: ($rowSpacing / 2);
+  padding-bottom: ($rowSpacing / 2);
+}
+.moonlightui-layout.grid > .row > .column {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+
+/*-------------------
+      Content
+--------------------*/
+
+.moonlightui-layout.grid > .row > img,
+.moonlightui-layout.grid > .row > .column > img {
+  max-width: $columnMaxImageWidth;
+}
+
+/*-------------------
+    Loose Coupling
+--------------------*/
+
+/* Collapse Margin on Consecutive Grid */
+.moonlightui-layout.grid > .moonlightui-layout.grid:first-child {
+  margin-top: 0em;
+}
+.moonlightui-layout.grid > .moonlightui-layout.grid:last-child {
+  margin-bottom: 0em;
+}
+
+/* Segment inside Aligned Grid */
+.moonlightui-layout.grid .aligned.row > .column > .segment:not(.compact):not(.attached),
+.moonlightui-layout.aligned.grid .column > .segment:not(.compact):not(.attached) {
+  width: 100%;
+}
+
+/* Align Dividers with Gutter */
+.moonlightui-layout.grid .row + .moonlightui-layout.divider {
+  flex-grow: 1;
+  margin: ($rowSpacing / 2) ($gutterWidth / 2);
+}
+.moonlightui-layout.grid .column + .moonlightui-layout.vertical.divider {
+  height: "calc(50% - " + ($rowSpacing/2) + ")";
+}
+
+/* Remove Border on Last Horizontal Segment */
+.moonlightui-layout.grid > .row > .column:last-child > .horizontal.segment,
+.moonlightui-layout.grid > .column:last-child > .horizontal.segment {
+  box-shadow: none;
+}
+
+/*******************************
+           Variations
+*******************************/
+
+
+/*-----------------------
+       Page Grid
+-------------------------*/
+
+@media only screen and (max-width: $largestMobileScreen) {
+  .moonlightui-layout.page.grid {
+    width: $mobileWidth;
+    padding-left: $mobileGutter;
+    padding-right: $mobileGutter;
+    margin-left: 0em;
+    margin-right: 0em;
+  }
+}
+@media only screen and (min-width: $tabletBreakpoint) and (max-width: $largestTabletScreen) {
+  .moonlightui-layout.page.grid {
+    width: $tabletWidth;
+    margin-left: $tabletMargin;
+    margin-right: $tabletMargin;
+    padding-left: $tabletGutter;
+    padding-right: $tabletGutter;
+  }
+}
+@media only screen and (min-width: $computerBreakpoint) and (max-width: $largestSmallMonitor) {
+  .moonlightui-layout.page.grid {
+    width: $computerWidth;
+    margin-left: $computerMargin;
+    margin-right: $computerMargin;
+    padding-left: $computerGutter;
+    padding-right: $computerGutter;
+  }
+}
+@media only screen and (min-width: $largeMonitorBreakpoint) and (max-width: $largestLargeMonitor) {
+  .moonlightui-layout.page.grid {
+    width: $largeMonitorWidth;
+    margin-left: $largeMonitorMargin;
+    margin-right: $largeMonitorMargin;
+    padding-left: $largeMonitorGutter;
+    padding-right: $largeMonitorGutter;
+  }
+}
+@media only screen and (min-width: $widescreenMonitorBreakpoint) {
+  .moonlightui-layout.page.grid {
+    width: $widescreenMonitorWidth;
+    margin-left: $widescreenMargin;
+    margin-right: $widescreenMargin;
+    padding-left: $widescreenMonitorGutter;
+    padding-right: $widescreenMonitorGutter;
+  }
+}
+
+
+/*-------------------
+     Column Count
+--------------------*/
+
+/* Assume full width with one column */
+.moonlightui-layout.grid > .column:only-child,
+.moonlightui-layout.grid > .row > .column:only-child {
+  width: $oneColumn;
+}
+
+/* Grid Based */
+.moonlightui-layout[class*="one column"].grid > .row > .column,
+.moonlightui-layout[class*="one column"].grid > .column:not(.row) {
+  width: $oneColumn;
+}
+.moonlightui-layout[class*="two column"].grid > .row > .column,
+.moonlightui-layout[class*="two column"].grid > .column:not(.row) {
+  width: $twoColumn;
+}
+.moonlightui-layout[class*="three column"].grid > .row > .column,
+.moonlightui-layout[class*="three column"].grid > .column:not(.row) {
+  width: $threeColumn;
+}
+.moonlightui-layout[class*="four column"].grid > .row > .column,
+.moonlightui-layout[class*="four column"].grid > .column:not(.row) {
+  width: $fourColumn;
+}
+.moonlightui-layout[class*="five column"].grid > .row > .column,
+.moonlightui-layout[class*="five column"].grid > .column:not(.row) {
+  width: $fiveColumn;
+}
+.moonlightui-layout[class*="six column"].grid > .row > .column,
+.moonlightui-layout[class*="six column"].grid > .column:not(.row) {
+  width: $sixColumn;
+}
+.moonlightui-layout[class*="seven column"].grid > .row > .column,
+.moonlightui-layout[class*="seven column"].grid > .column:not(.row) {
+  width: $sevenColumn;
+}
+.moonlightui-layout[class*="eight column"].grid > .row > .column,
+.moonlightui-layout[class*="eight column"].grid > .column:not(.row) {
+  width: $eightColumn;
+}
+.moonlightui-layout[class*="nine column"].grid > .row > .column,
+.moonlightui-layout[class*="nine column"].grid > .column:not(.row) {
+  width: $nineColumn;
+}
+.moonlightui-layout[class*="ten column"].grid > .row > .column,
+.moonlightui-layout[class*="ten column"].grid > .column:not(.row) {
+  width: $tenColumn;
+}
+.moonlightui-layout[class*="eleven column"].grid > .row > .column,
+.moonlightui-layout[class*="eleven column"].grid > .column:not(.row) {
+  width: $elevenColumn;
+}
+.moonlightui-layout[class*="twelve column"].grid > .row > .column,
+.moonlightui-layout[class*="twelve column"].grid > .column:not(.row) {
+  width: $twelveColumn;
+}
+.moonlightui-layout[class*="thirteen column"].grid > .row > .column,
+.moonlightui-layout[class*="thirteen column"].grid > .column:not(.row) {
+  width: $thirteenColumn;
+}
+.moonlightui-layout[class*="fourteen column"].grid > .row > .column,
+.moonlightui-layout[class*="fourteen column"].grid > .column:not(.row) {
+  width: $fourteenColumn;
+}
+.moonlightui-layout[class*="fifteen column"].grid > .row > .column,
+.moonlightui-layout[class*="fifteen column"].grid > .column:not(.row) {
+  width: $fifteenColumn;
+}
+.moonlightui-layout[class*="sixteen column"].grid > .row > .column,
+.moonlightui-layout[class*="sixteen column"].grid > .column:not(.row) {
+  width: $sixteenColumn;
+}
+
+/* Row Based Overrides */
+.moonlightui-layout.grid > [class*="one column"].row > .column {
+  width: $oneColumn !important;
+}
+.moonlightui-layout.grid > [class*="two column"].row > .column {
+  width: $twoColumn !important;
+}
+.moonlightui-layout.grid > [class*="three column"].row > .column {
+  width: $threeColumn !important;
+}
+.moonlightui-layout.grid > [class*="four column"].row > .column {
+  width: $fourColumn !important;
+}
+.moonlightui-layout.grid > [class*="five column"].row > .column {
+  width: $fiveColumn !important;
+}
+.moonlightui-layout.grid > [class*="six column"].row > .column {
+  width: $sixColumn !important;
+}
+.moonlightui-layout.grid > [class*="seven column"].row > .column {
+  width: $sevenColumn !important;
+}
+.moonlightui-layout.grid > [class*="eight column"].row > .column {
+  width: $eightColumn !important;
+}
+.moonlightui-layout.grid > [class*="nine column"].row > .column {
+  width: $nineColumn !important;
+}
+.moonlightui-layout.grid > [class*="ten column"].row > .column {
+  width: $tenColumn !important;
+}
+.moonlightui-layout.grid > [class*="eleven column"].row > .column {
+  width: $elevenColumn !important;
+}
+.moonlightui-layout.grid > [class*="twelve column"].row > .column {
+  width: $twelveColumn !important;
+}
+.moonlightui-layout.grid > [class*="thirteen column"].row > .column {
+  width: $thirteenColumn !important;
+}
+.moonlightui-layout.grid > [class*="fourteen column"].row > .column {
+  width: $fourteenColumn !important;
+}
+.moonlightui-layout.grid > [class*="fifteen column"].row > .column {
+  width: $fifteenColumn !important;
+}
+.moonlightui-layout.grid > [class*="sixteen column"].row > .column {
+  width: $sixteenColumn !important;
+}
+
+/* Celled Page */
+.moonlightui-layout.celled.page.grid {
+  box-shadow: none;
+}
+
+/*-------------------
+    Column Width
+--------------------*/
+
+/* Sizing Combinations */
+.moonlightui-layout.grid > .row > [class*="one wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="one wide"].column,
+.moonlightui-layout.grid > [class*="one wide"].column,
+.moonlightui-layout.column.grid > [class*="one wide"].column {
+  width: $oneWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="two wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="two wide"].column,
+.moonlightui-layout.grid > [class*="two wide"].column,
+.moonlightui-layout.column.grid > [class*="two wide"].column {
+  width: $twoWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="three wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="three wide"].column,
+.moonlightui-layout.grid > [class*="three wide"].column,
+.moonlightui-layout.column.grid > [class*="three wide"].column {
+  width: $threeWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="four wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="four wide"].column,
+.moonlightui-layout.grid > [class*="four wide"].column,
+.moonlightui-layout.column.grid > [class*="four wide"].column {
+  width: $fourWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="five wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="five wide"].column,
+.moonlightui-layout.grid > [class*="five wide"].column,
+.moonlightui-layout.column.grid > [class*="five wide"].column {
+  width: $fiveWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="six wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="six wide"].column,
+.moonlightui-layout.grid > [class*="six wide"].column,
+.moonlightui-layout.column.grid > [class*="six wide"].column {
+  width: $sixWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="seven wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="seven wide"].column,
+.moonlightui-layout.grid > [class*="seven wide"].column,
+.moonlightui-layout.column.grid > [class*="seven wide"].column {
+  width: $sevenWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="eight wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="eight wide"].column,
+.moonlightui-layout.grid > [class*="eight wide"].column,
+.moonlightui-layout.column.grid > [class*="eight wide"].column {
+  width: $eightWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="nine wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="nine wide"].column,
+.moonlightui-layout.grid > [class*="nine wide"].column,
+.moonlightui-layout.column.grid > [class*="nine wide"].column {
+  width: $nineWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="ten wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="ten wide"].column,
+.moonlightui-layout.grid > [class*="ten wide"].column,
+.moonlightui-layout.column.grid > [class*="ten wide"].column {
+  width: $tenWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="eleven wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="eleven wide"].column,
+.moonlightui-layout.grid > [class*="eleven wide"].column,
+.moonlightui-layout.column.grid > [class*="eleven wide"].column {
+  width: $elevenWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="twelve wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="twelve wide"].column,
+.moonlightui-layout.grid > [class*="twelve wide"].column,
+.moonlightui-layout.column.grid > [class*="twelve wide"].column {
+  width: $twelveWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="thirteen wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="thirteen wide"].column,
+.moonlightui-layout.grid > [class*="thirteen wide"].column,
+.moonlightui-layout.column.grid > [class*="thirteen wide"].column {
+  width: $thirteenWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="fourteen wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="fourteen wide"].column,
+.moonlightui-layout.grid > [class*="fourteen wide"].column,
+.moonlightui-layout.column.grid > [class*="fourteen wide"].column {
+  width: $fourteenWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="fifteen wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="fifteen wide"].column,
+.moonlightui-layout.grid > [class*="fifteen wide"].column,
+.moonlightui-layout.column.grid > [class*="fifteen wide"].column {
+  width: $fifteenWide !important;
+}
+.moonlightui-layout.grid > .row > [class*="sixteen wide"].column,
+.moonlightui-layout.grid > .column.row > [class*="sixteen wide"].column,
+.moonlightui-layout.grid > [class*="sixteen wide"].column,
+.moonlightui-layout.column.grid > [class*="sixteen wide"].column {
+  width: $sixteenWide !important;
+}
+
+/*----------------------
+    Width per Device
+-----------------------*/
+
+/* Mobile Sizing Combinations */
+@media only screen and (min-width: $mobileBreakpoint) and (max-width: $largestMobileScreen) {
+  .moonlightui-layout.grid > .row > [class*="one wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="one wide mobile"].column,
+  .moonlightui-layout.grid > [class*="one wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="one wide mobile"].column {
+    width: $oneWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="two wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="two wide mobile"].column,
+  .moonlightui-layout.grid > [class*="two wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="two wide mobile"].column {
+    width: $twoWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="three wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="three wide mobile"].column,
+  .moonlightui-layout.grid > [class*="three wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="three wide mobile"].column {
+    width: $threeWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="four wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="four wide mobile"].column,
+  .moonlightui-layout.grid > [class*="four wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="four wide mobile"].column {
+    width: $fourWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="five wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="five wide mobile"].column,
+  .moonlightui-layout.grid > [class*="five wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="five wide mobile"].column {
+    width: $fiveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="six wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="six wide mobile"].column,
+  .moonlightui-layout.grid > [class*="six wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="six wide mobile"].column {
+    width: $sixWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="seven wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="seven wide mobile"].column,
+  .moonlightui-layout.grid > [class*="seven wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="seven wide mobile"].column {
+    width: $sevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eight wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eight wide mobile"].column,
+  .moonlightui-layout.grid > [class*="eight wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="eight wide mobile"].column {
+    width: $eightWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="nine wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="nine wide mobile"].column,
+  .moonlightui-layout.grid > [class*="nine wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="nine wide mobile"].column {
+    width: $nineWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="ten wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="ten wide mobile"].column,
+  .moonlightui-layout.grid > [class*="ten wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="ten wide mobile"].column {
+    width: $tenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eleven wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eleven wide mobile"].column,
+  .moonlightui-layout.grid > [class*="eleven wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="eleven wide mobile"].column {
+    width: $elevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="twelve wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="twelve wide mobile"].column,
+  .moonlightui-layout.grid > [class*="twelve wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="twelve wide mobile"].column {
+    width: $twelveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="thirteen wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="thirteen wide mobile"].column,
+  .moonlightui-layout.grid > [class*="thirteen wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="thirteen wide mobile"].column {
+    width: $thirteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fourteen wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fourteen wide mobile"].column,
+  .moonlightui-layout.grid > [class*="fourteen wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="fourteen wide mobile"].column {
+    width: $fourteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fifteen wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fifteen wide mobile"].column,
+  .moonlightui-layout.grid > [class*="fifteen wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="fifteen wide mobile"].column {
+    width: $fifteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="sixteen wide mobile"].column,
+  .moonlightui-layout.grid > .column.row > [class*="sixteen wide mobile"].column,
+  .moonlightui-layout.grid > [class*="sixteen wide mobile"].column,
+  .moonlightui-layout.column.grid > [class*="sixteen wide mobile"].column {
+    width: $sixteenWide !important;
+  }
+}
+
+/* Tablet Sizing Combinations */
+@media only screen and (min-width: $tabletBreakpoint) and (max-width: $largestTabletScreen) {
+  .moonlightui-layout.grid > .row > [class*="one wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="one wide tablet"].column,
+  .moonlightui-layout.grid > [class*="one wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="one wide tablet"].column {
+    width: $oneWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="two wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="two wide tablet"].column,
+  .moonlightui-layout.grid > [class*="two wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="two wide tablet"].column {
+    width: $twoWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="three wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="three wide tablet"].column,
+  .moonlightui-layout.grid > [class*="three wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="three wide tablet"].column {
+    width: $threeWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="four wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="four wide tablet"].column,
+  .moonlightui-layout.grid > [class*="four wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="four wide tablet"].column {
+    width: $fourWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="five wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="five wide tablet"].column,
+  .moonlightui-layout.grid > [class*="five wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="five wide tablet"].column {
+    width: $fiveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="six wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="six wide tablet"].column,
+  .moonlightui-layout.grid > [class*="six wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="six wide tablet"].column {
+    width: $sixWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="seven wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="seven wide tablet"].column,
+  .moonlightui-layout.grid > [class*="seven wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="seven wide tablet"].column {
+    width: $sevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eight wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eight wide tablet"].column,
+  .moonlightui-layout.grid > [class*="eight wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="eight wide tablet"].column {
+    width: $eightWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="nine wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="nine wide tablet"].column,
+  .moonlightui-layout.grid > [class*="nine wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="nine wide tablet"].column {
+    width: $nineWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="ten wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="ten wide tablet"].column,
+  .moonlightui-layout.grid > [class*="ten wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="ten wide tablet"].column {
+    width: $tenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eleven wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eleven wide tablet"].column,
+  .moonlightui-layout.grid > [class*="eleven wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="eleven wide tablet"].column {
+    width: $elevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="twelve wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="twelve wide tablet"].column,
+  .moonlightui-layout.grid > [class*="twelve wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="twelve wide tablet"].column {
+    width: $twelveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="thirteen wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="thirteen wide tablet"].column,
+  .moonlightui-layout.grid > [class*="thirteen wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="thirteen wide tablet"].column {
+    width: $thirteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fourteen wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fourteen wide tablet"].column,
+  .moonlightui-layout.grid > [class*="fourteen wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="fourteen wide tablet"].column {
+    width: $fourteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fifteen wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fifteen wide tablet"].column,
+  .moonlightui-layout.grid > [class*="fifteen wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="fifteen wide tablet"].column {
+    width: $fifteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="sixteen wide tablet"].column,
+  .moonlightui-layout.grid > .column.row > [class*="sixteen wide tablet"].column,
+  .moonlightui-layout.grid > [class*="sixteen wide tablet"].column,
+  .moonlightui-layout.column.grid > [class*="sixteen wide tablet"].column {
+    width: $sixteenWide !important;
+  }
+}
+
+/* Computer/Desktop Sizing Combinations */
+@media only screen and (min-width: $computerBreakpoint) {
+  .moonlightui-layout.grid > .row > [class*="one wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="one wide computer"].column,
+  .moonlightui-layout.grid > [class*="one wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="one wide computer"].column {
+    width: $oneWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="two wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="two wide computer"].column,
+  .moonlightui-layout.grid > [class*="two wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="two wide computer"].column {
+    width: $twoWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="three wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="three wide computer"].column,
+  .moonlightui-layout.grid > [class*="three wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="three wide computer"].column {
+    width: $threeWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="four wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="four wide computer"].column,
+  .moonlightui-layout.grid > [class*="four wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="four wide computer"].column {
+    width: $fourWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="five wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="five wide computer"].column,
+  .moonlightui-layout.grid > [class*="five wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="five wide computer"].column {
+    width: $fiveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="six wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="six wide computer"].column,
+  .moonlightui-layout.grid > [class*="six wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="six wide computer"].column {
+    width: $sixWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="seven wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="seven wide computer"].column,
+  .moonlightui-layout.grid > [class*="seven wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="seven wide computer"].column {
+    width: $sevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eight wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eight wide computer"].column,
+  .moonlightui-layout.grid > [class*="eight wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="eight wide computer"].column {
+    width: $eightWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="nine wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="nine wide computer"].column,
+  .moonlightui-layout.grid > [class*="nine wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="nine wide computer"].column {
+    width: $nineWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="ten wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="ten wide computer"].column,
+  .moonlightui-layout.grid > [class*="ten wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="ten wide computer"].column {
+    width: $tenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eleven wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eleven wide computer"].column,
+  .moonlightui-layout.grid > [class*="eleven wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="eleven wide computer"].column {
+    width: $elevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="twelve wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="twelve wide computer"].column,
+  .moonlightui-layout.grid > [class*="twelve wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="twelve wide computer"].column {
+    width: $twelveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="thirteen wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="thirteen wide computer"].column,
+  .moonlightui-layout.grid > [class*="thirteen wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="thirteen wide computer"].column {
+    width: $thirteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fourteen wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fourteen wide computer"].column,
+  .moonlightui-layout.grid > [class*="fourteen wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="fourteen wide computer"].column {
+    width: $fourteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fifteen wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fifteen wide computer"].column,
+  .moonlightui-layout.grid > [class*="fifteen wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="fifteen wide computer"].column {
+    width: $fifteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="sixteen wide computer"].column,
+  .moonlightui-layout.grid > .column.row > [class*="sixteen wide computer"].column,
+  .moonlightui-layout.grid > [class*="sixteen wide computer"].column,
+  .moonlightui-layout.column.grid > [class*="sixteen wide computer"].column {
+    width: $sixteenWide !important;
+  }
+}
+
+/* Large Monitor Sizing Combinations */
+@media only screen and (min-width: $largeMonitorBreakpoint) and (max-width: $largestLargeMonitor){
+  .moonlightui-layout.grid > .row > [class*="one wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="one wide large screen"].column,
+  .moonlightui-layout.grid > [class*="one wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="one wide large screen"].column {
+    width: $oneWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="two wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="two wide large screen"].column,
+  .moonlightui-layout.grid > [class*="two wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="two wide large screen"].column {
+    width: $twoWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="three wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="three wide large screen"].column,
+  .moonlightui-layout.grid > [class*="three wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="three wide large screen"].column {
+    width: $threeWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="four wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="four wide large screen"].column,
+  .moonlightui-layout.grid > [class*="four wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="four wide large screen"].column {
+    width: $fourWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="five wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="five wide large screen"].column,
+  .moonlightui-layout.grid > [class*="five wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="five wide large screen"].column {
+    width: $fiveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="six wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="six wide large screen"].column,
+  .moonlightui-layout.grid > [class*="six wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="six wide large screen"].column {
+    width: $sixWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="seven wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="seven wide large screen"].column,
+  .moonlightui-layout.grid > [class*="seven wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="seven wide large screen"].column {
+    width: $sevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eight wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eight wide large screen"].column,
+  .moonlightui-layout.grid > [class*="eight wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="eight wide large screen"].column {
+    width: $eightWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="nine wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="nine wide large screen"].column,
+  .moonlightui-layout.grid > [class*="nine wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="nine wide large screen"].column {
+    width: $nineWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="ten wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="ten wide large screen"].column,
+  .moonlightui-layout.grid > [class*="ten wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="ten wide large screen"].column {
+    width: $tenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eleven wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eleven wide large screen"].column,
+  .moonlightui-layout.grid > [class*="eleven wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="eleven wide large screen"].column {
+    width: $elevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="twelve wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="twelve wide large screen"].column,
+  .moonlightui-layout.grid > [class*="twelve wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="twelve wide large screen"].column {
+    width: $twelveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="thirteen wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="thirteen wide large screen"].column,
+  .moonlightui-layout.grid > [class*="thirteen wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="thirteen wide large screen"].column {
+    width: $thirteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fourteen wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fourteen wide large screen"].column,
+  .moonlightui-layout.grid > [class*="fourteen wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="fourteen wide large screen"].column {
+    width: $fourteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fifteen wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fifteen wide large screen"].column,
+  .moonlightui-layout.grid > [class*="fifteen wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="fifteen wide large screen"].column {
+    width: $fifteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="sixteen wide large screen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="sixteen wide large screen"].column,
+  .moonlightui-layout.grid > [class*="sixteen wide large screen"].column,
+  .moonlightui-layout.column.grid > [class*="sixteen wide large screen"].column {
+    width: $sixteenWide !important;
+  }
+}
+
+/* Widescreen Sizing Combinations */
+@media only screen and (min-width: $widescreenMonitorBreakpoint) {
+  .moonlightui-layout.grid > .row > [class*="one wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="one wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="one wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="one wide widescreen"].column {
+    width: $oneWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="two wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="two wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="two wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="two wide widescreen"].column {
+    width: $twoWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="three wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="three wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="three wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="three wide widescreen"].column {
+    width: $threeWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="four wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="four wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="four wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="four wide widescreen"].column {
+    width: $fourWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="five wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="five wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="five wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="five wide widescreen"].column {
+    width: $fiveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="six wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="six wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="six wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="six wide widescreen"].column {
+    width: $sixWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="seven wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="seven wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="seven wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="seven wide widescreen"].column {
+    width: $sevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eight wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eight wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="eight wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="eight wide widescreen"].column {
+    width: $eightWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="nine wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="nine wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="nine wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="nine wide widescreen"].column {
+    width: $nineWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="ten wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="ten wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="ten wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="ten wide widescreen"].column {
+    width: $tenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="eleven wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="eleven wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="eleven wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="eleven wide widescreen"].column {
+    width: $elevenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="twelve wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="twelve wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="twelve wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="twelve wide widescreen"].column {
+    width: $twelveWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="thirteen wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="thirteen wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="thirteen wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="thirteen wide widescreen"].column {
+    width: $thirteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fourteen wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fourteen wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="fourteen wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="fourteen wide widescreen"].column {
+    width: $fourteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="fifteen wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="fifteen wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="fifteen wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="fifteen wide widescreen"].column {
+    width: $fifteenWide !important;
+  }
+  .moonlightui-layout.grid > .row > [class*="sixteen wide widescreen"].column,
+  .moonlightui-layout.grid > .column.row > [class*="sixteen wide widescreen"].column,
+  .moonlightui-layout.grid > [class*="sixteen wide widescreen"].column,
+  .moonlightui-layout.column.grid > [class*="sixteen wide widescreen"].column {
+    width: $sixteenWide !important;
+  }
+}
+
+/*----------------------
+        Centered
+-----------------------*/
+
+.moonlightui-layout.centered.grid,
+.moonlightui-layout.centered.grid > .row,
+.moonlightui-layout.grid > .centered.row {
+  text-align: center;
+  justify-content: center;
+}
+.moonlightui-layout.centered.grid > .column:not(.aligned):not(.justified):not(.row),
+.moonlightui-layout.centered.grid > .row > .column:not(.aligned):not(.justified),
+.moonlightui-layout.grid .centered.row > .column:not(.aligned):not(.justified) {
+  text-align: left;
+}
+
+.moonlightui-layout.grid > .centered.column,
+.moonlightui-layout.grid > .row > .centered.column {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*----------------------
+        Relaxed
+-----------------------*/
+
+.moonlightui-layout.relaxed.grid > .column:not(.row),
+.moonlightui-layout.relaxed.grid > .row > .column,
+.moonlightui-layout.grid > .relaxed.row > .column {
+  padding-left: ($relaxedGutterWidth / 2);
+  padding-right: ($relaxedGutterWidth / 2);
+}
+
+.moonlightui-layout[class*="very relaxed"].grid > .column:not(.row),
+.moonlightui-layout[class*="very relaxed"].grid > .row > .column,
+.moonlightui-layout.grid > [class*="very relaxed"].row > .column {
+  padding-left: ($veryRelaxedGutterWidth / 2);
+  padding-right: ($veryRelaxedGutterWidth / 2);
+}
+
+/* Coupling with UI Divider */
+.moonlightui-layout.relaxed.grid .row + .moonlightui-layout.divider,
+.moonlightui-layout.grid .relaxed.row + .moonlightui-layout.divider {
+  margin-left: ($relaxedGutterWidth / 2);
+  margin-right: ($relaxedGutterWidth / 2);
+}
+.moonlightui-layout[class*="very relaxed"].grid .row + .moonlightui-layout.divider,
+.moonlightui-layout.grid [class*="very relaxed"].row + .moonlightui-layout.divider {
+  margin-left: ($veryRelaxedGutterWidth / 2);
+  margin-right: ($veryRelaxedGutterWidth / 2);
+}
+
+
+/*----------------------
+        Padded
+-----------------------*/
+
+.moonlightui-layout.padded.grid:not(.vertically):not(.horizontally) {
+  margin: 0em !important;
+}
+[class*="horizontally padded"].moonlightui-layout.grid {
+  margin-left: 0em !important;
+  margin-right: 0em !important;
+}
+[class*="vertically padded"].moonlightui-layout.grid {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+}
+
+/*----------------------
+       "Floated"
+-----------------------*/
+
+.moonlightui-layout.grid [class*="left floated"].column {
+  margin-right: auto;
+}
+.moonlightui-layout.grid [class*="right floated"].column {
+  margin-left: auto;
+}
+
+
+/*----------------------
+        Divided
+-----------------------*/
+
+.moonlightui-layout.divided.grid:not([class*="vertically divided"]) > .column:not(.row),
+.moonlightui-layout.divided.grid:not([class*="vertically divided"]) > .row > .column {
+  box-shadow: $dividedBorder;
+}
+
+/* Swap from padding to margin on columns to have dividers align */
+.moonlightui-layout[class*="vertically divided"].grid > .column:not(.row),
+.moonlightui-layout[class*="vertically divided"].grid > .row > .column {
+  margin-top: ($rowSpacing / 2);
+  margin-bottom: ($rowSpacing / 2);
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
+.moonlightui-layout[class*="vertically divided"].grid > .row {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+
+
+
+/* No divider on first column on row */
+.moonlightui-layout.divided.grid:not([class*="vertically divided"]) > .column:first-child,
+.moonlightui-layout.divided.grid:not([class*="vertically divided"]) > .row > .column:first-child {
+  box-shadow: none;
+}
+
+/* No space on top of first row */
+.moonlightui-layout[class*="vertically divided"].grid > .row:first-child > .column {
+  margin-top: 0em;
+}
+
+
+/* Divided Row */
+.moonlightui-layout.grid > .divided.row > .column {
+  box-shadow: $dividedBorder;
+}
+.moonlightui-layout.grid > .divided.row > .column:first-child {
+  box-shadow: none;
+}
+
+/* Vertically Divided */
+.moonlightui-layout[class*="vertically divided"].grid > .row {
+  position: relative;
+}
+.moonlightui-layout[class*="vertically divided"].grid > .row:before {
+  position: absolute;
+  content: "";
+  top: 0em;
+  left: 0px;
+
+  width: "calc(100% - " + $gutterWidth + ")";
+  height: 1px;
+
+  margin: 0% ($gutterWidth / 2);
+  box-shadow: $verticallyDividedBorder;
+}
+
+/* Padded Horizontally Divided */
+[class*="horizontally padded"].moonlightui-layout.divided.grid,
+.moonlightui-layout.padded.divided.grid:not(.vertically):not(.horizontally) {
+  width: 100%;
+}
+
+/* First Row Vertically Divided */
+.moonlightui-layout[class*="vertically divided"].grid > .row:first-child:before {
+  box-shadow: none;
+}
+
+/* Inverted Divided */
+.moonlightui-layout.inverted.divided.grid:not([class*="vertically divided"]) > .column:not(.row),
+.moonlightui-layout.inverted.divided.grid:not([class*="vertically divided"]) > .row > .column {
+  box-shadow: $dividedInvertedBorder;
+}
+.moonlightui-layout.inverted.divided.grid:not([class*="vertically divided"]) > .column:not(.row):first-child,
+.moonlightui-layout.inverted.divided.grid:not([class*="vertically divided"]) > .row > .column:first-child {
+  box-shadow: none;
+}
+.moonlightui-layout.inverted[class*="vertically divided"].grid > .row:before {
+  box-shadow: $verticallyDividedInvertedBorder;
+}
+
+/* Relaxed */
+.moonlightui-layout.relaxed[class*="vertically divided"].grid > .row:before {
+  margin-left: ($relaxedGutterWidth / 2);
+  margin-right: ($relaxedGutterWidth / 2);
+  width: "calc(100% - " + $relaxedGutterWidth + ")";
+}
+.moonlightui-layout[class*="very relaxed"][class*="vertically divided"].grid > .row:before {
+  margin-left: $veryRelaxedGutterWidth;
+  margin-right: $veryRelaxedGutterWidth;
+  width: "calc(100% - " + $veryRelaxedGutterWidth + ")";
+}
+
+/*----------------------
+         Celled
+-----------------------*/
+
+.moonlightui-layout.celled.grid {
+  width: 100%;
+  margin: $celledMargin;
+  box-shadow: $celledGridDivider;
+}
+
+.moonlightui-layout.celled.grid > .row {
+  width: 100% !important;
+  margin: 0em;
+  padding: 0em;
+  box-shadow: $celledRowDivider;
+}
+.moonlightui-layout.celled.grid > .column:not(.row),
+.moonlightui-layout.celled.grid > .row > .column {
+  box-shadow: $celledColumnDivider;
+}
+
+.moonlightui-layout.celled.grid > .column:first-child,
+.moonlightui-layout.celled.grid > .row > .column:first-child {
+  box-shadow: none;
+}
+
+.moonlightui-layout.celled.grid > .column:not(.row),
+.moonlightui-layout.celled.grid > .row > .column {
+  padding: $celledPadding;
+}
+.moonlightui-layout.relaxed.celled.grid > .column:not(.row),
+.moonlightui-layout.relaxed.celled.grid > .row > .column {
+  padding: $celledRelaxedPadding;
+}
+.moonlightui-layout[class*="very relaxed"].celled.grid > .column:not(.row),
+.moonlightui-layout[class*="very relaxed"].celled.grid > .row > .column {
+  padding: $celledVeryRelaxedPadding;
+}
+
+/* Internally Celled */
+.moonlightui-layout[class*="internally celled"].grid {
+  box-shadow: none;
+  margin: 0em;
+}
+.moonlightui-layout[class*="internally celled"].grid > .row:first-child {
+  box-shadow: none;
+}
+.moonlightui-layout[class*="internally celled"].grid > .row > .column:first-child {
+  box-shadow: none;
+}
+
+/*----------------------
+   Vertically Aligned
+-----------------------*/
+
+/* Top Aligned */
+.moonlightui-layout[class*="top aligned"].grid > .column:not(.row),
+.moonlightui-layout[class*="top aligned"].grid > .row > .column,
+.moonlightui-layout.grid > [class*="top aligned"].row > .column,
+.moonlightui-layout.grid > [class*="top aligned"].column:not(.row),
+.moonlightui-layout.grid > .row > [class*="top aligned"].column {
+  flex-direction: column;
+  vertical-align: top;
+  align-self: flex-start !important;
+}
+
+/* Middle Aligned */
+.moonlightui-layout[class*="middle aligned"].grid > .column:not(.row),
+.moonlightui-layout[class*="middle aligned"].grid > .row > .column,
+.moonlightui-layout.grid > [class*="middle aligned"].row > .column,
+.moonlightui-layout.grid > [class*="middle aligned"].column:not(.row),
+.moonlightui-layout.grid > .row > [class*="middle aligned"].column {
+  flex-direction: column;
+  vertical-align: middle;
+  align-self: center !important;
+}
+
+/* Bottom Aligned */
+.moonlightui-layout[class*="bottom aligned"].grid > .column:not(.row),
+.moonlightui-layout[class*="bottom aligned"].grid > .row > .column,
+.moonlightui-layout.grid > [class*="bottom aligned"].row > .column,
+.moonlightui-layout.grid > [class*="bottom aligned"].column:not(.row),
+.moonlightui-layout.grid > .row > [class*="bottom aligned"].column {
+  flex-direction: column;
+  vertical-align: bottom;
+  align-self: flex-end !important;
+}
+
+/* Stretched */
+.moonlightui-layout.stretched.grid > .row > .column,
+.moonlightui-layout.stretched.grid > .column,
+.moonlightui-layout.grid > .stretched.row > .column,
+.moonlightui-layout.grid > .stretched.column:not(.row),
+.moonlightui-layout.grid > .row > .stretched.column {
+  display: inline-flex !important;
+  align-self: stretch;
+  flex-direction: column;
+}
+
+.moonlightui-layout.stretched.grid > .row > .column > *,
+.moonlightui-layout.stretched.grid > .column > *,
+.moonlightui-layout.grid > .stretched.row > .column > *,
+.moonlightui-layout.grid > .stretched.column:not(.row) > *,
+.moonlightui-layout.grid > .row > .stretched.column > * {
+  flex-grow: 1;
+}
+
+/*----------------------
+  Horizontally Centered
+-----------------------*/
+
+/* Left Aligned */
+.moonlightui-layout[class*="left aligned"].grid > .column,
+.moonlightui-layout[class*="left aligned"].grid > .row > .column,
+.moonlightui-layout.grid > [class*="left aligned"].row > .column,
+.moonlightui-layout.grid > [class*="left aligned"].column.column,
+.moonlightui-layout.grid > .row > [class*="left aligned"].column.column {
+  text-align: left;
+  align-self: inherit;
+}
+
+/* Center Aligned */
+.moonlightui-layout[class*="center aligned"].grid > .column,
+.moonlightui-layout[class*="center aligned"].grid > .row > .column,
+.moonlightui-layout.grid > [class*="center aligned"].row > .column,
+.moonlightui-layout.grid > [class*="center aligned"].column.column,
+.moonlightui-layout.grid > .row > [class*="center aligned"].column.column {
+  text-align: center;
+  align-self: inherit;
+}
+.moonlightui-layout[class*="center aligned"].grid {
+  justify-content: center;
+}
+
+/* Right Aligned */
+.moonlightui-layout[class*="right aligned"].grid > .column,
+.moonlightui-layout[class*="right aligned"].grid > .row > .column,
+.moonlightui-layout.grid > [class*="right aligned"].row > .column,
+.moonlightui-layout.grid > [class*="right aligned"].column.column,
+.moonlightui-layout.grid > .row > [class*="right aligned"].column.column {
+  text-align: right;
+  align-self: inherit;
+}
+
+/* Justified */
+.moonlightui-layout.justified.grid > .column,
+.moonlightui-layout.justified.grid > .row > .column,
+.moonlightui-layout.grid > .justified.row > .column,
+.moonlightui-layout.grid > .justified.column.column,
+.moonlightui-layout.grid > .row > .justified.column.column {
+  text-align: justify;
+  hyphens: auto;
+}
+
+/*----------------------
+         Colored
+-----------------------*/
+
+.moonlightui-layout.grid > .row > .red.column,
+.moonlightui-layout.grid > .row > .orange.column,
+.moonlightui-layout.grid > .row > .yellow.column,
+.moonlightui-layout.grid > .row > .olive.column,
+.moonlightui-layout.grid > .row > .green.column,
+.moonlightui-layout.grid > .row > .teal.column,
+.moonlightui-layout.grid > .row > .blue.column,
+.moonlightui-layout.grid > .row > .violet.column,
+.moonlightui-layout.grid > .row > .purple.column,
+.moonlightui-layout.grid > .row > .pink.column,
+.moonlightui-layout.grid > .row > .brown.column,
+.moonlightui-layout.grid > .row > .grey.column,
+.moonlightui-layout.grid > .row > .black.column {
+  margin-top: -($rowSpacing / 2);
+  margin-bottom: -($rowSpacing / 2);
+  padding-top: ($rowSpacing / 2);
+  padding-bottom: ($rowSpacing / 2);
+}
+
+/* Red */
+.moonlightui-layout.grid > .red.row,
+.moonlightui-layout.grid > .red.column,
+.moonlightui-layout.grid > .row > .red.column {
+  background-color: $red !important;
+  color: $white;
+}
+/* Orange */
+.moonlightui-layout.grid > .orange.row,
+.moonlightui-layout.grid > .orange.column,
+.moonlightui-layout.grid > .row > .orange.column {
+  background-color: $orange !important;
+  color: $white;
+}
+/* Yellow */
+.moonlightui-layout.grid > .yellow.row,
+.moonlightui-layout.grid > .yellow.column,
+.moonlightui-layout.grid > .row > .yellow.column {
+  background-color: $yellow !important;
+  color: $white;
+}
+/* Olive */
+.moonlightui-layout.grid > .olive.row,
+.moonlightui-layout.grid > .olive.column,
+.moonlightui-layout.grid > .row > .olive.column {
+  background-color: $olive !important;
+  color: $white;
+}
+/* Green */
+.moonlightui-layout.grid > .green.row,
+.moonlightui-layout.grid > .green.column,
+.moonlightui-layout.grid > .row > .green.column {
+  background-color: $green !important;
+  color: $white;
+}
+/* Teal */
+.moonlightui-layout.grid > .teal.row,
+.moonlightui-layout.grid > .teal.column,
+.moonlightui-layout.grid > .row > .teal.column {
+  background-color: $teal !important;
+  color: $white;
+}
+/* Blue */
+.moonlightui-layout.grid > .blue.row,
+.moonlightui-layout.grid > .blue.column,
+.moonlightui-layout.grid > .row > .blue.column {
+  background-color: $blue !important;
+  color: $white;
+}
+/* Violet */
+.moonlightui-layout.grid > .violet.row,
+.moonlightui-layout.grid > .violet.column,
+.moonlightui-layout.grid > .row > .violet.column {
+  background-color: $violet !important;
+  color: $white;
+}
+/* Purple */
+.moonlightui-layout.grid > .purple.row,
+.moonlightui-layout.grid > .purple.column,
+.moonlightui-layout.grid > .row > .purple.column {
+  background-color: $purple !important;
+  color: $white;
+}
+/* Pink */
+.moonlightui-layout.grid > .pink.row,
+.moonlightui-layout.grid > .pink.column,
+.moonlightui-layout.grid > .row > .pink.column {
+  background-color: $pink !important;
+  color: $white;
+}
+/* Brown */
+.moonlightui-layout.grid > .brown.row,
+.moonlightui-layout.grid > .brown.column,
+.moonlightui-layout.grid > .row > .brown.column {
+  background-color: $brown !important;
+  color: $white;
+}
+/* Grey */
+.moonlightui-layout.grid > .grey.row,
+.moonlightui-layout.grid > .grey.column,
+.moonlightui-layout.grid > .row > .grey.column {
+  background-color: $grey !important;
+  color: $white;
+}
+/* Black */
+.moonlightui-layout.grid > .black.row,
+.moonlightui-layout.grid > .black.column,
+.moonlightui-layout.grid > .row > .black.column {
+  background-color: $black !important;
+  color: $white;
+}
+
+
+/*----------------------
+      Equal Width
+-----------------------*/
+
+.moonlightui-layout[class*="equal width"].grid > .column:not(.row),
+.moonlightui-layout[class*="equal width"].grid > .row > .column,
+.moonlightui-layout.grid > [class*="equal width"].row > .column {
+  display: inline-block;
+  flex-grow: 1;
+}
+.moonlightui-layout[class*="equal width"].grid > .wide.column,
+.moonlightui-layout[class*="equal width"].grid > .row > .wide.column,
+.moonlightui-layout.grid > [class*="equal width"].row > .wide.column {
+  flex-grow: 0;
+}
+
+
+/*----------------------
+        Reverse
+-----------------------*/
+
+
+/* Mobile */
+@media only screen and (max-width: $largestMobileScreen) {
+  .moonlightui-layout[class*="mobile reversed"].grid,
+  .moonlightui-layout[class*="mobile reversed"].grid > .row,
+  .moonlightui-layout.grid > [class*="mobile reversed"].row {
+    flex-direction: row-reverse;
+  }
+  .moonlightui-layout[class*="mobile vertically reversed"].grid,
+  .moonlightui-layout.stackable[class*="mobile reversed"] {
+    flex-direction: column-reverse;
+  }
+
+  /* Divided Reversed */
+  .moonlightui-layout[class*="mobile reversed"].divided.grid:not([class*="vertically divided"]) > .column:first-child,
+  .moonlightui-layout[class*="mobile reversed"].divided.grid:not([class*="vertically divided"]) > .row > .column:first-child {
+    box-shadow: $dividedBorder;
+  }
+  .moonlightui-layout[class*="mobile reversed"].divided.grid:not([class*="vertically divided"]) > .column:last-child,
+  .moonlightui-layout[class*="mobile reversed"].divided.grid:not([class*="vertically divided"]) > .row > .column:last-child {
+    box-shadow: none;
+  }
+  /* Vertically Divided Reversed */
+  .moonlightui-layout.grid[class*="vertically divided"][class*="mobile vertically reversed"] > .row:first-child:before {
+    box-shadow: $verticallyDividedBorder;
+  }
+  .moonlightui-layout.grid[class*="vertically divided"][class*="mobile vertically reversed"] > .row:last-child:before {
+    box-shadow: none;
+  }
+  /* Celled Reversed */
+  .moonlightui-layout[class*="mobile reversed"].celled.grid > .row > .column:first-child {
+    box-shadow: $celledColumnDivider;
+  }
+  .moonlightui-layout[class*="mobile reversed"].celled.grid > .row > .column:last-child {
+    box-shadow: none;
+  }
+}
+
+/* Tablet */
+@media only screen and (min-width: $tabletBreakpoint) and (max-width: $largestTabletScreen) {
+  .moonlightui-layout[class*="tablet reversed"].grid,
+  .moonlightui-layout[class*="tablet reversed"].grid > .row,
+  .moonlightui-layout.grid > [class*="tablet reversed"].row {
+    flex-direction: row-reverse;
+  }
+  .moonlightui-layout[class*="tablet vertically reversed"].grid {
+    flex-direction: column-reverse;
+  }
+
+  /* Divided Reversed */
+  .moonlightui-layout[class*="tablet reversed"].divided.grid:not([class*="vertically divided"]) > .column:first-child,
+  .moonlightui-layout[class*="tablet reversed"].divided.grid:not([class*="vertically divided"]) > .row > .column:first-child {
+    box-shadow: $dividedBorder;
+  }
+  .moonlightui-layout[class*="tablet reversed"].divided.grid:not([class*="vertically divided"]) > .column:last-child,
+  .moonlightui-layout[class*="tablet reversed"].divided.grid:not([class*="vertically divided"]) > .row > .column:last-child {
+    box-shadow: none;
+  }
+  /* Vertically Divided Reversed */
+  .moonlightui-layout.grid[class*="vertically divided"][class*="tablet vertically reversed"] > .row:first-child:before {
+    box-shadow: $verticallyDividedBorder;
+  }
+  .moonlightui-layout.grid[class*="vertically divided"][class*="tablet vertically reversed"] > .row:last-child:before {
+    box-shadow: none;
+  }
+  /* Celled Reversed */
+  .moonlightui-layout[class*="tablet reversed"].celled.grid > .row > .column:first-child {
+    box-shadow: $celledColumnDivider;
+  }
+  .moonlightui-layout[class*="tablet reversed"].celled.grid > .row > .column:last-child {
+    box-shadow: none;
+  }
+}
+
+/* Computer */
+@media only screen and (min-width: $computerBreakpoint) {
+  .moonlightui-layout[class*="computer reversed"].grid,
+  .moonlightui-layout[class*="computer reversed"].grid > .row,
+  .moonlightui-layout.grid > [class*="computer reversed"].row {
+    flex-direction: row-reverse;
+  }
+  .moonlightui-layout[class*="computer vertically reversed"].grid {
+    flex-direction: column-reverse;
+  }
+
+  /* Divided Reversed */
+  .moonlightui-layout[class*="computer reversed"].divided.grid:not([class*="vertically divided"]) > .column:first-child,
+  .moonlightui-layout[class*="computer reversed"].divided.grid:not([class*="vertically divided"]) > .row > .column:first-child {
+    box-shadow: $dividedBorder;
+  }
+  .moonlightui-layout[class*="computer reversed"].divided.grid:not([class*="vertically divided"]) > .column:last-child,
+  .moonlightui-layout[class*="computer reversed"].divided.grid:not([class*="vertically divided"]) > .row > .column:last-child {
+    box-shadow: none;
+  }
+  /* Vertically Divided Reversed */
+  .moonlightui-layout.grid[class*="vertically divided"][class*="computer vertically reversed"] > .row:first-child:before {
+    box-shadow: $verticallyDividedBorder;
+  }
+  .moonlightui-layout.grid[class*="vertically divided"][class*="computer vertically reversed"] > .row:last-child:before {
+    box-shadow: none;
+  }
+  /* Celled Reversed */
+  .moonlightui-layout[class*="computer reversed"].celled.grid > .row > .column:first-child {
+    box-shadow: $celledColumnDivider;
+  }
+  .moonlightui-layout[class*="computer reversed"].celled.grid > .row > .column:last-child {
+    box-shadow: none;
+  }
+}
+
+
+/*-------------------
+      Doubling
+--------------------*/
+
+/* Tablet Only */
+@media only screen and (min-width: $tabletBreakpoint) and (max-width: $largestTabletScreen) {
+  .moonlightui-layout.doubling.grid {
+    width: auto;
+  }
+  .moonlightui-layout.grid > .doubling.row,
+  .moonlightui-layout.doubling.grid > .row {
+    margin: 0em !important;
+    padding: 0em !important;
+  }
+  .moonlightui-layout.grid > .doubling.row > .column,
+  .moonlightui-layout.doubling.grid > .row > .column {
+    display: inline-block !important;
+    padding-top: ($rowSpacing / 2) !important;
+    padding-bottom: ($rowSpacing / 2) !important;
+    box-shadow: none !important;
+    margin: 0em;
+  }
+  .moonlightui-layout[class*="two column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="two column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="two column"].doubling.row.row > .column {
+    width: $oneColumn !important;
+  }
+  .moonlightui-layout[class*="three column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="three column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="three column"].doubling.row.row > .column {
+    width: $twoColumn !important;
+  }
+  .moonlightui-layout[class*="four column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="four column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="four column"].doubling.row.row > .column {
+    width: $twoColumn !important;
+  }
+  .moonlightui-layout[class*="five column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="five column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="five column"].doubling.row.row > .column {
+    width: $threeColumn !important;
+  }
+  .moonlightui-layout[class*="six column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="six column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="six column"].doubling.row.row > .column {
+    width: $threeColumn !important;
+  }
+  .moonlightui-layout[class*="seven column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="seven column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="seven column"].doubling.row.row > .column {
+    width: $threeColumn !important;
+  }
+  .moonlightui-layout[class*="eight column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="eight column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="eight column"].doubling.row.row > .column {
+    width: $fourColumn !important;
+  }
+  .moonlightui-layout[class*="nine column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="nine column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="nine column"].doubling.row.row > .column {
+    width: $fourColumn !important;
+  }
+  .moonlightui-layout[class*="ten column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="ten column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="ten column"].doubling.row.row > .column {
+    width: $fiveColumn !important;
+  }
+  .moonlightui-layout[class*="eleven column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="eleven column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="eleven column"].doubling.row.row > .column {
+    width: $fiveColumn !important;
+  }
+  .moonlightui-layout[class*="twelve column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="twelve column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="twelve column"].doubling.row.row > .column {
+    width: $sixColumn !important;
+  }
+  .moonlightui-layout[class*="thirteen column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="thirteen column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="thirteen column"].doubling.row.row > .column {
+    width: $sixColumn !important;
+  }
+  .moonlightui-layout[class*="fourteen column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="fourteen column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="fourteen column"].doubling.row.row > .column {
+    width: $sevenColumn !important;
+  }
+  .moonlightui-layout[class*="fifteen column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="fifteen column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="fifteen column"].doubling.row.row > .column {
+    width: $sevenColumn !important;
+  }
+  .moonlightui-layout[class*="sixteen column"].doubling.grid > .row > .column,
+  .moonlightui-layout[class*="sixteen column"].doubling.grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="sixteen column"].doubling.row.row > .column {
+    width: $eightColumn !important;
+  }
+}
+
+/* Mobile Only */
+@media only screen and (max-width: $largestMobileScreen) {
+  .moonlightui-layout.grid > .doubling.row,
+  .moonlightui-layout.doubling.grid > .row {
+    margin: 0em !important;
+    padding: 0em !important;
+  }
+  .moonlightui-layout.grid > .doubling.row > .column,
+  .moonlightui-layout.doubling.grid > .row > .column {
+    padding-top: ($rowSpacing / 2) !important;
+    padding-bottom: ($rowSpacing / 2) !important;
+    margin: 0em !important;
+    box-shadow: none !important;
+  }
+  .moonlightui-layout[class*="two column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="two column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="two column"].doubling:not(.stackable).row.row > .column {
+    width: $oneColumn !important;
+  }
+  .moonlightui-layout[class*="three column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="three column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="three column"].doubling:not(.stackable).row.row > .column {
+    width: $twoColumn !important;
+  }
+  .moonlightui-layout[class*="four column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="four column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="four column"].doubling:not(.stackable).row.row > .column {
+    width: $twoColumn !important;
+  }
+  .moonlightui-layout[class*="five column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="five column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="five column"].doubling:not(.stackable).row.row > .column {
+    width: $twoColumn !important;
+  }
+  .moonlightui-layout[class*="six column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="six column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="six column"].doubling:not(.stackable).row.row > .column {
+    width: $twoColumn !important;
+  }
+  .moonlightui-layout[class*="seven column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="seven column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="seven column"].doubling:not(.stackable).row.row > .column {
+    width: $twoColumn !important;
+  }
+  .moonlightui-layout[class*="eight column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="eight column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="eight column"].doubling:not(.stackable).row.row > .column {
+    width: $twoColumn !important;
+  }
+  .moonlightui-layout[class*="nine column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="nine column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="nine column"].doubling:not(.stackable).row.row > .column {
+    width: $threeColumn !important;
+  }
+  .moonlightui-layout[class*="ten column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="ten column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="ten column"].doubling:not(.stackable).row.row > .column {
+    width: $threeColumn !important;
+  }
+  .moonlightui-layout[class*="eleven column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="eleven column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="eleven column"].doubling:not(.stackable).row.row > .column {
+    width: $threeColumn !important;
+  }
+  .moonlightui-layout[class*="twelve column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="twelve column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="twelve column"].doubling:not(.stackable).row.row > .column {
+    width: $threeColumn !important;
+  }
+  .moonlightui-layout[class*="thirteen column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="thirteen column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="thirteen column"].doubling:not(.stackable).row.row > .column {
+    width: $threeColumn !important;
+  }
+  .moonlightui-layout[class*="fourteen column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="fourteen column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="fourteen column"].doubling:not(.stackable).row.row > .column {
+    width: $fourColumn !important;
+  }
+  .moonlightui-layout[class*="fifteen column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="fifteen column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="fifteen column"].doubling:not(.stackable).row.row > .column {
+    width: $fourColumn !important;
+  }
+  .moonlightui-layout[class*="sixteen column"].doubling:not(.stackable).grid > .row > .column,
+  .moonlightui-layout[class*="sixteen column"].doubling:not(.stackable).grid > .column:not(.row),
+  .moonlightui-layout.grid > [class*="sixteen column"].doubling:not(.stackable).row.row > .column {
+    width: $fourColumn !important;
+  }
+}
+
+/*-------------------
+      Stackable
+--------------------*/
+@media only screen and (max-width: $largestMobileScreen) {
+  .moonlightui-layout.stackable.grid {
+    width: auto;
+    margin-left: 0em !important;
+    margin-right: 0em !important;
+  }
+  .moonlightui-layout.stackable.grid > .row > .wide.column,
+  .moonlightui-layout.stackable.grid > .wide.column,
+  .moonlightui-layout.stackable.grid > .column.grid > .column,
+  .moonlightui-layout.stackable.grid > .column.row > .column,
+  .moonlightui-layout.stackable.grid > .row > .column,
+  .moonlightui-layout.stackable.grid > .column:not(.row),
+  .moonlightui-layout.grid > .stackable.stackable.row > .column {
+    width: 100% !important;
+    margin: 0em 0em !important;
+    box-shadow: none !important;
+    padding: ($stackableRowSpacing / 2) ($stackableGutter / 2) !important;
+  }
+  .moonlightui-layout.stackable.grid:not(.vertically) > .row {
+    margin: 0em;
+    padding: 0em;
+  }
+
+  /* Coupling */
+  .moonlightui-layout.container > .moonlightui-layout.stackable.grid > .column,
+  .moonlightui-layout.container > .moonlightui-layout.stackable.grid > .row > .column {
+    padding-left: 0em !important;
+    padding-right: 0em !important;
+  }
+
+  /* Don't pad inside segment or nested grid */
+  .moonlightui-layout.grid .moonlightui-layout.stackable.grid,
+  .moonlightui-layout.segment:not(.vertical) .moonlightui-layout.stackable.page.grid {
+    margin-left: -($stackableGutter / 2) !important;
+    margin-right: -($stackableGutter / 2) !important;
+  }
+
+  /* Divided Stackable */
+  .moonlightui-layout.stackable.divided.grid > .row:first-child > .column:first-child,
+  .moonlightui-layout.stackable.celled.grid > .row:first-child > .column:first-child,
+  .moonlightui-layout.stackable.divided.grid > .column:not(.row):first-child,
+  .moonlightui-layout.stackable.celled.grid > .column:not(.row):first-child {
+    border-top: none !important;
+  }
+  .moonlightui-layout.inverted.stackable.celled.grid > .column:not(.row),
+  .moonlightui-layout.inverted.stackable.divided.grid > .column:not(.row),
+  .moonlightui-layout.inverted.stackable.celled.grid > .row > .column,
+  .moonlightui-layout.inverted.stackable.divided.grid > .row > .column {
+    border-top: $stackableInvertedMobileBorder;
+  }
+
+  .moonlightui-layout.stackable.celled.grid > .column:not(.row),
+  .moonlightui-layout.stackable.divided:not(.vertically).grid > .column:not(.row),
+  .moonlightui-layout.stackable.celled.grid > .row > .column,
+  .moonlightui-layout.stackable.divided:not(.vertically).grid > .row > .column {
+    border-top: $stackableMobileBorder;
+    box-shadow: none !important;
+    padding-top: $stackableRowSpacing !important;
+    padding-bottom: $stackableRowSpacing !important;
+  }
+
+  .moonlightui-layout.stackable.celled.grid > .row {
+    box-shadow: none !important;
+  }
+  .moonlightui-layout.stackable.divided:not(.vertically).grid > .column:not(.row),
+  .moonlightui-layout.stackable.divided:not(.vertically).grid > .row > .column {
+    padding-left: 0em !important;
+    padding-right: 0em !important;
+  }
+
+}
+
+/*----------------------
+     Only (Device)
+-----------------------*/
+
+
+/* These include arbitrary class repetitions for forced specificity */
+
+/* Mobile Only Hide */
+@media only screen and (max-width: $largestMobileScreen) {
+  .moonlightui-layout[class*="tablet only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="tablet only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="tablet only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="tablet only"].column:not(.mobile) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="computer only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="computer only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="computer only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="computer only"].column:not(.mobile) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="large screen only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="large screen only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="large screen only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="large screen only"].column:not(.mobile) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="widescreen only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="widescreen only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="widescreen only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="widescreen only"].column:not(.mobile) {
+    display: none !important;
+  }
+}
+/* Tablet Only Hide */
+@media only screen and (min-width: $tabletBreakpoint) and (max-width: $largestTabletScreen) {
+  .moonlightui-layout[class*="mobile only"].grid.grid.grid:not(.tablet),
+  .moonlightui-layout.grid.grid.grid > [class*="mobile only"].row:not(.tablet),
+  .moonlightui-layout.grid.grid.grid > [class*="mobile only"].column:not(.tablet),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="mobile only"].column:not(.tablet) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="computer only"].grid.grid.grid:not(.tablet),
+  .moonlightui-layout.grid.grid.grid > [class*="computer only"].row:not(.tablet),
+  .moonlightui-layout.grid.grid.grid > [class*="computer only"].column:not(.tablet),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="computer only"].column:not(.tablet) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="large screen only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="large screen only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="large screen only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="large screen only"].column:not(.mobile) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="widescreen only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="widescreen only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="widescreen only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="widescreen only"].column:not(.mobile) {
+    display: none !important;
+  }
+}
+
+/* Computer Only Hide */
+@media only screen and (min-width: $computerBreakpoint) and (max-width: $largestSmallMonitor) {
+  .moonlightui-layout[class*="mobile only"].grid.grid.grid:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="mobile only"].row:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="mobile only"].column:not(.computer),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="mobile only"].column:not(.computer) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="tablet only"].grid.grid.grid:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="tablet only"].row:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="tablet only"].column:not(.computer),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="tablet only"].column:not(.computer) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="large screen only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="large screen only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="large screen only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="large screen only"].column:not(.mobile) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="widescreen only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="widescreen only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="widescreen only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="widescreen only"].column:not(.mobile) {
+    display: none !important;
+  }
+}
+
+/* Large Screen Only Hide */
+@media only screen and (min-width: $largeMonitorBreakpoint) and (max-width: $largestLargeMonitor) {
+  .moonlightui-layout[class*="mobile only"].grid.grid.grid:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="mobile only"].row:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="mobile only"].column:not(.computer),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="mobile only"].column:not(.computer) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="tablet only"].grid.grid.grid:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="tablet only"].row:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="tablet only"].column:not(.computer),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="tablet only"].column:not(.computer) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="widescreen only"].grid.grid.grid:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="widescreen only"].row:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > [class*="widescreen only"].column:not(.mobile),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="widescreen only"].column:not(.mobile) {
+    display: none !important;
+  }
+}
+
+/* Widescreen Only Hide */
+@media only screen and (min-width: $widescreenMonitorBreakpoint) {
+  .moonlightui-layout[class*="mobile only"].grid.grid.grid:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="mobile only"].row:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="mobile only"].column:not(.computer),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="mobile only"].column:not(.computer) {
+    display: none !important;
+  }
+  .moonlightui-layout[class*="tablet only"].grid.grid.grid:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="tablet only"].row:not(.computer),
+  .moonlightui-layout.grid.grid.grid > [class*="tablet only"].column:not(.computer),
+  .moonlightui-layout.grid.grid.grid > .row > [class*="tablet only"].column:not(.computer) {
+    display: none !important;
+  }
+}
+.moonlightui-layout-example .column{
+  padding: 15px !important;
+  margin-bottom: 2px;
+  margin-right: 2px;
+  background-color: $grey-darker;
+  border: 1px solid $grey-dark;
+  border-radius: 5px;
+}

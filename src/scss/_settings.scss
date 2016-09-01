@@ -1,3 +1,7 @@
+/*-------------------
+       Colors
+--------------------*/
+
 /* Grey pallet */
 $grey-supersoniclight: #222222;
 $grey-ultralight: #262626;
@@ -33,8 +37,1020 @@ $modal-main-begin-border: #575757;
 /* Selected color */
 $selected: #0a6aa1;
 
-/* Drop Shadow */
+
+/*-------------------
+      Site Colors
+--------------------*/
+
+/*---  Colors  ---*/
+$red              : #DB2828;
+$orange           : #F2711C;
+$yellow           : #FBBD08;
+$olive            : #B5CC18;
+$green            : #21BA45;
+$teal             : #00B5AD;
+$blue             : #2185D0;
+$violet           : #6435C9;
+$purple           : #A333C8;
+$pink             : #E03997;
+$brown            : #A5673F;
+$grey             : #767676;
+$black            : #1B1C1D;
+
+/*---  Light Colors  ---*/
+$lightRed         : #FF695E;
+$lightOrange      : #FF851B;
+$lightYellow      : #FFE21F;
+$lightOlive       : #D9E778;
+$lightGreen       : #2ECC40;
+$lightTeal        : #6DFFFF;
+$lightBlue        : #54C8FF;
+$lightViolet      : #A291FB;
+$lightPurple      : #DC73FF;
+$lightPink        : #FF8EDF;
+$lightBrown       : #D67C1C;
+$lightGrey        : #DCDDDE;
+$lightBlack       : #545454;
+
+/*---   Neutrals  ---*/
+$fullBlack        : #000000;
+$offWhite         : #F9FAFB;
+$darkWhite        : #F3F4F5;
+$midWhite         : #DCDDDE;
+$white            : #FFFFFF;
+
+/*--- Colored Backgrounds ---*/
+$redBackground    : #FFE8E6;
+$orangeBackground : #FFEDDE;
+$yellowBackground : #FFF8DB;
+$oliveBackground  : #FBFDEF;
+$greenBackground  : #E5F9E7;
+$tealBackground   : #E1F7F7;
+$blueBackground   : #DFF0FF;
+$violetBackground : #EAE7FF;
+$purpleBackground : #F6E7FF;
+$pinkBackground   : #FFE3FB;
+$brownBackground  : #F1E2D3;
+
+/*--- Colored Text ---*/
+$redTextColor    : $red;
+$orangeTextColor : $orange;
+$yellowTextColor : #B58105; // Yellow text is difficult to read
+$oliveTextColor  : #8ABC1E; // Olive is difficult to read
+$greenTextColor  : #1EBC30; // Green is difficult to read
+$tealTextColor   : #10A3A3; // Teal text is difficult to read
+$blueTextColor   : $blue;
+$violetTextColor : $violet;
+$purpleTextColor : $purple;
+$pinkTextColor   : $pink;
+$brownTextColor  : $brown;
+
+/*--- Colored Headers ---*/
+$redHeaderColor    : darken($redTextColor, 5);
+$oliveHeaderColor  : darken($oliveTextColor, 5);
+$greenHeaderColor  : darken($greenTextColor, 5);
+$yellowHeaderColor : darken($yellowTextColor, 5);
+$blueHeaderColor   : darken($blueTextColor, 5);
+$tealHeaderColor   : darken($tealTextColor, 5);
+$pinkHeaderColor   : darken($pinkTextColor, 5);
+$violetHeaderColor : darken($violetTextColor, 5);
+$purpleHeaderColor : darken($purpleTextColor, 5);
+$orangeHeaderColor : darken($orangeTextColor, 5);
+$brownHeaderColor  : darken($brownTextColor, 5);
+
+/*--- Colored Border ---*/
+$redBorderColor    : $redTextColor;
+$orangeBorderColor : $orangeTextColor;
+$yellowBorderColor : $yellowTextColor;
+$oliveBorderColor  : $oliveTextColor;
+$greenBorderColor  : $greenTextColor;
+$tealBorderColor   : $tealTextColor;
+$blueBorderColor   : $blueTextColor;
+$violetBorderColor : $violetTextColor;
+$purpleBorderColor : $purpleTextColor;
+$pinkBorderColor   : $pinkTextColor;
+$brownBorderColor  : $brownTextColor;
+
+
+/*-------------------
+    Emotive Colors
+--------------------*/
+
+/* Positive */
+$positiveColor           : $green;
+$positiveBackgroundColor : #FCFFF5;
+$positiveBorderColor     : #A3C293;
+$positiveHeaderColor     : #1A531B;
+$positiveTextColor       : #2C662D;
+
+/* Negative */
+$negativeColor           : $red;
+$negativeBackgroundColor : #FFF6F6;
+$negativeBorderColor     : #E0B4B4;
+$negativeHeaderColor     : #912D2B;
+$negativeTextColor       : #9F3A38;
+
+/* Info */
+$infoColor              : #31CCEC;
+$infoBackgroundColor    : #F8FFFF;
+$infoBorderColor        : #A9D5DE;
+$infoHeaderColor        : #0E566C;
+$infoTextColor          : #276F86;
+
+/* Warning */
+$warningColor           : #F2C037;
+$warningBorderColor     : #C9BA9B;
+$warningBackgroundColor : #FFFAF3;
+$warningHeaderColor     : #794B02;
+$warningTextColor       : #573A08;
+
+/*-------------------
+     Alpha Colors
+--------------------*/
+
+$subtleTransparentBlack     : rgba(0, 0, 0, 0.03);
+$transparentBlack           : rgba(0, 0, 0, 0.05);
+$strongTransparentBlack     : rgba(0, 0, 0, 0.10);
+$veryStrongTransparentBlack : rgba(0, 0, 0, 0.15);
+
+$subtleTransparentWhite     : rgba(255, 255, 255, 0.02);
+$transparentWhite           : rgba(255, 255, 255, 0.08);
+$strongTransparentWhite     : rgba(255, 255, 255, 0.15);
+
+
+/*-------------------
+     Neutral Text
+--------------------*/
+
+$darkTextColor               : rgba(0, 0, 0, 0.85);
+$mutedTextColor              : rgba(0, 0, 0, 0.6);
+$lightTextColor              : rgba(0, 0, 0, 0.4);
+
+$unselectedTextColor         : rgba(0, 0, 0, 0.4);
+$hoveredTextColor            : rgba(0, 0, 0, 0.8);
+$pressedTextColor            : rgba(0, 0, 0, 0.9);
+$selectedTextColor           : rgba(0, 0, 0, 0.95);
+$disabledTextColor           : rgba(0, 0, 0, 0.2);
+
+$invertedTextColor           : rgba(255, 255, 255, 0.9);
+$invertedMutedTextColor      : rgba(255, 255, 255, 0.8);
+$invertedLightTextColor      : rgba(255, 255, 255, 0.7);
+$invertedUnselectedTextColor : rgba(255, 255, 255, 0.5);
+$invertedHoveredTextColor    : rgba(255, 255, 255, 1);
+$invertedPressedTextColor    : rgba(255, 255, 255, 1);
+$invertedSelectedTextColor   : rgba(255, 255, 255, 1);
+$invertedDisabledTextColor   : rgba(255, 255, 255, 0.2);
+
+/*-------------------
+     Brand Colors
+--------------------*/
+
+$facebookColor   : #3B5998;
+$twitterColor    : #55ACEE;
+$googlePlusColor : #DD4B39;
+$linkedInColor   : #1F88BE;
+$youtubeColor    : #CC181E;
+$pinterestColor  : #BD081C;
+$vkColor         : #4D7198;
+$instagramColor  : #49769C;
+
+/*-------------------
+      Borders
+--------------------*/
+
+$circularRadius                : 500rem;
+
+$borderColor               : rgba(34, 36, 38, 0.15);
+$strongBorderColor         : rgba(34, 36, 38, 0.22);
+$internalBorderColor       : rgba(34, 36, 38, 0.1);
+$selectedBorderColor       : rgba(34, 36, 38, 0.35);
+$strongSelectedBorderColor : rgba(34, 36, 38, 0.5);
+$disabledBorderColor       : rgba(34, 36, 38, 0.5);
+
+$solidInternalBorderColor  : #FAFAFA;
+$solidBorderColor          : #D4D4D5;
+$solidSelectedBorderColor  : #BCBDBD;
+
+$whiteBorderColor              : rgba(255, 255, 255, 0.1);
+$selectedWhiteBorderColor      : rgba(255, 255, 255, 0.8);
+
+$solidWhiteBorderColor         : #555555;
+$selectedSolidWhiteBorderColor : #999999;
+
+/*-------------------
+      Text color
+--------------------*/
+
+$textColor           : rgba(0, 0, 0, 0.87);
+
+/*-------------------
+      Base Sizes
+--------------------*/
+
+/* This is the single variable that controls them all */
+$emSize   : 14px;
+
+/* The size of page text  */
+$fontSize : 14px;
+
+/*-------------------
+        Grid
+--------------------*/
+
+$columnCount: 16;
+
+/*-------------------
+  Exact Pixel Values
+--------------------*/
+
+$m1px  : (1 / $emSize) * 1rem;
+$m2px  : (2 / $emSize) * 1rem;
+$m3px  : (3 / $emSize) * 1rem;
+$m4px  : (4 / $emSize) * 1rem;
+$m5px  : (5 / $emSize) * 1rem;
+$m6px  : (6 / $emSize) * 1rem;
+$m7px  : (7 / $emSize) * 1rem;
+$m8px  : (8 / $emSize) * 1rem;
+$m9px  : (9 / $emSize) * 1rem;
+$m10px : (10 / $emSize) * 1rem;
+$m11px : (11 / $emSize) * 1rem;
+$m12px : (12 / $emSize) * 1rem;
+$m13px : (13 / $emSize) * 1rem;
+$m14px : (14 / $emSize) * 1rem;
+$m15px : (15 / $emSize) * 1rem;
+$m16px : (16 / $emSize) * 1rem;
+$m17px : (17 / $emSize) * 1rem;
+$m18px : (18 / $emSize) * 1rem;
+$m19px : (19 / $emSize) * 1rem;
+$m20px : (20 / $emSize) * 1rem;
+$m21px : (21 / $emSize) * 1rem;
+$m22px : (22 / $emSize) * 1rem;
+$m23px : (23 / $emSize) * 1rem;
+$m24px : (24 / $emSize) * 1rem;
+$m25px : (25 / $emSize) * 1rem;
+$m26px : (26 / $emSize) * 1rem;
+$m27px : (27 / $emSize) * 1rem;
+$m28px : (28 / $emSize) * 1rem;
+$m29px : (29 / $emSize) * 1rem;
+$m30px : (30 / $emSize) * 1rem;
+$m31px : (31 / $emSize) * 1rem;
+$m32px : (32 / $emSize) * 1rem;
+$m33px : (33 / $emSize) * 1rem;
+$m34px : (34 / $emSize) * 1rem;
+$m35px : (35 / $emSize) * 1rem;
+$m36px : (36 / $emSize) * 1rem;
+$m37px : (37 / $emSize) * 1rem;
+$m38px : (38 / $emSize) * 1rem;
+$m39px : (39 / $emSize) * 1rem;
+$m40px : (40 / $emSize) * 1rem;
+$m41px : (41 / $emSize) * 1rem;
+$m42px : (42 / $emSize) * 1rem;
+$m43px : (43 / $emSize) * 1rem;
+$m44px : (44 / $emSize) * 1rem;
+$m45px : (45 / $emSize) * 1rem;
+$m46px : (46 / $emSize) * 1rem;
+$m47px : (47 / $emSize) * 1rem;
+$m48px : (48 / $emSize) * 1rem;
+$m49px : (49 / $emSize) * 1rem;
+$m50px : (50 / $emSize) * 1rem;
+$m51px : (51 / $emSize) * 1rem;
+$m52px : (52 / $emSize) * 1rem;
+$m53px : (53 / $emSize) * 1rem;
+$m54px : (54 / $emSize) * 1rem;
+$m55px : (55 / $emSize) * 1rem;
+$m56px : (56 / $emSize) * 1rem;
+$m57px : (57 / $emSize) * 1rem;
+$m58px : (58 / $emSize) * 1rem;
+$m59px : (59 / $emSize) * 1rem;
+$m60px : (60 / $emSize) * 1rem;
+$m61px : (61 / $emSize) * 1rem;
+$m62px : (62 / $emSize) * 1rem;
+$m63px : (63 / $emSize) * 1rem;
+$m64px : (64 / $emSize) * 1rem;
+
+$relative1px  : (1 / $emSize) * 1em;
+$relative2px  : (2 / $emSize) * 1em;
+$relative3px  : (3 / $emSize) * 1em;
+$relative4px  : (4 / $emSize) * 1em;
+$relative5px  : (5 / $emSize) * 1em;
+$relative6px  : (6 / $emSize) * 1em;
+$relative7px  : (7 / $emSize) * 1em;
+$relative8px  : (8 / $emSize) * 1em;
+$relative9px  : (9 / $emSize) * 1em;
+$relative10px : (10 / $emSize) * 1em;
+$relative11px : (11 / $emSize) * 1em;
+$relative12px : (12 / $emSize) * 1em;
+$relative13px : (13 / $emSize) * 1em;
+$relative14px : (14 / $emSize) * 1em;
+$relative15px : (15 / $emSize) * 1em;
+$relative16px : (16 / $emSize) * 1em;
+$relative17px : (17 / $emSize) * 1em;
+$relative18px : (18 / $emSize) * 1em;
+$relative19px : (19 / $emSize) * 1em;
+$relative20px : (20 / $emSize) * 1em;
+$relative21px : (21 / $emSize) * 1em;
+$relative22px : (22 / $emSize) * 1em;
+$relative23px : (23 / $emSize) * 1em;
+$relative24px : (24 / $emSize) * 1em;
+$relative25px : (25 / $emSize) * 1em;
+$relative26px : (26 / $emSize) * 1em;
+$relative27px : (27 / $emSize) * 1em;
+$relative28px : (28 / $emSize) * 1em;
+$relative29px : (29 / $emSize) * 1em;
+$relative30px : (30 / $emSize) * 1em;
+$relative31px : (31 / $emSize) * 1em;
+$relative32px : (32 / $emSize) * 1em;
+$relative33px : (33 / $emSize) * 1em;
+$relative34px : (34 / $emSize) * 1em;
+$relative35px : (35 / $emSize) * 1em;
+$relative36px : (36 / $emSize) * 1em;
+$relative37px : (37 / $emSize) * 1em;
+$relative38px : (38 / $emSize) * 1em;
+$relative39px : (39 / $emSize) * 1em;
+$relative40px : (40 / $emSize) * 1em;
+$relative41px : (41 / $emSize) * 1em;
+$relative42px : (42 / $emSize) * 1em;
+$relative43px : (43 / $emSize) * 1em;
+$relative44px : (44 / $emSize) * 1em;
+$relative45px : (45 / $emSize) * 1em;
+$relative46px : (46 / $emSize) * 1em;
+$relative47px : (47 / $emSize) * 1em;
+$relative48px : (48 / $emSize) * 1em;
+$relative49px : (49 / $emSize) * 1em;
+$relative50px : (50 / $emSize) * 1em;
+$relative51px : (51 / $emSize) * 1em;
+$relative52px : (52 / $emSize) * 1em;
+$relative53px : (53 / $emSize) * 1em;
+$relative54px : (54 / $emSize) * 1em;
+$relative55px : (55 / $emSize) * 1em;
+$relative56px : (56 / $emSize) * 1em;
+$relative57px : (57 / $emSize) * 1em;
+$relative58px : (58 / $emSize) * 1em;
+$relative59px : (59 / $emSize) * 1em;
+$relative60px : (60 / $emSize) * 1em;
+$relative61px : (61 / $emSize) * 1em;
+$relative62px : (62 / $emSize) * 1em;
+$relative63px : (63 / $emSize) * 1em;
+$relative64px : (64 / $emSize) * 1em;
+
+/* Columns */
+$oneWide        : (1 / $columnCount * 100%);
+$twoWide        : (2 / $columnCount * 100%);
+$threeWide      : (3 / $columnCount * 100%);
+$fourWide       : (4 / $columnCount * 100%);
+$fiveWide       : (5 / $columnCount * 100%);
+$sixWide        : (6 / $columnCount * 100%);
+$sevenWide      : (7 / $columnCount * 100%);
+$eightWide      : (8 / $columnCount * 100%);
+$nineWide       : (9 / $columnCount * 100%);
+$tenWide        : (10 / $columnCount * 100%);
+$elevenWide     : (11 / $columnCount * 100%);
+$twelveWide     : (12 / $columnCount * 100%);
+$thirteenWide   : (13 / $columnCount * 100%);
+$fourteenWide   : (14 / $columnCount * 100%);
+$fifteenWide    : (15 / $columnCount * 100%);
+$sixteenWide    : (16 / $columnCount * 100%);
+
+$oneColumn      : (1 / 1 * 100%);
+$twoColumn      : (1 / 2 * 100%);
+$threeColumn    : (1 / 3 * 100%);
+$fourColumn     : (1 / 4 * 100%);
+$fiveColumn     : (1 / 5 * 100%);
+$sixColumn      : (1 / 6 * 100%);
+$sevenColumn    : (1 / 7 * 100%);
+$eightColumn    : (1 / 8 * 100%);
+$nineColumn     : (1 / 9 * 100%);
+$tenColumn      : (1 / 10 * 100%);
+$elevenColumn   : (1 / 11 * 100%);
+$twelveColumn   : (1 / 12 * 100%);
+$thirteenColumn : (1 / 13 * 100%);
+$fourteenColumn : (1 / 14 * 100%);
+$fifteenColumn  : (1 / 15 * 100%);
+$sixteenColumn  : (1 / 16 * 100%);
+
+/*-------------------
+       Drop shadow
+--------------------*/
 $drop-shadow-grey: rgba(0,0,0,0.75);
 
-/* Font family */
-$font-family: -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial
+/*-------------------
+       Fonts
+--------------------*/
+$font-family       : -apple-system, "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, sans-serif, Arial;
+$fontName          : $font-family;
+$fontSmoothing     : antialiased;
+$headerFont        : $font-family;
+$pageFont          : $font-family;
+
+/*-------------------
+    Border Radius
+--------------------*/
+
+/* See Power-user section below
+   for explanation of $px variables
+*/
+$relativeBorderRadius: $relative4px;
+$absoluteBorderRadius: $m4px;
+
+$defaultBorderRadius: $absoluteBorderRadius;
+
+/*-------------------
+    Brand Colors
+--------------------*/
+
+$primaryColor        : $blue;
+$secondaryColor      : $black;
+
+$lightPrimaryColor   : $lightBlue;
+$lightSecondaryColor : $lightBlack;
+
+/*--------------
+  Page Heading
+---------------*/
+
+$headerFontWeight : bold;
+$headerLineHeight : 1.2857em;
+
+$h1 : 2rem;
+$h2 : 1.714rem;
+$h3 : 1.28rem;
+$h4 : 1.071rem;
+$h5 : 1rem;
+
+/*--------------
+   Form Input
+---------------*/
+
+/* This adjusts the default form input across all elements */
+$inputBackground        : $white;
+$inputVerticalPadding   : $relative11px;
+$inputHorizontalPadding : $relative14px;
+$inputPadding           : $inputVerticalPadding $inputHorizontalPadding;
+
+/* Input Text Color */
+$inputColor: $textColor;
+$inputPlaceholderColor: lighten($inputColor, 75);
+$inputPlaceholderFocusColor: lighten($inputColor, 45);
+
+/* Line Height Default For Inputs in Browser */
+$inputLineHeight: 1.2142em;
+
+/*-------------------
+    Focused Input
+--------------------*/
+
+/* Used on inputs, textarea etc */
+$focusedFormBorderColor: #85B7D9;
+
+/* Used on dropdowns, other larger blocks */
+$focusedFormMutedBorderColor: #96C8DA;
+
+/*-------------------
+        Sizes
+--------------------*/
+
+/*
+  Sizes are all expressed in terms of 14px/em (default em)
+  This ensures these "ratios" remain constant despite changes in EM
+*/
+
+$miniSize        : (11 / 14);
+$tinySize        : (12 / 14);
+$smallSize       : (13 / 14);
+$mediumSize      : (14 / 14);
+$largeSize       : (16 / 14);
+$bigSize         : (18 / 14);
+$hugeSize        : (20 / 14);
+$massiveSize     : (24 / 14);
+
+
+/*-------------------
+        Page
+--------------------*/
+
+$pageBackground      : #FFFFFF;
+$pageOverflowX       : hidden;
+
+$lineHeight          : 1.4285em;
+
+/*-------------------
+      Paragraph
+--------------------*/
+
+$paragraphMargin     : 0em 0em 1em;
+$paragraphLineHeight : $lineHeight;
+
+/*-------------------
+       Links
+--------------------*/
+
+$linkColor           : #4183C4;
+$linkUnderline       : none;
+$linkHoverColor      : darken(saturate($linkColor, 20), 15);
+$linkHoverUnderline  : $linkUnderline;
+
+/*-------------------
+  Highlighted Text
+--------------------*/
+
+$highlightBackground      : #CCE2FF;
+$highlightColor           : $textColor;
+
+$inputHighlightBackground : rgba(100, 100, 100, 0.4);
+$inputHighlightColor      : $textColor;
+
+
+/*-------------------
+     Transitions
+--------------------*/
+
+$defaultDuration : 0.1s;
+$defaultEasing   : ease;
+
+/*-------------------
+     Breakpoints
+--------------------*/
+
+$mobileBreakpoint            : 320px;
+$tabletBreakpoint            : 768px;
+$computerBreakpoint          : 992px;
+$largeMonitorBreakpoint      : 1200px;
+$widescreenMonitorBreakpoint : 1920px;
+
+/*-------------------
+       Accents
+--------------------*/
+
+/* Differentiating Neutrals */
+$subtleGradient: linear-gradient(transparent, $transparentBlack);
+
+/* Differentiating Layers */
+$subtleShadow:
+0px 1px 2px 0 $borderColor
+;
+$floatingShadow:
+0px 2px 4px 0px rgba(34, 36, 38, 0.12),
+0px 2px 10px 0px rgba(34, 36, 38, 0.15)
+;
+
+/*******************************
+           Power-User
+*******************************/
+
+/*-------------------
+        Paths
+--------------------*/
+
+/* For source only. Modified in gulp for dist */
+$imagePath : '../../themes/default/assets/images';
+$fontPath  : '../../themes/default/assets/fonts';
+
+/*-------------------
+       Em Sizes
+--------------------*/
+
+/*
+  This rounds $size values to the closest pixel then expresses that value in (r)em.
+  This ensures all size values round to exact pixels
+*/
+$mini            : (($miniSize * $emSize) / $emSize) * 1rem;
+$tiny            : (($tinySize * $emSize) / $emSize) * 1rem;
+$small           : (($smallSize * $emSize) / $emSize) * 1rem;
+$medium          : (($mediumSize * $emSize) / $emSize) * 1rem;
+$large           : (($largeSize * $emSize) / $emSize) * 1rem;
+$big             : (($bigSize * $emSize) / $emSize) * 1rem;
+$huge            : (($hugeSize * $emSize) / $emSize) * 1rem;
+$massive         : (($massiveSize * $emSize) / $emSize) * 1rem;
+
+/* em */
+$relativeMini    : (($miniSize * $emSize) / $emSize) * 1em;
+$relativeTiny    : (($tinySize * $emSize) / $emSize) * 1em;
+$relativeSmall   : (($smallSize * $emSize) / $emSize) * 1em;
+$relativeMedium  : (($mediumSize * $emSize) / $emSize) * 1em;
+$relativeLarge   : (($largeSize * $emSize) / $emSize) * 1em;
+$relativeBig     : (($bigSize * $emSize) / $emSize) * 1em;
+$relativeHuge    : (($hugeSize * $emSize) / $emSize) * 1em;
+$relativeMassive : (($massiveSize * $emSize) / $emSize) * 1em;
+
+/* rem */
+$absoluteMini    : (($miniSize * $emSize) / $emSize) * 1rem;
+$absoluteTiny    : (($tinySize * $emSize) / $emSize) * 1rem;
+$absoluteSmall   : (($smallSize * $emSize) / $emSize) * 1rem;
+$absoluteMedium  : (($mediumSize * $emSize) / $emSize) * 1rem;
+$absoluteLarge   : (($largeSize * $emSize) / $emSize) * 1rem;
+$absoluteBig     : (($bigSize * $emSize) / $emSize) * 1rem;
+$absoluteHuge    : (($hugeSize * $emSize) / $emSize) * 1rem;
+$absoluteMassive : (($massiveSize * $emSize) / $emSize) * 1rem;
+
+/*-------------------
+       Loader
+--------------------*/
+
+$loaderSize              : $relativeBig;
+$loaderSpeed             : 0.6s;
+$loaderLineWidth         : 0.2em;
+$loaderFillColor         : rgba(0, 0, 0, 0.1);
+$loaderLineColor         : $grey;
+
+$invertedLoaderFillColor : rgba(255, 255, 255, 0.15);
+$invertedLoaderLineColor : $white;
+
+/*-------------------
+       Icons
+--------------------*/
+
+/* Maximum Glyph Width of Icon */
+$iconWidth : 1.18em;
+
+/*-------------------
+    Derived Values
+--------------------*/
+
+/* Loaders Position Offset */
+$loaderOffset : -($loaderSize / 2);
+$loaderMargin : $loaderOffset 0em 0em $loaderOffset;
+
+/* Rendered Scrollbar Width */
+$scrollbarWidth: 17px;
+
+/* Maximum Single Character Glyph Width, aka Capital "W" */
+$glyphWidth: 1.1em;
+
+/* Used to match floats with text */
+$lineHeightOffset       : (($lineHeight - 1em) / 2);
+$headerLineHeightOffset : ($headerLineHeight - 1em) / 2;
+
+/* Header Spacing */
+$headerTopMargin    : "calc(2rem - " + $headerLineHeightOffset + ")";
+$headerBottomMargin : 1rem;
+$headerMargin       : $headerTopMargin 0em $headerBottomMargin;
+
+/* Minimum Mobile Width */
+$pageMinWidth       : 320px;
+
+/* Positive / Negative Dupes */
+$successBackgroundColor : $positiveBackgroundColor;
+$successColor           : $positiveColor;
+$successBorderColor     : $positiveBorderColor;
+$successHeaderColor     : $positiveHeaderColor;
+$successTextColor       : $positiveTextColor;
+
+$errorBackgroundColor   : $negativeBackgroundColor;
+$errorColor             : $negativeColor;
+$errorBorderColor       : $negativeBorderColor;
+$errorHeaderColor       : $negativeHeaderColor;
+$errorTextColor         : $negativeTextColor;
+
+
+/* Responsive */
+$largestMobileScreen : ($tabletBreakpoint - 1px);
+$largestTabletScreen : ($computerBreakpoint - 1px);
+$largestSmallMonitor : ($largeMonitorBreakpoint - 1px);
+$largestLargeMonitor : ($widescreenMonitorBreakpoint - 1px);
+
+/*******************************
+             States
+*******************************/
+
+/*-------------------
+      Disabled
+--------------------*/
+
+$disabledOpacity: 0.45;
+$disabledTextColor: rgba(40, 40, 40, 0.3);
+$invertedDisabledTextColor: rgba(225, 225, 225, 0.3);
+
+/*-------------------
+        Hover
+--------------------*/
+
+/*---  Shadows  ---*/
+$floatingShadowHover:
+0px 2px 4px 0px rgba(34, 36, 38, 0.15),
+0px 2px 10px 0px rgba(34, 36, 38, 0.25)
+;
+
+/*---  Colors  ---*/
+$primaryColorHover    : saturate(darken($primaryColor, 5), 10);
+$secondaryColorHover  : saturate(lighten($secondaryColor, 5), 10);
+
+$redHover             : saturate(darken($red, 5), 10);
+$orangeHover          : saturate(darken($orange, 5), 10);
+$yellowHover          : saturate(darken($yellow, 5), 10);
+$oliveHover           : saturate(darken($olive, 5), 10);
+$greenHover           : saturate(darken($green, 5), 10);
+$tealHover            : saturate(darken($teal, 5), 10);
+$blueHover            : saturate(darken($blue, 5), 10);
+$violetHover          : saturate(darken($violet, 5), 10);
+$purpleHover          : saturate(darken($purple, 5), 10);
+$pinkHover            : saturate(darken($pink, 5), 10);
+$brownHover           : saturate(darken($brown, 5), 10);
+
+$lightRedHover        : saturate(darken($lightRed, 5), 10);
+$lightOrangeHover     : saturate(darken($lightOrange, 5), 10);
+$lightYellowHover     : saturate(darken($lightYellow, 5), 10);
+$lightOliveHover      : saturate(darken($lightOlive, 5), 10);
+$lightGreenHover      : saturate(darken($lightGreen, 5), 10);
+$lightTealHover       : saturate(darken($lightTeal, 5), 10);
+$lightBlueHover       : saturate(darken($lightBlue, 5), 10);
+$lightVioletHover     : saturate(darken($lightViolet, 5), 10);
+$lightPurpleHover     : saturate(darken($lightPurple, 5), 10);
+$lightPinkHover       : saturate(darken($lightPink, 5), 10);
+$lightBrownHover      : saturate(darken($lightBrown, 5), 10);
+$lightGreyHover       : saturate(darken($lightGrey, 5), 10);
+$lightBlackHover      : saturate(darken($fullBlack, 5), 10);
+
+/*---  Emotive  ---*/
+$positiveColorHover   : saturate(darken($positiveColor, 5), 10);
+$negativeColorHover   : saturate(darken($negativeColor, 5), 10);
+
+/*---  Brand   ---*/
+$facebookHoverColor   : saturate(darken($facebookColor, 5), 10);
+$twitterHoverColor    : saturate(darken($twitterColor, 5), 10);
+$googlePlusHoverColor : saturate(darken($googlePlusColor, 5), 10);
+$linkedInHoverColor   : saturate(darken($linkedInColor, 5), 10);
+$youtubeHoverColor    : saturate(darken($youtubeColor, 5), 10);
+$instagramHoverColor  : saturate(darken($instagramColor, 5), 10);
+$pinterestHoverColor  : saturate(darken($pinterestColor, 5), 10);
+$vkHoverColor         : saturate(darken($vkColor, 5), 10);
+
+/*---  Dark Tones  ---*/
+$fullBlackHover       : lighten($fullBlack, 5);
+$blackHover           : lighten($black, 5);
+$greyHover            : lighten($grey, 5);
+
+/*---  Light Tones  ---*/
+$whiteHover           : darken($white, 5);
+$offWhiteHover        : darken($offWhite, 5);
+$darkWhiteHover       : darken($darkWhite, 5);
+
+/*-------------------
+        Focus
+--------------------*/
+
+/*---  Colors  ---*/
+$primaryColorFocus    : saturate(darken($primaryColor, 8), 20);
+$secondaryColorFocus  : saturate(lighten($secondaryColor, 8), 20);
+
+$redFocus             : saturate(darken($red, 8), 20);
+$orangeFocus          : saturate(darken($orange, 8), 20);
+$yellowFocus          : saturate(darken($yellow, 8), 20);
+$oliveFocus           : saturate(darken($olive, 8), 20);
+$greenFocus           : saturate(darken($green, 8), 20);
+$tealFocus            : saturate(darken($teal, 8), 20);
+$blueFocus            : saturate(darken($blue, 8), 20);
+$violetFocus          : saturate(darken($violet, 8), 20);
+$purpleFocus          : saturate(darken($purple, 8), 20);
+$pinkFocus            : saturate(darken($pink, 8), 20);
+$brownFocus           : saturate(darken($brown, 8), 20);
+
+$lightRedFocus        : saturate(darken($lightRed, 8), 20);
+$lightOrangeFocus     : saturate(darken($lightOrange, 8), 20);
+$lightYellowFocus     : saturate(darken($lightYellow, 8), 20);
+$lightOliveFocus      : saturate(darken($lightOlive, 8), 20);
+$lightGreenFocus      : saturate(darken($lightGreen, 8), 20);
+$lightTealFocus       : saturate(darken($lightTeal, 8), 20);
+$lightBlueFocus       : saturate(darken($lightBlue, 8), 20);
+$lightVioletFocus     : saturate(darken($lightViolet, 8), 20);
+$lightPurpleFocus     : saturate(darken($lightPurple, 8), 20);
+$lightPinkFocus       : saturate(darken($lightPink, 8), 20);
+$lightBrownFocus      : saturate(darken($lightBrown, 8), 20);
+$lightGreyFocus       : saturate(darken($lightGrey, 8), 20);
+$lightBlackFocus      : saturate(darken($fullBlack, 8), 20);
+
+/*---  Emotive  ---*/
+$positiveColorFocus   : saturate(darken($positiveColor, 8), 20);
+$negativeColorFocus   : saturate(darken($negativeColor, 8), 20);
+
+/*---  Brand   ---*/
+$facebookFocusColor   : saturate(darken($facebookColor, 8), 20);
+$twitterFocusColor    : saturate(darken($twitterColor, 8), 20);
+$googlePlusFocusColor : saturate(darken($googlePlusColor, 8), 20);
+$linkedInFocusColor   : saturate(darken($linkedInColor, 8), 20);
+$youtubeFocusColor    : saturate(darken($youtubeColor, 8), 20);
+$instagramFocusColor  : saturate(darken($instagramColor, 8), 20);
+$pinterestFocusColor  : saturate(darken($pinterestColor, 8), 20);
+$vkFocusColor         : saturate(darken($vkColor, 8), 20);
+
+/*---  Dark Tones  ---*/
+$fullBlackFocus       : lighten($fullBlack, 8);
+$blackFocus           : lighten($black, 8);
+$greyFocus            : lighten($grey, 8);
+
+/*---  Light Tones  ---*/
+$whiteFocus           : darken($white, 8);
+$offWhiteFocus        : darken($offWhite, 8);
+$darkWhiteFocus       : darken($darkWhite, 8);
+
+
+/*-------------------
+    Down (:active)
+--------------------*/
+
+/*---  Colors  ---*/
+$primaryColorDown    : darken($primaryColor, 10);
+$secondaryColorDown  : lighten($secondaryColor, 10);
+
+$redDown             : darken($red, 10);
+$orangeDown          : darken($orange, 10);
+$yellowDown          : darken($yellow, 10);
+$oliveDown           : darken($olive, 10);
+$greenDown           : darken($green, 10);
+$tealDown            : darken($teal, 10);
+$blueDown            : darken($blue, 10);
+$violetDown          : darken($violet, 10);
+$purpleDown          : darken($purple, 10);
+$pinkDown            : darken($pink, 10);
+$brownDown           : darken($brown, 10);
+
+$lightRedDown        : darken($lightRed, 10);
+$lightOrangeDown     : darken($lightOrange, 10);
+$lightYellowDown     : darken($lightYellow, 10);
+$lightOliveDown      : darken($lightOlive, 10);
+$lightGreenDown      : darken($lightGreen, 10);
+$lightTealDown       : darken($lightTeal, 10);
+$lightBlueDown       : darken($lightBlue, 10);
+$lightVioletDown     : darken($lightViolet, 10);
+$lightPurpleDown     : darken($lightPurple, 10);
+$lightPinkDown       : darken($lightPink, 10);
+$lightBrownDown      : darken($lightBrown, 10);
+$lightGreyDown       : darken($lightGrey, 10);
+$lightBlackDown      : darken($fullBlack, 10);
+
+/*---  Emotive  ---*/
+$positiveColorDown   : darken($positiveColor, 10);
+$negativeColorDown   : darken($negativeColor, 10);
+
+/*---  Brand   ---*/
+$facebookDownColor   : darken($facebookColor, 10);
+$twitterDownColor    : darken($twitterColor, 10);
+$googlePlusDownColor : darken($googlePlusColor, 10);
+$linkedInDownColor   : darken($linkedInColor, 10);
+$youtubeDownColor    : darken($youtubeColor, 10);
+$instagramDownColor  : darken($instagramColor, 10);
+$pinterestDownColor  : darken($pinterestColor, 10);
+$vkDownColor         : darken($vkColor, 10);
+
+/*---  Dark Tones  ---*/
+$fullBlackDown       : lighten($fullBlack, 10);
+$blackDown           : lighten($black, 10);
+$greyDown            : lighten($grey, 10);
+
+/*---  Light Tones  ---*/
+$whiteDown           : darken($white, 10);
+$offWhiteDown        : darken($offWhite, 10);
+$darkWhiteDown       : darken($darkWhite, 10);
+
+
+/*-------------------
+        Active
+--------------------*/
+
+/*---  Colors  ---*/
+$primaryColorActive    : saturate(darken($primaryColor, 5), 15);
+$secondaryColorActive  : saturate(lighten($secondaryColor, 5), 15);
+
+$redActive             : saturate(darken($red, 5), 15);
+$orangeActive          : saturate(darken($orange, 5), 15);
+$yellowActive          : saturate(darken($yellow, 5), 15);
+$oliveActive           : saturate(darken($olive, 5), 15);
+$greenActive           : saturate(darken($green, 5), 15);
+$tealActive            : saturate(darken($teal, 5), 15);
+$blueActive            : saturate(darken($blue, 5), 15);
+$violetActive          : saturate(darken($violet, 5), 15);
+$purpleActive          : saturate(darken($purple, 5), 15);
+$pinkActive            : saturate(darken($pink, 5), 15);
+$brownActive           : saturate(darken($brown, 5), 15);
+
+$lightRedActive        : saturate(darken($lightRed, 5), 15);
+$lightOrangeActive     : saturate(darken($lightOrange, 5), 15);
+$lightYellowActive     : saturate(darken($lightYellow, 5), 15);
+$lightOliveActive      : saturate(darken($lightOlive, 5), 15);
+$lightGreenActive      : saturate(darken($lightGreen, 5), 15);
+$lightTealActive       : saturate(darken($lightTeal, 5), 15);
+$lightBlueActive       : saturate(darken($lightBlue, 5), 15);
+$lightVioletActive     : saturate(darken($lightViolet, 5), 15);
+$lightPurpleActive     : saturate(darken($lightPurple, 5), 15);
+$lightPinkActive       : saturate(darken($lightPink, 5), 15);
+$lightBrownActive      : saturate(darken($lightBrown, 5), 15);
+$lightGreyActive       : saturate(darken($lightGrey, 5), 15);
+$lightBlackActive      : saturate(darken($fullBlack, 5), 15);
+
+/*---  Emotive  ---*/
+$positiveColorActive   : saturate(darken($positiveColor, 5), 15);
+$negativeColorActive   : saturate(darken($negativeColor, 5), 15);
+
+/*---  Brand   ---*/
+$facebookActiveColor   : saturate(darken($facebookColor, 5), 15);
+$twitterActiveColor    : saturate(darken($twitterColor, 5), 15);
+$googlePlusActiveColor : saturate(darken($googlePlusColor, 5), 15);
+$linkedInActiveColor   : saturate(darken($linkedInColor, 5), 15);
+$youtubeActiveColor    : saturate(darken($youtubeColor, 5), 15);
+$instagramActiveColor  : saturate(darken($instagramColor, 5), 15);
+$pinterestActiveColor  : saturate(darken($pinterestColor, 5), 15);
+$vkActiveColor         : saturate(darken($vkColor, 5), 15);
+
+/*---  Dark Tones  ---*/
+$fullBlackActive       : darken($fullBlack, 5);
+$blackActive           : darken($black, 5);
+$greyActive            : darken($grey, 5);
+
+/*---  Light Tones  ---*/
+$whiteActive           : darken($white, 5);
+$offWhiteActive        : darken($offWhite, 5);
+$darkWhiteActive       : darken($darkWhite, 5);
+
+
+/* Grid */
+$mobileBreakpoint: 320px;
+$tabletBreakpoint: 768px;
+$computerBreakpoint: 992px;
+$largeMonitorBreakpoint: 1400px;
+$widescreenMonitorBreakpoint: 1900px;
+
+/*******************************
+            Grid
+*******************************/
+$minWidth: 320px;
+
+$gutterWidth: 0rem;
+$rowSpacing: 0rem;
+
+$tableWidth: "calc(100% + " + $gutterWidth + ")";
+$columnMaxImageWidth: 100%;
+
+$consecutiveGridDistance: ($rowSpacing / 2);
+
+/*******************************
+           Variations
+*******************************/
+
+/*--------------
+     Relaxed
+---------------*/
+
+$relaxedGutterWidth: 3rem;
+$veryRelaxedGutterWidth: 5rem;
+
+/*--------------
+     Divided
+---------------*/
+
+$dividedBorder: -1px 0px 0px 0px $borderColor;
+$verticallyDividedBorder: 0px -1px 0px 0px $borderColor;
+
+$dividedInvertedBorder: -1px 0px 0px 0px $whiteBorderColor;
+$verticallyDividedInvertedBorder: 0px -1px 0px 0px $whiteBorderColor;
+
+/*--------------
+    Celled
+---------------*/
+
+$celledMargin: 1em 0em;
+$celledWidth: 1px;
+$celledBorderColor: $solidBorderColor;
+
+$celledPadding: 1em;
+$celledRelaxedPadding: 1.5em;
+$celledVeryRelaxedPadding: 2em;
+
+$celledGridDivider: 0px 0px 0px $celledWidth $celledBorderColor;
+$celledRowDivider: 0px (-$celledWidth) 0px 0px $celledBorderColor;
+$celledColumnDivider: (-$celledWidth) 0px 0px 0px $celledBorderColor;
+
+
+/*--------------
+    Stackable
+---------------*/
+
+$stackableRowSpacing: $rowSpacing;
+$stackableGutter: $gutterWidth;
+$stackableMobileBorder: 1px solid $borderColor;
+$stackableInvertedMobileBorder: 1px solid $whiteBorderColor;
+
+
+/*--------------
+    Width
+---------------*/
+
+$mobileWidth: auto;
+$mobileMargin: 0em;
+$mobileGutter: 0em;
+
+$tabletWidth: auto;
+$tabletMargin: 0em;
+$tabletGutter: 8%;
+
+$computerWidth: 960px;
+$computerMargin: auto;
+$computerGutter: 0;
+
+$largeMonitorWidth: 1180px;
+$largeMonitorMargin: auto;
+$largeMonitorGutter: 0;
+
+$widescreenMonitorWidth: 1300px;
+$widescreenMargin: auto;
+$widescreenMonitorGutter: 0;
+
+$tableWidth: '';
