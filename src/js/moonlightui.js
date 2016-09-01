@@ -498,6 +498,17 @@
                     $(this).parent().parent().addClass('hidden');
                 }
             });
+            $('.moonlightui-modal .moonlightui-modal-close.destroy').on('click', function() {
+                if(!$(this).hasClass('moonlightui-modal-disable')) {
+                    $(this).remove();
+                }
+            });
+            $('.moonlightui-modal .moonlightui-modal-close-btn.destroy').on('click', function() {
+                $(this).remove();
+            });
+            $('.moonlightui-modal .moonlightui-modal-ok-btn.destroy').on('click', function() {
+                $(this).remove();
+            });
             $('.moonlightui-modal .moonlightui-modal-min').on('click', function() {
                 if(!$(this).hasClass('moonlightui-modal-disable')) {
                     if ($(this).parent().parent().hasClass('min')) {
@@ -546,10 +557,56 @@
                 }
             });
         },
+        showHelp: function() {
+            $(this).each(function() {
+                var url = $(this).data('ml-help-url');
+                var title = $(this).data('ml-help-title');
+                if (typeof url === 'undefined') {
+                    console.warn('MOONLIGHTUI - You must specify url to load the help page from.');
+                }
+                if (typeof title === 'undefined') {
+                    console.warn('MOONLIGHTUI - You must specify title for the help dialog.');
+                }
+                $(this).on('click', function () {
+                    var newHelp = $('<div></div>').html(
+                        '<div class="moonlightui-modal-header">' +
+                        '<div class="moonlightui-modal-close destroy"></div>' +
+                        '<div class="moonlightui-modal-min moonlightui-modal-disable"></div>' +
+                        '<div class="moonlightui-modal-max moonlightui-modal-disable"></div>' +
+                        title +
+                        '</div>' +
+                        '<div class="moonlightui-modal-body table-add">' +
+                        '<iframe src="' + url + '" class="moonlightui-modal-help-iframe"></iframe>' +
+                        '<div class="moonlightui-modal-body-btn-bottom-fixed">' +
+                        '<div id="fillableAddOk" class="moonlightui-btn moonlightui-modal-ok-btn destroy">' +
+                        '<div class="moonlightui-btn-inner">ok</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
+                    newHelp.addClass('moonlightui-modal moonlightui-modal-fixed');
+                    $('body').append(newHelp);
+                    newHelp.draggable({
+                        scroll: false
+                    });
+                    newHelp.find('.moonlightui-modal-close.destroy').on('click', function() {
+                        $(newHelp).remove();
+                    });
+                    newHelp.find('.moonlightui-modal-close-btn.destroy').on('click', function() {
+                        $(newHelp).remove();
+                    });
+                    newHelp.find('.moonlightui-modal-ok-btn.destroy').on('click', function() {
+                        $(newHelp).remove();
+                    });
+                    newHelp.css({
+                        top: '50%',
+                        left: '50%',
+                        margin: '-' + ($(newHelp).height() / 2) + 'px 0 0 -' + ($(newHelp).width() / 2) + 'px'
+                    });
+                });
+            });
+        },
         /* MOONLIGHTUI - lodash */
         lodash: _,
-        /* MOONLIGHTUI - TWIG template engine */
-        twig: twig,
         /* MOONLIGHTUI - External Libraries */
         async: async,
         jsPlumb: jsPlumb,
@@ -576,6 +633,9 @@
 
             // Attach buttons
             $(element + ' .moonlightui-btn-inner').off();
+
+            /* MOONLIGHT UI - Show help */
+            $(element + ' .moonlightui-show-help').off();
 
             // Attach tooltips
             $(element).find('[data-ml-tooltip-active="true"]').off();
@@ -627,6 +687,9 @@
 
             /* MOONLIGHT UI - Will activate all custom click */
             $(element).find('[data-ml-action]').actions();
+
+            /* MOONLIGHT UI - Show help */
+            $(element + ' .moonlightui-show-help').showHelp();
 
             /* MOONLIGHT UI - Buttons */
             $(element + ' .moonlightui-btn-inner').buttons();

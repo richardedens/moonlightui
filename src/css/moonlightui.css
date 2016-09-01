@@ -2260,6 +2260,9 @@
 .moonlightui-component-options {
   float: right; }
 
+.moonlightui-component-options i {
+  padding-left: 5px; }
+
 .moonlightui-component-title {
   position: absolute;
   left: 0;
@@ -2748,6 +2751,16 @@ ul.moonlightui-component-title-main-options li {
 .moonlightui-modal-body-btn-bottom-fixed .moonlightui-btn {
   float: right;
   padding-right: 5px; }
+
+.moonlightui-modal-help-iframe {
+  position: absolute;
+  left: 0;
+  top: 0px;
+  right: 0;
+  bottom: 0px;
+  border: none;
+  width: 100%;
+  height: 100%; }
 
 /* jQuery Resizable */
 .ui-resizable {
