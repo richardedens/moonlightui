@@ -55,10 +55,21 @@ module.exports = function(grunt) {
             my_target: {
                 files: {
                     './dist/js/moonlightui.min.js': ['./dist/js/moonlightui.js'],
+                    './dist/js/moonlightui.core.min.js': ['./dist/js/moonlightui.core.js'],
                 }
             }
         },
         concat: {
+            core: {
+                src: [
+                    // jQuery.
+                    'src/lib/jquery/dist/jquery.js',
+
+                    // jsMore
+                    'src/js/moonlightui.core.js'
+                ],
+                dest: 'dist/js/moonlightui.core.js'
+            },
             js: {
                 src: [
                     // jQuery.
@@ -101,7 +112,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: 'src/**/*.js',
-                tasks: ['jshint', 'concat:js', 'uglify', 'copy'],
+                tasks: ['jshint', 'concat:js', 'concat:core', 'uglify', 'copy'],
                 options: {
                     debounceDelay: 250
                 }
