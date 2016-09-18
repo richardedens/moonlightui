@@ -10087,7 +10087,9 @@ return jQuery;
     $.fn.extend({
         /* MOONLIGHTUI - System */
         onready: function(cb) {
-            jsPlumb.ready(cb);
+            $(document).ready(function() {
+                cb();
+            });
         },
         url: window.location,
         /* MOONLIGHTUI - Interaction from modules and controller */
