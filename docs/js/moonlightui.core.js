@@ -10090,7 +10090,7 @@ return jQuery;
             $(document).ready(function() {
                 cb();
             });
-        },
+        }, 
         url: window.location,
         /* MOONLIGHTUI - Interaction from modules and controller */
         removeSelect: function(){
