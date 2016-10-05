@@ -110,7 +110,7 @@
             modules[tempModule].controllers[name] = ctrl;
             return this;
         },
-        view: function(name, view) {
+        view: function(name, view, render) {
             var vw = view(),
                 engine = this,
                 module = tempModule.slice(0);
@@ -199,7 +199,9 @@
                 var self = this;
                 this.__loadTemplate(function(){
                     self.__loadModels(function(){
-                        self.render();
+                        if (typeof render !== 'undefined' && render === true) {
+                            self.render();
+                        }
                         self.__initialized = true;
                     });
                 });
