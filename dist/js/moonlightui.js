@@ -62863,7 +62863,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             return null;
         },
         eraseCookie: function(name) {
-            createCookie(name, "", -1);
+            this.createCookie(name, "", -1);
         },
         /* MOONLIGHTUI - Lets GO */
         reenergize: function(element) {
