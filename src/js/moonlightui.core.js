@@ -391,7 +391,7 @@
             var dateVal, expiresVal;
             if (days) {
                 dateVal = new Date();
-                dateVal.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                dateVal.setTime(dateVal.getTime() + (days * 24 * 60 * 60 * 1000));
                 expiresVal = "; expires=" + dateVal.toGMTString();
             } else {
                 expiresVal = "";
