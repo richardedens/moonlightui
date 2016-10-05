@@ -191,7 +191,7 @@
                     modules[module].views[name].__models = this.models;
                 }
                 cb();
-            };
+            }; 
             vw.__init = function() {
                 if (typeof modules[module].views[name].container !== 'undefined') {
                     modules[module].views[name].__container = $(modules[module].views[name].container);

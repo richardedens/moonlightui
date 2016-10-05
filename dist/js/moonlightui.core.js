@@ -10090,7 +10090,7 @@ return jQuery;
             $(document).ready(function() {
                 cb();
             });
-        }, 
+        },
         url: window.location,
         /* MOONLIGHTUI - Interaction from modules and controller */
         removeSelect: function(){
@@ -10184,7 +10184,7 @@ return jQuery;
             modules[tempModule].controllers[name] = ctrl;
             return this;
         },
-        view: function(name, view) {
+        view: function(name, view, render) {
             var vw = view(),
                 engine = this,
                 module = tempModule.slice(0);
@@ -10273,7 +10273,9 @@ return jQuery;
                 var self = this;
                 this.__loadTemplate(function(){
                     self.__loadModels(function(){
-                        self.render();
+                        if (typeof render !== 'undefined' && render === true) {
+                            self.render();
+                        }
                         self.__initialized = true;
                     });
                 });

@@ -62229,7 +62229,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             modules[tempModule].controllers[name] = ctrl;
             return this;
         },
-        view: function(name, view) {
+        view: function(name, view, render) {
             var vw = view(),
                 engine = this,
                 module = tempModule.slice(0);
@@ -62310,7 +62310,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     modules[module].views[name].__models = this.models;
                 }
                 cb();
-            };
+            }; 
             vw.__init = function() {
                 if (typeof modules[module].views[name].container !== 'undefined') {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
@@ -62318,7 +62318,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 var self = this;
                 this.__loadTemplate(function(){
                     self.__loadModels(function(){
-                        self.render();
+                        if (typeof render !== 'undefined' && render === true) {
+                            self.render();
+                        }
                         self.__initialized = true;
                     });
                 });
