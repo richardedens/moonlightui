@@ -14,6 +14,13 @@
         onready: function(cb) {
             jsPlumb.ready(cb);
         },
+        viewReady: function(module, view) {
+            if (modules[module].views[view].__template === false) {
+                return false;
+            } else {
+                return true;
+            }
+        },
         viewsReady: function() {
             $.each( modules, function( module, value ) {
                 $.each( modules[module].views, function( name, view ) {
