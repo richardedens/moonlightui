@@ -14,6 +14,17 @@
         onready: function(cb) {
             jsPlumb.ready(cb);
         },
+        viewsReady: function() {
+            $.each( modules, function( module, value ) {
+                $.each( modules[module].views, function( name, view ) {
+                    if (modules[module].views[name].__template === false) {
+                        return false;
+                    }
+                });
+            }).promise().done(function(){
+                return true;
+            });
+        },
         url: window.location,
         /* MOONLIGHTUI - Interaction from modules and controller */
         removeSelect: function(){
