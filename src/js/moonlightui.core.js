@@ -432,7 +432,7 @@
             return null;
         },
         eraseCookie: function(name) {
-            createCookie(name, "", -1);
+            this.createCookie(name, "", -1);
         },
         /* MOONLIGHTUI - Lets GO */
         reenergize: function(element) {
