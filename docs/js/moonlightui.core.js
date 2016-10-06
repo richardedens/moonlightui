@@ -10523,6 +10523,20 @@ return jQuery;
             /* MOONLIGHT UI - Will activate all custom click */
             $(element).find('[data-ml-action]').actions();
 
+        },
+        doGet: function(options, done, error){
+            $.ajax(options).done(function() {
+                done();
+            }).fail(function() {
+                error();
+            });
+        },
+        doPost: function(options, done, error) {
+            $.ajax(options).done(function() {
+                done();
+            }).fail(function() {
+                error();
+            });
         }
     });
     window.$ml = window.moonlightui = $.noConflict();

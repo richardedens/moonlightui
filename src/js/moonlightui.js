@@ -839,6 +839,20 @@
             /* MOONLIGHT UI - Enable all modal dialogs */
             $(element + ' .moonlightui').modals();
 
+        },
+        doGet: function(options, done, error){
+            $.ajax(options).done(function() {
+                done();
+            }).fail(function() {
+                error();
+            });
+        },
+        doPost: function(options, done, error) {
+            $.ajax(options).done(function() {
+                done();
+            }).fail(function() {
+                error();
+            });
         }
     });
     window.$ml = window.moonlightui = $.noConflict();
