@@ -10252,7 +10252,7 @@ return jQuery;
                         ajaxOptions.type = 'POST';
                         ajaxOptions.data = options.data;
                         if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
-                            ajaxOptions._token = window.moonlightuicfg.csrf_token;
+                            ajaxOptions._token = window.mlui_cfg.csrf_token;
                         }
                     }
                     $.ajax(ajaxOptions).done(function(data){
