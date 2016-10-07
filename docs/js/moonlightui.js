@@ -62950,24 +62950,17 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             $(element + ' .moonlightui').modals();
 
         },
-        doGET: function(optionsSet, done, error) {
-            var options = {
-                'url': optionsSet.url,
-                'method': 'GET',
-                'data': options.data
-            };
-            $.ajax(options).done(function () {
+        doGET: function(options, done, error){
+            $.ajax(options).done(function() {
                 done();
-            }).fail(function () {
+            }).fail(function() {
                 error();
             });
         },
-        doPOST: function(optionsSet, done, error) {
-            var options = {
-                'url' : optionsSet.url,
-                'method': 'POST',
-                'data' : options.data
-            };
+        doPOST: function(options, done, error) {
+            if (typeof options.data !== 'undefined') {
+                options.data = {};
+            }
             if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
                 options.data._token = window.mlui_cfg.csrf_token;
             }
