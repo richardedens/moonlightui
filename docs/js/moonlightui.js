@@ -62262,7 +62262,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             vw.__render = function(html) {
                 return html;
             };
-            vw.render = function(cb) {
+            vw.render = function(cb, options) {
                 modules[module].views[name].__container = $(modules[module].views[name].container);
                 modules[module].views[name].__container.html('<div class="moonlightui-preloader"><div class="moonlightui-speeding-wheel"></div></div>');
                 if (typeof cb === "undefined") {
@@ -62285,15 +62285,23 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                             engine.energize(modules[module].views[name].container);
                         }
                         cb(modules[module].views[name].__template, modules[module].views[name].__container);
-                    });
+                    }, options);
                 }
             };
-            vw.__loadTemplate = function(cb) {
+            vw.__loadTemplate = function(cb, options) {
                 if (typeof modules[module].views[name].templateURL !== 'undefined') {
-                    $.ajax({
+                    var ajaxOptions = {
                         url: modules[module].views[name].templateURL,
                         type: 'GET'
-                    }).done(function(data){
+                    };
+                    if (typeof options.data !== 'undefined') {
+                        ajaxOptions.type = 'POST';
+                        ajaxOptions.data = options.data;
+                        if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
+                            ajaxOptions._token = window.moonlightuicfg.csrf_token;
+                        }
+                    }
+                    $.ajax(ajaxOptions).done(function(data){
                         modules[module].views[name].__template = data;
                         if (typeof cb !== "undefined") {
                             cb(data);
