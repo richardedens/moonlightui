@@ -5109,4 +5109,45 @@ pre[class*="language-"] {
 .error-input input {
   border: none; }
 
+/* Preloader */
+.moonlightui-preloader {
+  width: 100%;
+  height: 31px;
+  text-align: center; }
+
+.moonlightui-speeding-wheel {
+  width: 31px;
+  height: 31px;
+  margin: 0 auto;
+  border: 2px solid rgba(97, 100, 193, 0.98);
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: moonlightui-cssload-spin 425ms infinite linear;
+  -o-animation: moonlightui-ssload-spin 425ms infinite linear;
+  -ms-animation: moonlightui-cssload-spin 425ms infinite linear;
+  -webkit-animation: moonlightui-cssload-spin 425ms infinite linear;
+  -moz-animation: moonlightui-cssload-spin 425ms infinite linear; }
+
+@keyframes moonlightui-cssload-spin {
+  100% {
+    transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@-o-keyframes moonlightui-cssload-spin {
+  100% {
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@-ms-keyframes moonlightui-cssload-spin {
+  100% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@-webkit-keyframes moonlightui-cssload-spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+@-moz-keyframes moonlightui-cssload-spin {
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
 /*# sourceMappingURL=moonlightui.css.map */

@@ -154,6 +154,8 @@
                         'MOONLIGHTUI - The view does not have a property "container". Inside the variable "container" needs to be a CSS selector for an HTML element.'
                     );
                 }
+                modules[module].views[name].__container = $(modules[module].views[name].container);
+                modules[module].views[name].__container.html('<div class="moonlightui-preloader"><div class="moonlightui-speeding-wheel"></div></div>');
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
@@ -163,6 +165,8 @@
                         engine.energize(modules[module].views[name].container);
                     }
                 } else {
+                    modules[module].views[name].__container = $(modules[module].views[name].container);
+                    modules[module].views[name].__container.html('<div class="ml-loader"><div class="ml-loader-wheel"></div></div>');
                     modules[module].views[name].__loadTemplate(function(){
                         modules[module].views[name].__container = $(modules[module].views[name].container);
                         modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
