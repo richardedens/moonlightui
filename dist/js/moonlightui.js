@@ -62459,6 +62459,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     }
                 });
             };
+            mdl.init = function() {
+                mdl.__initTwoWayBinding();
+            };
 
             // Save model into the module.
             modules[module].models[name] = mdl;

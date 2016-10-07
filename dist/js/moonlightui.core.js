@@ -10413,6 +10413,9 @@ return jQuery;
                     }
                 });
             };
+            mdl.init = function() {
+                mdl.__initTwoWayBinding();
+            };
 
             // Save model into the module.
             modules[module].models[name] = mdl;
