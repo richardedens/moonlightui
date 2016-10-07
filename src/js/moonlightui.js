@@ -831,14 +831,27 @@
             $(element + ' .moonlightui').modals();
 
         },
-        doGet: function(options, done, error){
-            $.ajax(options).done(function() {
+        doGET: function(optionsSet, done, error) {
+            var options = {
+                'url': optionsSet.url,
+                'method': 'GET',
+                'data': options.data
+            };
+            $.ajax(options).done(function () {
                 done();
-            }).fail(function() {
+            }).fail(function () {
                 error();
             });
         },
-        doPost: function(options, done, error) {
+        doPOST: function(optionsSet, done, error) {
+            var options = {
+                'url' : optionsSet.url,
+                'method': 'POST',
+                'data' : options.data
+            };
+            if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
+                options.data._token = window.mlui_cfg.csrf_token;
+            }
             $.ajax(options).done(function() {
                 done();
             }).fail(function() {

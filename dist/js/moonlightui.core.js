@@ -10514,14 +10514,27 @@ return jQuery;
             $(element).find('[data-ml-action]').actions();
 
         },
-        doGet: function(options, done, error){
+        doGET: function(optionsSet, done, error){
+            var options = {
+                'url' : optionsSet.url,
+                'method': 'GET',
+                'data' : options.data
+            };
             $.ajax(options).done(function() {
                 done();
             }).fail(function() {
                 error();
             });
         },
-        doPost: function(options, done, error) {
+        doPOST: function(optionsSet, done, error) {
+            var options = {
+                'url' : optionsSet.url,
+                'method': 'POST',
+                'data' : options.data
+            };
+            if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
+                options.data._token = window.mlui_cfg.csrf_token;
+            };
             $.ajax(options).done(function() {
                 done();
             }).fail(function() {
