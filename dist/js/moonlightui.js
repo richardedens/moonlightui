@@ -62335,22 +62335,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 }
                 cb();
             };
-            vw.__init = function() {
-                if (typeof modules[module].views[name].container !== 'undefined') {
-                    modules[module].views[name].__container = $(modules[module].views[name].container);
-                }
-                var self = this;
-                this.__loadTemplate(function(){
-                    self.__loadModels(function(){
-                        if (typeof render !== 'undefined' && render === true) {
-                            self.render();
-                        }
-                        self.__initialized = true;
-                    });
-                });
-            };
             modules[module].views[name] = vw;
-            vw.__init();
             return this;
         },
         model: function(name, model) {
