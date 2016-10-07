@@ -62210,7 +62210,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 return false;
             }
             this.each(function(){
-                $(this).on('click', function(){
+                $(this).on('click', function(event){
                     var tabAction = $(this).data('ml-action'),
                         controller = $(this).closest('[data-ml-controller]').data('ml-controller'),
                         module = $(this).closest('[data-ml-module]').data('ml-module');
@@ -62219,10 +62219,10 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         if (tabAction.indexOf(',') !== -1) {
                             var tabActions = tabAction.split(',');
                             for (var i = 0; i < tabActions.length; i++) {
-                                modules[module].controllers[controller][tabActions[i]](this);
+                                modules[module].controllers[controller][tabActions[i]](this, event);
                             }
                         } else {
-                            modules[module].controllers[controller][tabAction](this);
+                            modules[module].controllers[controller][tabAction](this, event);
                         }
                     }
                 });
