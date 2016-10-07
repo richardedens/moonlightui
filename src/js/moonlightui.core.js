@@ -143,16 +143,6 @@
                 return html;
             };
             vw.render = function(cb) {
-                if (modules[module].views[name].__template === false) {
-                    console.warn(
-                        'MOONLIGHTUI - The template is eighter not set with the variable "template" or "templateURL".'
-                    );
-                }
-                if (modules[module].views[name].__container === false) {
-                    console.warn(
-                        'MOONLIGHTUI - The view does not have a property "container". Inside the variable "container" needs to be a CSS selector for an HTML element.'
-                    );
-                }
                 modules[module].views[name].__container = $(modules[module].views[name].container);
                 modules[module].views[name].__container.html('<div class="moonlightui-preloader"><div class="moonlightui-speeding-wheel"></div></div>');
                 if (typeof cb === "undefined") {
