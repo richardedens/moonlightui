@@ -62296,9 +62296,11 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     };
                     if (typeof options !== 'undefined' && typeof options.data !== 'undefined') {
                         ajaxOptions.type = 'POST';
-                        ajaxOptions.data = options.data;
+                        ajaxOptions.data = {
+                            data: options.data
+                        };
                         if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
-                            ajaxOptions._token = window.mlui_cfg.csrf_token;
+                            ajaxOptions.data._token = window.mlui_cfg.csrf_token;
                         }
                     }
                     $.ajax(ajaxOptions).done(function(data){
