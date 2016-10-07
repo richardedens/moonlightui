@@ -62294,7 +62294,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         url: modules[module].views[name].templateURL,
                         type: 'GET'
                     };
-                    if (typeof options.data !== 'undefined') {
+                    if (typeof options !== 'undefined' && typeof options.data !== 'undefined') {
                         ajaxOptions.type = 'POST';
                         ajaxOptions.data = options.data;
                         if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
