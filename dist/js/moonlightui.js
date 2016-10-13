@@ -63005,15 +63005,19 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 options.data = {};
             }
             if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
-                options.data._token = window.mlui_cfg.csrf_token;
+                //options.data._token = window.mlui_cfg.csrf_token;
+                $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+                    jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.csrf_token);
+                    jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.csrf_token);
+                });
             }
             options.method = type;
             options.data = JSON.stringify(options.data);
             options.contentType = 'application/json; charset=utf-8';
             options.dataType = 'json';
             options.async = false;
-            $.ajax(options).done(function() {
-                done();
+            $.ajax(options).done(function(data) {
+                done(data);
             }).fail(function() {
                 error();
             });
