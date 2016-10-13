@@ -885,12 +885,15 @@
             if (typeof options.data === 'undefined') {
                 options.data = {};
             }
+            if (typeof window.mlui_cfg.jwt_token !== 'undefined') {
+                $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+                    jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
+                    jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
+                });
+            }
             if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
                 options.data._token = window.mlui_cfg.csrf_token;
-                $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-                    jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.csrf_token);
-                    jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.csrf_token);
-                });
+
             }
             options.method = type;
             options.data = JSON.stringify(options.data);
