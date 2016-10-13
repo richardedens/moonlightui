@@ -10349,11 +10349,17 @@ return jQuery;
                 mdl[param] = value;
                 $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function()
                 {
+                    if ($(this).is( ":checkbox" )) {
+                        if (modules[module].models[model][param] === 1) {
+                            $(this).prop('checked', true);
+                        } else {
+                            $(this).prop('checked', false);
+                        }
+                    }
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
                         $(this).is( "select" ) ||
-                        $(this).is( "checkbox" ) ||
-                        $(this).is( "radio" )) {
+                        $(this).is( ":radio" )) {
                         $(this).val(value);
                     } else {
                         $(this).html(value);
@@ -10366,7 +10372,7 @@ return jQuery;
             };
             mdl.__broadcast = function(model, param){
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
-                    if ($(this).is( "checkbox" )) {
+                    if ($(this).is( ":checkbox" )) {
                         if (modules[module].models[model][param] === 1) {
                             $(this).prop('checked', true);
                         } else {
@@ -10376,7 +10382,7 @@ return jQuery;
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
                         $(this).is( "select" ) ||
-                        $(this).is( "radio" )) {
+                        $(this).is( ":radio" )) {
                         $(this).val(modules[module].models[model][param]);
                     } else {
                         $(this).html(modules[module].models[model][param]);
@@ -10418,8 +10424,8 @@ return jQuery;
                             });
                         }
                         if ($(this).is( "input" ) ||
-                            $(this).is( ":textarea" ) ||
-                            $(this).is( ":select" ) ) {
+                            $(this).is( "textarea" ) ||
+                            $(this).is( "select" ) ) {
                             $(this).val(modules[module].models[model][param]);
                             if ($(this).is( "input" ) || $(this).is( "textarea" )) {
                                 $(this).on('keyup', function () {
