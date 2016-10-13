@@ -276,11 +276,17 @@
                 mdl[param] = value;
                 $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function()
                 {
+                    if ($(this).is( ":checkbox" )) {
+                        if (modules[module].models[model][param] === 1) {
+                            $(this).prop('checked', true);
+                        } else {
+                            $(this).prop('checked', false);
+                        }
+                    }
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
                         $(this).is( "select" ) ||
-                        $(this).is( "checkbox" ) ||
-                        $(this).is( "radio" )) {
+                        $(this).is( ":radio" )) {
                         $(this).val(value);
                     } else {
                         $(this).html(value);
@@ -293,7 +299,7 @@
             };
             mdl.__broadcast = function(model, param){
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
-                    if ($(this).is( "checkbox" )) {
+                    if ($(this).is( ":checkbox" )) {
                         if (modules[module].models[model][param] === 1) {
                             $(this).prop('checked', true);
                         } else {
@@ -303,7 +309,7 @@
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
                         $(this).is( "select" ) ||
-                        $(this).is( "radio" )) {
+                        $(this).is( ":radio" )) {
                         $(this).val(modules[module].models[model][param]);
                     } else {
                         $(this).html(modules[module].models[model][param]);
@@ -318,7 +324,7 @@
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0],
                             param = modelParameter[1];
-                        if ($(this).is( "checkbox" )) {
+                        if ($(this).is( ":checkbox" )) {
                             if (modules[module].models[model][param] === 1)
                             {
                                 $(this).prop('checked', true);
@@ -330,7 +336,7 @@
                                 modules[module].models[model].__broadcast(model, param);
                             });
                         }
-                        if ($(this).is( "radio" )) {
+                        if ($(this).is( ":radio" )) {
                             if (modules[module].models[model][param] === 1)
                             {
                                 $(this).prop('checked', true);

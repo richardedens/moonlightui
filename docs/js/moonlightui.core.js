@@ -10391,7 +10391,7 @@ return jQuery;
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0],
                             param = modelParameter[1];
-                        if ($(this).is( "checkbox" )) {
+                        if ($(this).is( ":checkbox" )) {
                             if (modules[module].models[model][param] === 1)
                             {
                                 $(this).prop('checked', true);
@@ -10403,7 +10403,7 @@ return jQuery;
                                 modules[module].models[model].__broadcast(model, param);
                             });
                         }
-                        if ($(this).is( "radio" )) {
+                        if ($(this).is( ":radio" )) {
                             if (modules[module].models[model][param] === 1)
                             {
                                 $(this).prop('checked', true);
@@ -10416,10 +10416,10 @@ return jQuery;
                                     modules[module].models[model].__broadcast(model, param);
                                 }
                             });
-                        } 
+                        }
                         if ($(this).is( "input" ) ||
-                            $(this).is( "textarea" ) ||
-                            $(this).is( "select" ) ) {
+                            $(this).is( ":textarea" ) ||
+                            $(this).is( ":select" ) ) {
                             $(this).val(modules[module].models[model][param]);
                             if ($(this).is( "input" ) || $(this).is( "textarea" )) {
                                 $(this).on('keyup', function () {
