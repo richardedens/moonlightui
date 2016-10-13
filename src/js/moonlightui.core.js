@@ -498,7 +498,7 @@
                 $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
                     jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.csrf_token);
                     jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.csrf_token);
-                });
+                }); 
             }
             options.method = type;
             options.data = JSON.stringify(options.data);
