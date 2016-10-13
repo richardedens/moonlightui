@@ -62396,7 +62396,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function()
                 {
                     if ($(this).is( ":checkbox" )) {
-                        if (modules[module].models[model][param] === 1) {
+                        if (value === 1) {
                             $(this).prop('checked', true);
                         } else {
                             $(this).prop('checked', false);
