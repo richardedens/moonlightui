@@ -63008,6 +63008,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
                     jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
+                    jqXHR.setRequestHeader('Authorization', 'Bearer' + window.mlui_cfg.jwt_bearer);
                 });
             }
             if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
