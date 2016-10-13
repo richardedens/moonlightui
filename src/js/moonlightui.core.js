@@ -480,13 +480,23 @@
                 error();
             });
         },
-        doPOST: function(options, done, error) {
+        doPUT: function(options, done, error){
+            this.doPOSTPUTDELETE('PUT', options, done, error);
+        },
+        doPOST: function(options, done, error){
+            this.doPOSTPUTDELETE('POST', options, done, error);
+        },
+        doDELETE: function(options, done, error){
+            this.doPOSTPUTDELETE('DELETE', options, done, error);
+        },
+        doPOSTPUTDELETE: function(type, options, done, error) {
             if (typeof options.data !== 'undefined') {
                 options.data = {};
             }
             if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
                 options.data._token = window.mlui_cfg.csrf_token;
             }
+            options.method = type;
             $.ajax(options).done(function() {
                 done();
             }).fail(function() {
