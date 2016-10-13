@@ -490,7 +490,7 @@
             this.doPOSTPUTDELETE('DELETE', options, done, error);
         },
         doPOSTPUTDELETE: function(type, options, done, error) {
-            if (typeof options.data !== 'undefined') {
+            if (typeof options.data === 'undefined') {
                 options.data = {};
             }
             if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
