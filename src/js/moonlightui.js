@@ -889,6 +889,10 @@
                 options.data._token = window.mlui_cfg.csrf_token;
             }
             options.method = type;
+            options.data = JSON.stringify(options.data);
+            options.contentType = 'application/json; charset=utf-8';
+            options.dataType = 'json';
+            options.async = false;
             $.ajax(options).done(function() {
                 done();
             }).fail(function() {
