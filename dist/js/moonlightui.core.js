@@ -10374,7 +10374,7 @@ return jQuery;
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
                     if ($(this).is( ":checkbox" )) {
                         $(this).prop('checked', modules[module].models[model][param]);
-                    } 
+                    }
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
                         $(this).is( "select" ) ||
@@ -10394,7 +10394,7 @@ return jQuery;
                             model = modelParameter[0],
                             param = modelParameter[1];
                         if ($(this).is( ":checkbox" )) {
-                            if (modules[module].models[model][param] === 1)
+                            if (modules[module].models[model][param] === true)
                             {
                                 $(this).prop('checked', true);
                             } else {
@@ -10406,7 +10406,7 @@ return jQuery;
                             });
                         }
                         if ($(this).is( ":radio" )) {
-                            if (modules[module].models[model][param] === 1)
+                            if (modules[module].models[model][param] === true)
                             {
                                 $(this).prop('checked', true);
                             } else {

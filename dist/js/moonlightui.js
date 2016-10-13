@@ -62440,7 +62440,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                             model = modelParameter[0],
                             param = modelParameter[1];
                         if ($(this).is( ":checkbox" )) {
-                            if (modules[module].models[model][param] === 1)
+                            if (modules[module].models[model][param] === true)
                             {
                                 $(this).prop('checked', true);
                             } else {
@@ -62452,7 +62452,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                             });
                         }
                         if ($(this).is( ":radio" )) {
-                            if (modules[module].models[model][param] === 1)
+                            if (modules[module].models[model][param] === true)
                             {
                                 $(this).prop('checked', true);
                             } else {

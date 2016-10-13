@@ -10394,7 +10394,7 @@ return jQuery;
                             model = modelParameter[0],
                             param = modelParameter[1];
                         if ($(this).is( ":checkbox" )) {
-                            if (modules[module].models[model][param] === 1)
+                            if (modules[module].models[model][param] === true)
                             {
                                 $(this).prop('checked', true);
                             } else {
@@ -10406,7 +10406,7 @@ return jQuery;
                             });
                         }
                         if ($(this).is( ":radio" )) {
-                            if (modules[module].models[model][param] === 1)
+                            if (modules[module].models[model][param] === true)
                             {
                                 $(this).prop('checked', true);
                             } else {
