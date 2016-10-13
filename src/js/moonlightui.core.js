@@ -298,11 +298,7 @@
             mdl.__broadcast = function(model, param){
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
                     if ($(this).is( ":checkbox" )) {
-                        if (modules[module].models[model][param] === 1) {
-                            $(this).prop('checked', true);
-                        } else {
-                            $(this).prop('checked', false);
-                        }
+                        $(this).prop('checked', modules[module].models[model][param]);
                     }
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
