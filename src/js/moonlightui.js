@@ -293,10 +293,16 @@
             };
             mdl.__broadcast = function(model, param){
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
+                    if ($(this).is( "checkbox" )) {
+                        if (modules[module].models[model][param] === 1) {
+                            $(this).prop('checked', true);
+                        } else {
+                            $(this).prop('checked', false);
+                        }
+                    }
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
                         $(this).is( "select" ) ||
-                        $(this).is( "checkbox" ) ||
                         $(this).is( "radio" )) {
                         $(this).val(modules[module].models[model][param]);
                     } else {
@@ -312,11 +318,35 @@
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0],
                             param = modelParameter[1];
+                        if ($(this).is( "checkbox" )) {
+                            if (modules[module].models[model][param] === 1)
+                            {
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                            $(this).on('click', function () {
+                                modules[module].models[model][param] = $(this).prop('checked');
+                                modules[module].models[model].__broadcast(model, param);
+                            });
+                        }
+                        if ($(this).is( "radio" )) {
+                            if (modules[module].models[model][param] === 1)
+                            {
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                            $(this).on('click', function () {
+                                if ($(this).prop('checked')) {
+                                    modules[module].models[model][param] = $(this).val();
+                                    modules[module].models[model].__broadcast(model, param);
+                                }
+                            });
+                        }
                         if ($(this).is( "input" ) ||
                             $(this).is( "textarea" ) ||
-                            $(this).is( "select" ) ||
-                            $(this).is( "checkbox" ) ||
-                            $(this).is( "radio" )) {
+                            $(this).is( "select" ) ) {
                             $(this).val(modules[module].models[model][param]);
                             if ($(this).is( "input" ) || $(this).is( "textarea" )) {
                                 $(this).on('keyup', function () {
@@ -324,14 +354,13 @@
                                     modules[module].models[model].__broadcast(model, param);
                                 });
                             }
-                            if ($(this).is( "select" ) ||
-                                $(this).is( "checkbox" ) ||
-                                $(this).is( "radio" )) {
+                            if ($(this).is( "select" )) {
                                 $(this).on('change', function () {
                                     modules[module].models[model][param] = $(this).val();
                                     modules[module].models[model].__broadcast(model, param);
                                 });
                             }
+
                         } else {
                             $(this).html(modules[module].models[model][param]);
                         }
