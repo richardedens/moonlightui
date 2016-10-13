@@ -10576,8 +10576,8 @@ return jQuery;
             options.contentType = 'application/json; charset=utf-8';
             options.dataType = 'json';
             options.async = false;
-            $.ajax(options).done(function() {
-                done();
+            $.ajax(options).done(function(data) {
+                done(data);
             }).fail(function() {
                 error();
             });
