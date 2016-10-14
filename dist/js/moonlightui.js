@@ -62627,11 +62627,11 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         },
         getModule: function(name)
         {
-            if (typeof modules[parent] !== 'undefined') {
+            if (typeof modules[name] !== 'undefined') {
                 if (debugMode) {
                     console.info(labelLib + 'Get model: ' + name);
                 }
-                return modules[parent];
+                return modules[name];
             }
         },
         getModel: function(parent, name)
