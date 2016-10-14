@@ -10297,7 +10297,7 @@ return jQuery;
                 if (debugMode) {
                     console.info(labelLib + 'Reset module: ' + module + ' view: ' + name);
                 }
-                modules[module].views[name].__container.html();
+                modules[module].views[name].__container.html('');
             };
             vw.render = function(cb, options) {
                 if (debugMode) {
