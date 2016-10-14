@@ -506,6 +506,15 @@
 
             return this;
         },
+        getModule: function(name)
+        {
+            if (typeof modules[parent] !== 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Get model: ' + name);
+                }
+                return modules[parent];
+            }
+        },
         getModel: function(parent, name)
         {
             if (typeof modules[parent].models[name] !== 'undefined') {
