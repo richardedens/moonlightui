@@ -10697,7 +10697,7 @@ return jQuery;
                 console.info(labelLib + 'Erase cookie name: ' + name);
             }
             this.createCookie(name, "", -1);
-        }, 
+        },
         /* MOONLIGHTUI - Lets GO */
         deenergize: function(element) {
             if (debugMode) {

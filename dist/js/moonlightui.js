@@ -62662,10 +62662,10 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     if (debugMode) {
                         console.info(labelLib + 'Tab click tab:' +  $(this).data('ml-tab'));
                     }
-                    $(this).parents('.active').removeClass('active');
+                    $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
                     var tab = $(this).data('ml-tab');
-                    $('#' + tab).parents('.active').removeClass('active');
+                    $('#' + tab).parent().find('.active').removeClass('active');
                     $('#' + tab).addClass('active');
                 });
             });
