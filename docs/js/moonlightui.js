@@ -62127,83 +62127,133 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
 }(this, function ($) {
     var callbacks = [],
         modules = {},
+        actions = [],
+        debugMode = false,
+        labelLib = 'MOONLIGHTUI - ',
         tempModule;
     $.fn.extend({
         /* MOONLIGHTUI - System */
         onready: function(cb) {
+            if (debugMode) {
+                console.info(labelLib + 'We are initializing the onready.');
+            }
             jsPlumb.ready(cb);
         },
+        url: window.location,
+        debug: function(setAs) {
+            debugMode = setAs;
+        },
         viewReady: function(module, view) {
+            if (debugMode) {
+                console.info(labelLib + 'Triggered viewReady for module: ' + module + ' view: ' + view);
+            }
             if (modules[module].views[view].__template === false) {
                 return false;
             } else {
                 return true;
             }
         },
-        viewsReady: function() {
+        viewsReady: function(cb) {
+            if (debugMode) {
+                console.info(labelLib + 'Triggered viewsReady.');
+            }
             $.each( modules, function( module, value ) {
                 $.each( modules[module].views, function( name, view ) {
                     if (modules[module].views[name].__template === false) {
-                        return false;
+                        if (typeof cb !== 'undefined') {
+                            cb(false);
+                        } else {
+                            return false;
+                        }
                     }
                 });
             }).promise().done(function(){
-                return true;
+                if (typeof cb !== 'undefined') {
+                    cb(true);
+                } else {
+                    return true;
+                }
             });
         },
-        url: window.location,
         /* MOONLIGHTUI - Interaction from modules and controller */
         removeSelect: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Remove select.');
+            }
             $(this).each(function(){
                 $(this).removeClass('selected');
             });
         },
         addSelect: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Add select.');
+            }
             $(this).each(function(){
                 $(this).addClass('selected');
             });
         },
         removeHidden: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Remove hidden.');
+            }
             $(this).each(function(){
                 $(this).removeClass('hidden');
             });
         },
         addHidden: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Add hidden.');
+            }
             $(this).each(function(){
                 $(this).addClass('hidden');
             });
         },
         removeErrorInput: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Remove error input.');
+            }
             $(this).each(function(){
                 $(this).removeClass('error-input');
             });
         },
         addErrorInput: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Add error input.');
+            }
             $(this).each(function(){
                 $(this).addClass('error-input');
             });
         },
         scrollToElement: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Scroll to element');
+            }
             $(this).get(0).scrollIntoView();
         },
         registerCallback: function(identifier, fn) {
+            if (debugMode) {
+                console.info(labelLib + 'Register a callback. Identifier: ' + identifier);
+            }
             callbacks[identifier] = fn;
         },
         actions: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Attach actions.');
+            }
             function findModuleAndController(element, fnc)
             {
                 var controller = $(element).closest('[data-ml-controller]').data('ml-controller');
                 var module = $(element).closest('[data-ml-module]').data('ml-module');
                 if (typeof modules[module] === 'undefined') {
-                    console.warn('MOONLIGHTUI - Module "' + module + '" is not defined');
+                    console.warn(labelLib + 'Module "' + module + '" is not defined');
                     return true;
                 }
                 if (typeof modules[module].controllers[controller] === 'undefined') {
-                    console.warn('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" is not defined');
+                    console.warn(labelLib + 'Controller "' + controller + '" on module "' + module + '" is not defined');
                     return true;
                 } else {
                     if (typeof modules[module].controllers[controller][fnc] === 'undefined') {
-                        console.warn('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" with function "' + fnc + '" is not defined');
+                        console.warn(labelLib + 'Controller "' + controller + '" on module "' + module + '" with function "' + fnc + '" is not defined');
                         return true;
                     }
                 }
@@ -62215,6 +62265,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         controller = $(this).closest('[data-ml-controller]').data('ml-controller'),
                         module = $(this).closest('[data-ml-module]').data('ml-module');
                     var error = findModuleAndController(this, tabAction);
+                    if (debugMode) {
+                        console.info(labelLib + 'Click event executed for module: ' + module + ' controller: ' + controller + ' action: ' + tabAction);
+                    }
                     if (error === false) {
                         if (tabAction.indexOf(',') !== -1) {
                             var tabActions = tabAction.split(',');
@@ -62232,6 +62285,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         module: function(name) {
             tempModule = name;
             if (typeof modules[name] === 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Created module: ' + name);
+                }
                 modules[name] = {
                     controllers: {},
                     models: {},
@@ -62244,6 +62300,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             var ctrl = controller(),
                 module = tempModule.slice(0);
             ctrl.__module = module;
+            if (debugMode) {
+                console.info(labelLib + 'Created controller: ' + name);
+            }
             modules[tempModule].controllers[name] = ctrl;
             return this;
         },
@@ -62259,15 +62318,38 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             vw.__container = false;
             vw.__models = false;
             vw.__initialized = false;
+            vw.__cached = '';
             vw.__render = function(html) {
                 return html;
             };
+            vw.refresh = function() {
+                if (debugMode) {
+                    console.info(labelLib + 'Refreshing module: ' + module + ' view: ' + name);
+                }
+                modules[module].views[name].__container.html(modules[module].views[name].__cached);
+                if (modules[module].views[name].__initialized === true) {
+                    engine.reenergize(modules[module].views[name].container);
+                } else {
+                    engine.energize(modules[module].views[name].container);
+                }
+            };
+            vw.reset = function() {
+                if (debugMode) {
+                    console.info(labelLib + 'Reset module: ' + module + ' view: ' + name);
+                }
+                modules[module].views[name].__container.html();
+            };
             vw.render = function(cb, options) {
+                if (debugMode) {
+                    console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
+                }
                 modules[module].views[name].__container = $(modules[module].views[name].container);
                 modules[module].views[name].__container.html('<div class="moonlightui-preloader"><div class="moonlightui-speeding-wheel"></div></div>');
+                modules[module].views[name].__cached = modules[module].views[name].__container.html();
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                    modules[module].views[name].__cached = modules[module].views[name].__container.html();
                     if (modules[module].views[name].__initialized === true) {
                         engine.reenergize(modules[module].views[name].container);
                     } else {
@@ -62279,6 +62361,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     modules[module].views[name].__loadTemplate(function(){
                         modules[module].views[name].__container = $(modules[module].views[name].container);
                         modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                        modules[module].views[name].__cached = modules[module].views[name].__container.html();
                         if (modules[module].views[name].__initialized === true) {
                             engine.reenergize(modules[module].views[name].container);
                         } else {
@@ -62304,6 +62387,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         }
                     }
                     $.ajax(ajaxOptions).done(function(data){
+                        if (debugMode) {
+                            console.info(labelLib + 'Loadtemplate completed module: ' + module + ' view: ' + name);
+                        }
                         modules[module].views[name].__template = data;
                         if (typeof cb !== "undefined") {
                             cb(data);
@@ -62311,7 +62397,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                             return data;
                         }
                     }).fail(function(){
-                        console.warn('MOONLIGHTUI - We cant load template with url: ' + this.templateURL);
+                        console.warn(labelLib + 'We cant load template with url: ' + this.templateURL);
                         if (typeof cb !== "undefined") {
                             cb("");
                         } else {
@@ -62320,6 +62406,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     });
                 }
                 if (typeof this.template !== 'undefined') {
+                    if (debugMode) {
+                        console.info(labelLib + 'Set the template from a string module: ' + module + ' view: ' + name + ' template: ' + this.template);
+                    }
                     modules[module].views[name].__template = this.template;
                     if (typeof cb !== "undefined") {
                         cb(this.template);
@@ -62330,12 +62419,19 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 return this.__template;
             };
             vw.__loadModels = function(cb) {
+                if (debugMode) {
+                    console.info(labelLib + 'Load models on view: ' + module + ' view: ' + name + ' models: ');
+                    console.info(this.models);
+                }
                 if (typeof this.models !== 'undefined') {
                     modules[module].views[name].__models = this.models;
                 }
                 cb();
             };
             modules[module].views[name] = vw;
+            if (debugMode) {
+                console.info(labelLib + 'Created view: ' + name);
+            }
             return this;
         },
         model: function(name, model) {
@@ -62348,6 +62444,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             mdl.__error = '';
             mdl.__module = module;
             mdl.removeError = function() {
+                if (debugMode) {
+                    console.info(labelLib + 'Remove error: ' + module + ' model: ' + name);
+                }
                 modules[module].models[name].__error = '';
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
                     if ($(this).is( "input" ) ||
@@ -62363,6 +62462,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 });
             };
             mdl.addError = function(value) {
+                if (debugMode) {
+                    console.info(labelLib + 'Add error: ' + module + ' model: ' + name);
+                }
                 modules[module].models[name].__error = value;
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
                     if ($(this).is( "input" ) ||
@@ -62378,9 +62480,17 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 });
             };
             mdl.getError = function(value) {
+                if (debugMode) {
+                    console.info(labelLib + 'Get error: ' + module + ' model: ' + name + ' value: ');
+                    console.info(value);
+                }
                 return modules[module].models[name].__error;
             };
             mdl.get = function(param, defaultValue) {
+                if (debugMode) {
+                    console.info(labelLib + 'Get: ' + module + ' model: ' + name + ' default value: ');
+                    console.info(defaultValue);
+                }
                 if (typeof defaultValue === 'undefined') {
                     defaultValue = '';
                 }
@@ -62392,6 +62502,10 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 }
             };
             mdl.set = function(param, value) {
+                if (debugMode) {
+                    console.info(labelLib + 'Set: ' + module + ' model: ' + name + ' value: ');
+                    console.info(value);
+                }
                 mdl[param] = value;
                 $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function()
                 {
@@ -62414,9 +62528,15 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             };
             mdl.__on = {};
             mdl.receive = function(cb) {
+                if (debugMode) {
+                    console.info(labelLib + 'Set receive module: ' + module + ' model: ' + name);
+                }
                 mdl.__on = cb;
             };
             mdl.__broadcast = function(model, param){
+                if (debugMode) {
+                    console.info(labelLib + 'Broadcast: ' + module + ' model: ' + name);
+                }
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
                     if ($(this).is( ":checkbox" )) {
                         $(this).prop('checked', modules[module].models[model][param]);
@@ -62433,6 +62553,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 modules[module].models[model].__on(param);
             };
             mdl.__initTwoWayBinding = function(){
+                if (debugMode) {
+                    console.info(labelLib + 'Init two-way databinding module: ' + module + ' model: ' + name);
+                }
                 // Attach two-way databinding
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model*="' + name + '."]').each(function(){
                     if ($(this).data('ml-model').indexOf('.') !== -1) {
@@ -62486,7 +62609,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                             $(this).html(modules[module].models[model][param]);
                         }
                     } else {
-                        console.warn('MOONLIGHTUI - You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + module + '"');
+                        console.warn(labelLib + 'You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + module + '"');
                     }
                 });
             };
@@ -62505,38 +62628,59 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         getModel: function(parent, name)
         {
             if (typeof modules[parent].models[name] !== 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Get model: ' + name);
+                }
                 return modules[parent].models[name];
             }
         },
         getController: function(parent, name)
         {
             if (typeof modules[parent].controllers[name] !== 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Get controller: ' + name);
+                }
                 return modules[parent].controllers[name];
             }
         },
         getView: function(parent, name)
         {
             if (typeof modules[parent].views[name] !== 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Get view: ' + name);
+                }
                 return modules[parent].views[name];
             }
         },
         /* MOONLIGHTUI - UI components */
         tabs : function() {
+            if (debugMode) {
+                console.info(labelLib + 'Activate tabs');
+            }
             $(this).each(function(){
                 $(this).on('click', function(){
-                    $(this).parent().find('.active').removeClass('active');
+                    if (debugMode) {
+                        console.info(labelLib + 'Tab click tab:' +  $(this).data('ml-tab'));
+                    }
+                    $(this).parents('.active').removeClass('active');
                     $(this).addClass('active');
                     var tab = $(this).data('ml-tab');
-                    $('#' + tab).parent().find('.active').removeClass('active');
+                    $('#' + tab).parents('.active').removeClass('active');
                     $('#' + tab).addClass('active');
                 });
             });
         },
         tabSwitch : function() {
+            if (debugMode) {
+                console.info(labelLib + 'Activate tab switch');
+            }
             $(this).each(function(){
                 $(this).on('click', function(){
                     var collection = $(this).data('ml-tab-switch');
                     var tab = {};
+                    if (debugMode) {
+                        console.info(labelLib + 'Tab switch click: ' + collection);
+                    }
                     if (collection.indexOf(',') !== -1) {
                         var tabs = collection.split(',');
                         for (var i = 0; i < tabs.length; i++) {
@@ -62557,11 +62701,20 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             });
         },
         buttons : function() {
+            if (debugMode) {
+                console.info(labelLib + 'Activate buttons');
+            }
             $(this).each(function() {
                 $(this).on('mousedown', function () {
+                    if (debugMode) {
+                        console.info(labelLib + 'Button mousedown.');
+                    }
                     $(this).addClass('down');
                 });
                 $(this).on('mouseup', function () {
+                    if (debugMode) {
+                        console.info(labelLib + 'Button mouseup:' +  $(this).data('click'));
+                    }
                     $(this).removeClass('down');
                     if (typeof $(this).data('click') !== 'undefined') {
                         var click = $(this).data('click');
@@ -62571,51 +62724,83 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             });
         },
         trees: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Init JSTrees');
+            }
             $(this).each(function(){
                 $(this).jstree();
                 $(this).removeClass('hidden');
             });
         },
         showComponents: function() {
+            if (debugMode) {
+                console.info(labelLib + 'Init showComponents');
+            }
             $(this).each(function(){
                 $(this).on('click', function(){
                     var show = $(this).data('ml-show');
                     if (show.indexOf(',') !== -1) {
                         var elements = show.split(',');
                         for (var i = 0; i < elements.length; i++) {
+                            if (debugMode) {
+                                console.info(labelLib + 'Show component: ' + elements[i]);
+                            }
                             $('#' + elements[i]).removeClass('hidden');
                         }
                     } else {
+                        if (debugMode) {
+                            console.info(labelLib + 'Show component: ' + show);
+                        }
                         $('#' + show).removeClass('hidden');
                     }
                 });
             });
         },
         hideComponents: function() {
+            if (debugMode) {
+                console.info(labelLib + 'Init hideComponents');
+            }
             $(this).each(function(){
                 $(this).on('click', function(){
                     var hide = $(this).data('ml-hide');
                     if (hide.indexOf(',') !== -1) {
                         var elements = hide.split(',');
                         for (var i = 0; i < elements.length; i++) {
+                            if (debugMode) {
+                                console.info(labelLib + 'Hide component: ' + elements[i]);
+                            }
                             $('#' + elements[i]).addClass('hidden');
                         }
                     } else {
+                        if (debugMode) {
+                            console.info(labelLib + 'Hide component: ' + hide);
+                        }
                         $('#' + hide).addClass('hidden');
                     }
                 });
             });
         },
         draggableComponents: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Init draggable components.');
+            }
             $('.moonlightui-layout-left').droppable({
                 accept: '.moonlightui-component',
                 drop: function (event, ui) {
+                    if (debugMode) {
+                        console.info(labelLib + 'Drop.');
+                        console.info(ui);
+                    }
                     $(this).append(ui.draggable);
                 }
             });
             $('.moonlightui-layout-right').droppable({
                 accept: '.moonlightui-component',
                 drop: function (event, ui) {
+                    if (debugMode) {
+                        console.info(labelLib + 'Drop.');
+                        console.info(ui);
+                    }
                     $(this).append(ui.draggable);
                 }
             });
@@ -62624,6 +62809,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             $('.moonlightui-component-draggable').draggable({revert: true, scroll: false});
         },
         tooltips: function() {
+            if (debugMode) {
+                console.info(labelLib + 'Init draggable tooltips.');
+            }
             $('[data-ml-tooltip-active="true"]').on('mouseover', function () {
                 var title = $(this).data('ml-tooltip');
                 $('.moonlightui-tooltip').html(title);
@@ -62642,17 +62830,29 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             });
         },
         showModal: function() {
+            if (debugMode) {
+                console.info(labelLib + 'Show modal.');
+            }
             this.css({top:'50%',left:'50%',margin:'-'+($(this).height() / 2)+'px 0 0 -'+($(this).width() / 2)+'px'});
             this.removeHidden();
         },
         hideModal: function() {
+            if (debugMode) {
+                console.info(labelLib + 'Hide modal.');
+            }
             this.addHidden();
         },
         centerModal: function () {
+            if (debugMode) {
+                console.info(labelLib + 'Center modal.');
+            }
             this.css({top:'50%',left:'50%',margin:'-'+($(this).height() / 2)+'px 0 0 -'+($(this).width() / 2)+'px'});
             return this;
         },
         modals: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Init modals.');
+            }
             var bottomScale = false;
             $('.moonlightui-modal').draggable({
                 scroll: false,
@@ -62752,6 +62952,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             });
         },
         showHelp: function() {
+            if (debugMode) {
+                console.info(labelLib + 'Init show help.');
+            }
             $(this).each(function() {
                 var url = $(this).data('ml-help-url');
                 var title = $(this).data('ml-help-title');
@@ -62808,6 +63011,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         laravel: {
             http: {
                 get: function (url, data, cb, fail) {
+                    if (debugMode) {
+                        console.info(labelLib + 'laravel - http - get - url: ' + url + ' data: ' + JSON.stringify(data));
+                    }
                     $.ajax({
                         url: url,
                         method: 'GET',
@@ -62820,6 +63026,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     });
                 },
                 post: function (url, data, cb, fail) {
+                    if (debugMode) {
+                        console.info(labelLib + 'laravel - http - post - url: ' + url + ' data: ' + JSON.stringify(data));
+                    }
                     var settings = $().getModel('moonlightui', 'settings');
                     data._token = settings.get('csrfToken');
                     $.ajax({
@@ -62834,6 +63043,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     });
                 },
                 put: function (url, data, cb, fail) {
+                    if (debugMode) {
+                        console.info(labelLib + 'laravel - http - put - url: ' + url + ' data: ' + JSON.stringify(data));
+                    }
                     data._token = window.csrfToken;
                     $.ajax({
                         url: url,
@@ -62847,6 +63059,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     });
                 },
                 delete: function (url, data, cb, fail) {
+                    if (debugMode) {
+                        console.info(labelLib + 'laravel - http - delete - url: ' + url + ' data: ' + JSON.stringify(data));
+                    }
                     data._token = window.csrfToken;
                     $.ajax({
                         url: url,
@@ -62862,6 +63077,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             }
         },
         createCookie: function(name, value, days) {
+            if (debugMode) {
+                console.info(labelLib + 'Create cookie name: ' + name + ' value: ' + JSON.stringify(value) + ' days: ' + days);
+            }
             var dateVal, expiresVal;
             if (days) {
                 dateVal = new Date();
@@ -62873,6 +63091,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             document.cookie = name + "=" + value + expiresVal + "; path=/";
         },
         readCookie: function(name) {
+            if (debugMode) {
+                console.info(labelLib + 'Read cookie name: ' + name);
+            }
             var nameEQ = name + "=";
             var ca = document.cookie.split(';');
             var c = 0;
@@ -62888,10 +63109,16 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             return null;
         },
         eraseCookie: function(name) {
+            if (debugMode) {
+                console.info(labelLib + 'Erase cookie name: ' + name);
+            }
             this.createCookie(name, "", -1);
         },
         /* MOONLIGHTUI - Lets GO */
-        reenergize: function(element) {
+        deenergize: function(element) {
+            if (debugMode) {
+                console.info(labelLib + 'DE-ENERGIZE');
+            }
 
             /* MOONLIGHT UI - Tab's */
             $(element + ' .moonlightui-tab').off();
@@ -62930,6 +63157,12 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
 
             /* Detach two-way databinding */
             $(element).find('[data-ml-model]').off();
+        },
+        reenergize: function(element) {
+            if (debugMode) {
+                console.info(labelLib + 'RE-ENERGIZE');
+            }
+            this.deenergize(element);
 
             /* Attach model two way databinding */
             for (var module in modules) {
@@ -62942,6 +63175,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
 
         },
         energize: function(element) {
+            if (debugMode) {
+                console.info(labelLib + 'ENERGIZE');
+            }
 
             /* MOONLIGHT UI - Tree's */
             $(element + ' .moonlightui-tree').trees();
@@ -62985,6 +63221,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
 
         },
         doGET: function(options, done, error){
+            if (debugMode) {
+                console.info(labelLib + 'doGET ' + JSON.stringify(options));
+            }
             $.ajax(options).done(function() {
                 done();
             }).fail(function() {
@@ -62992,12 +63231,21 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             });
         },
         doPUT: function(options, done, error){
+            if (debugMode) {
+                console.info(labelLib + 'doPUT ' + JSON.stringify(options));
+            }
             this.doPOSTPUTDELETE('PUT', options, done, error);
         },
         doPOST: function(options, done, error){
+            if (debugMode) {
+                console.info(labelLib + 'doPOST ' + JSON.stringify(options));
+            }
             this.doPOSTPUTDELETE('POST', options, done, error);
         },
         doDELETE: function(options, done, error){
+            if (debugMode) {
+                console.info(labelLib + 'doDELETE ' + JSON.stringify(options));
+            }
             this.doPOSTPUTDELETE('DELETE', options, done, error);
         },
         doPOSTPUTDELETE: function(type, options, done, error) {
@@ -63013,7 +63261,6 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             }
             if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
                 options.data._token = window.mlui_cfg.csrf_token;
-
             }
             options.method = type;
             options.data = JSON.stringify(options.data);

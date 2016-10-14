@@ -107,6 +107,12 @@
                 $(this).addClass('error-input');
             });
         },
+        scrollToElement: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Scroll to element');
+            }
+            $(this).get(0).scrollIntoView();
+        },
         registerCallback: function(identifier, fn) {
             if (debugMode) {
                 console.info(labelLib + 'Register a callback. Identifier: ' + identifier);
@@ -211,13 +217,13 @@
                 } else {
                     engine.energize(modules[module].views[name].container);
                 }
-            },
+            };
             vw.reset = function() {
                 if (debugMode) {
                     console.info(labelLib + 'Reset module: ' + module + ' view: ' + name);
                 }
                 modules[module].views[name].__container.html();
-            },
+            };
             vw.render = function(cb, options) {
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
@@ -228,6 +234,7 @@
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                    modules[module].views[name].__cached = modules[module].views[name].__container.html();
                     if (modules[module].views[name].__initialized === true) {
                         engine.reenergize(modules[module].views[name].container);
                     } else {
@@ -237,6 +244,7 @@
                     modules[module].views[name].__loadTemplate(function(){
                         modules[module].views[name].__container = $(modules[module].views[name].container);
                         modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                        modules[module].views[name].__cached = modules[module].views[name].__container.html();
                         if (modules[module].views[name].__initialized === true) {
                             engine.reenergize(modules[module].views[name].container);
                         } else {
@@ -484,7 +492,7 @@
                             $(this).html(modules[module].models[model][param]);
                         }
                     } else {
-                        console.warn('MOONLIGHTUI - You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + module + '"');
+                        console.warn(labelLib + 'You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + module + '"');
                     }
                 });
             };
@@ -530,6 +538,9 @@
             }
         },
         showComponents: function() {
+            if (debugMode) {
+                console.info(labelLib + 'Init showComponents');
+            }
             $(this).each(function(){
                 $(this).on('click', function(){
                     var show = $(this).data('ml-show');
@@ -551,6 +562,9 @@
             });
         },
         hideComponents: function() {
+            if (debugMode) {
+                console.info(labelLib + 'Init hideComponents');
+            }
             $(this).each(function(){
                 $(this).on('click', function(){
                     var hide = $(this).data('ml-hide');
@@ -614,10 +628,15 @@
             if (debugMode) {
                 console.info(labelLib + 'DE-ENERGIZE');
             }
+
+            // Attach actions and clicks again.
             $(element).find('[data-ml-action]').off();
-            $(element).find('[data-ml-model]').each(function(){
-                $(this).off();
-            });
+
+            /* Detach all events */
+            $(element).off();
+
+            /* Detach two-way databinding */
+            $(element).find('[data-ml-model]').off();
         },
         reenergize: function(element) {
             if (debugMode) {
