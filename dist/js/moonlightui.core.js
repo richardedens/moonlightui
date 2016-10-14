@@ -10084,82 +10084,128 @@ return jQuery;
     var callbacks = [],
         modules = {},
         actions = [],
+        debugMode = false,
+        labelLib = 'MOONLIGHTUI - ',
         tempModule;
     $.fn.extend({
         /* MOONLIGHTUI - System */
         onready: function(cb) {
+            if (debugMode) {
+                console.info(labelLib + 'We are initializing the onready.');
+            }
             $(document).ready(function() {
                 cb();
             });
         },
         url: window.location,
+        debug: function(setAs) {
+            debugMode = setAs;
+        },
         viewReady: function(module, view) {
+            if (debugMode) {
+                console.info(labelLib + 'Triggered viewReady for module: ' + module + ' view: ' + view);
+            }
             if (modules[module].views[view].__template === false) {
                 return false;
             } else {
                 return true;
             }
         },
-        viewsReady: function() {
+        viewsReady: function(cb) {
+            if (debugMode) {
+                console.info(labelLib + 'Triggered viewsReady.');
+            }
             $.each( modules, function( module, value ) {
                 $.each( modules[module].views, function( name, view ) {
                     if (modules[module].views[name].__template === false) {
-                        return false;
+                        if (typeof cb !== 'undefined') {
+                            cb(false);
+                        } else {
+                            return false;
+                        }
                     }
                 });
             }).promise().done(function(){
-                return true;
+                if (typeof cb !== 'undefined') {
+                    cb(true);
+                } else {
+                    return true;
+                }
             });
         },
         /* MOONLIGHTUI - Interaction from modules and controller */
         removeSelect: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Remove select.');
+            }
             $(this).each(function(){
                 $(this).removeClass('selected');
             });
         },
         addSelect: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Add select.');
+            }
             $(this).each(function(){
                 $(this).addClass('selected');
             });
         },
         removeHidden: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Remove hidden.');
+            }
             $(this).each(function(){
                 $(this).removeClass('hidden');
             });
         },
         addHidden: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Add hidden.');
+            }
             $(this).each(function(){
                 $(this).addClass('hidden');
             });
         },
         removeErrorInput: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Remove error input.');
+            }
             $(this).each(function(){
                 $(this).removeClass('error-input');
             });
         },
         addErrorInput: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Add error input.');
+            }
             $(this).each(function(){
                 $(this).addClass('error-input');
             });
         },
         registerCallback: function(identifier, fn) {
+            if (debugMode) {
+                console.info(labelLib + 'Register a callback. Identifier: ' + identifier);
+            }
             callbacks[identifier] = fn;
         },
         actions: function(){
+            if (debugMode) {
+                console.info(labelLib + 'Attach actions.');
+            }
             function findModuleAndController(element, fnc)
             {
                 var controller = $(element).closest('[data-ml-controller]').data('ml-controller');
                 var module = $(element).closest('[data-ml-module]').data('ml-module');
                 if (typeof modules[module] === 'undefined') {
-                    console.warn('MOONLIGHTUI - Module "' + module + '" is not defined');
+                    console.warn(labelLib + 'Module "' + module + '" is not defined');
                     return true;
                 }
                 if (typeof modules[module].controllers[controller] === 'undefined') {
-                    console.warn('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" is not defined');
+                    console.warn(labelLib + 'Controller "' + controller + '" on module "' + module + '" is not defined');
                     return true;
                 } else {
                     if (typeof modules[module].controllers[controller][fnc] === 'undefined') {
-                        console.warn('MOONLIGHTUI - Controller "' + controller + '" on module "' + module + '" with function "' + fnc + '" is not defined');
+                        console.warn(labelLib + 'Controller "' + controller + '" on module "' + module + '" with function "' + fnc + '" is not defined');
                         return true;
                     }
                 }
@@ -10171,6 +10217,9 @@ return jQuery;
                         controller = $(this).closest('[data-ml-controller]').data('ml-controller'),
                         module = $(this).closest('[data-ml-module]').data('ml-module');
                     var error = findModuleAndController(this, tabAction);
+                    if (debugMode) {
+                        console.info(labelLib + 'Click event executed for module: ' + module + ' controller: ' + controller + ' action: ' + tabAction);
+                    }
                     if (error === false) {
                         if (tabAction.indexOf(',') !== -1) {
                             var tabActions = tabAction.split(',');
@@ -10180,6 +10229,8 @@ return jQuery;
                         } else {
                             modules[module].controllers[controller][tabAction](this, event);
                         }
+                    } else {
+                        console.warn(labelLib + error);
                     }
                 });
             });
@@ -10188,6 +10239,9 @@ return jQuery;
         module: function(name) {
             tempModule = name;
             if (typeof modules[name] === 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Created module: ' + name);
+                }
                 modules[name] = {
                     controllers: {},
                     models: {},
@@ -10201,6 +10255,9 @@ return jQuery;
                 module = tempModule.slice(0);
             ctrl.__module = module;
             modules[tempModule].controllers[name] = ctrl;
+            if (debugMode) {
+                console.info(labelLib + 'Created controller: ' + name);
+            }
             return this;
         },
         view: function(name, view, render) {
@@ -10215,12 +10272,34 @@ return jQuery;
             vw.__container = false;
             vw.__models = false;
             vw.__initialized = false;
+            vw.__cached = '';
             vw.__render = function(html) {
                 return html;
             };
+            vw.refresh = function() {
+                if (debugMode) {
+                    console.info(labelLib + 'Refreshing module: ' + module + ' view: ' + name);
+                }
+                modules[module].views[name].__container.html(modules[module].views[name].__cached.html());
+                if (modules[module].views[name].__initialized === true) {
+                    engine.reenergize(modules[module].views[name].container);
+                } else {
+                    engine.energize(modules[module].views[name].container);
+                }
+            },
+            vw.reset = function() {
+                if (debugMode) {
+                    console.info(labelLib + 'Reset module: ' + module + ' view: ' + name);
+                }
+                modules[module].views[name].__container.html();
+            },
             vw.render = function(cb, options) {
+                if (debugMode) {
+                    console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
+                }
                 modules[module].views[name].__container = $(modules[module].views[name].container);
                 modules[module].views[name].__container.html('<div class="moonlightui-preloader"><div class="moonlightui-speeding-wheel"></div></div>');
+                modules[module].views[name].__cached.html(modules[module].views[name].__container.html());
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
@@ -10258,6 +10337,9 @@ return jQuery;
                         }
                     }
                     $.ajax(ajaxOptions).done(function(data){
+                        if (debugMode) {
+                            console.info(labelLib + 'Loadtemplate completed module: ' + module + ' view: ' + name);
+                        }
                         modules[module].views[name].__template = data;
                         if (typeof cb !== "undefined") {
                             cb(data);
@@ -10265,7 +10347,7 @@ return jQuery;
                             return data;
                         }
                     }).fail(function(){
-                        console.warn('MOONLIGHTUI - We cant load template with url: ' + this.templateURL);
+                        console.warn(labelLib + 'We cant load template with url: ' + this.templateURL);
                         if (typeof cb !== "undefined") {
                             cb("");
                         } else {
@@ -10274,6 +10356,9 @@ return jQuery;
                     });
                 }
                 if (typeof this.template !== 'undefined') {
+                    if (debugMode) {
+                        console.info(labelLib + 'Set the template from a string module: ' + module + ' view: ' + name + ' template: ' + this.template);
+                    }
                     modules[module].views[name].__template = this.template;
                     if (typeof cb !== "undefined") {
                         cb(this.template);
@@ -10285,11 +10370,18 @@ return jQuery;
             };
             vw.__loadModels = function(cb) {
                 if (typeof this.models !== 'undefined') {
+                    if (debugMode) {
+                        console.info(labelLib + 'Load models on view: ' + module + ' view: ' + name + ' models: ');
+                        console.info(this.models);
+                    }
                     modules[module].views[name].__models = this.models;
                 }
                 cb();
             };
             modules[module].views[name] = vw;
+            if (debugMode) {
+                console.info(labelLib + 'Created view: ' + name);
+            }
             return this;
         },
         model: function(name, model) {
@@ -10302,6 +10394,9 @@ return jQuery;
             mdl.__error = '';
             mdl.__module = module;
             mdl.removeError = function() {
+                if (debugMode) {
+                    console.info(labelLib + 'Remove error: ' + module + ' model: ' + name);
+                }
                 modules[module].models[name].__error = '';
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
                     if ($(this).is( "input" ) ||
@@ -10317,6 +10412,9 @@ return jQuery;
                 });
             };
             mdl.addError = function(value) {
+                if (debugMode) {
+                    console.info(labelLib + 'Add error: ' + module + ' model: ' + name);
+                }
                 modules[module].models[name].__error = value;
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-error="' + name + '.error"]').each(function() {
                     if ($(this).is( "input" ) ||
@@ -10332,20 +10430,32 @@ return jQuery;
                 });
             };
             mdl.getError = function(value) {
+                if (debugMode) {
+                    console.info(labelLib + 'Get error: ' + module + ' model: ' + name + ' value: ');
+                    console.info(value);
+                }
                 return modules[module].models[name].__error;
             };
             mdl.get = function(param, defaultValue) {
+                if (debugMode) {
+                    console.info(labelLib + 'Get: ' + module + ' model: ' + name + ' default value: ');
+                    console.info(defaultValue);
+                }
                 if (typeof defaultValue === 'undefined') {
                     defaultValue = '';
                 }
                 if (typeof modules[module].models[name][param] !== 'undefined') {
                     return modules[module].models[name][param];
                 } else {
-                    console.warn('MOONLIGHTUI - Model "' + mdl.__name + '" in module "' + mdl.__module + '" does not have property "' + param + '"');
+                    console.warn(labelLib + 'Model "' + mdl.__name + '" in module "' + mdl.__module + '" does not have property "' + param + '"');
                     return defaultValue;
                 }
             };
             mdl.set = function(param, value) {
+                if (debugMode) {
+                    console.info(labelLib + 'Set: ' + module + ' model: ' + name + ' value: ');
+                    console.info(value);
+                }
                 mdl[param] = value;
                 $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function()
                 {
@@ -10368,9 +10478,15 @@ return jQuery;
             };
             mdl.__on = {};
             mdl.receive = function(cb) {
+                if (debugMode) {
+                    console.info(labelLib + 'Set receive module: ' + module + ' model: ' + name);
+                }
                 mdl.__on = cb;
             };
             mdl.__broadcast = function(model, param){
+                if (debugMode) {
+                    console.info(labelLib + 'Broadcast: ' + module + ' model: ' + name);
+                }
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
                     if ($(this).is( ":checkbox" )) {
                         $(this).prop('checked', modules[module].models[model][param]);
@@ -10387,6 +10503,9 @@ return jQuery;
                 modules[module].models[model].__on(param);
             };
             mdl.__initTwoWayBinding = function(){
+                if (debugMode) {
+                    console.info(labelLib + 'Init two-way databinding module: ' + module + ' model: ' + name);
+                }
                 // Attach two-way databinding
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model*="' + name + '."]').each(function(){
                     if ($(this).data('ml-model').indexOf('.') !== -1) {
@@ -10453,24 +10572,35 @@ return jQuery;
 
             mdl.__initTwoWayBinding();
 
-
+            if (debugMode) {
+                console.info(labelLib + 'Created model: ' + name);
+            }
             return this;
         },
         getModel: function(parent, name)
         {
             if (typeof modules[parent].models[name] !== 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Get model: ' + name);
+                }
                 return modules[parent].models[name];
             }
         },
         getController: function(parent, name)
         {
             if (typeof modules[parent].controllers[name] !== 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Get controller: ' + name);
+                }
                 return modules[parent].controllers[name];
             }
         },
         getView: function(parent, name)
         {
             if (typeof modules[parent].views[name] !== 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Get view: ' + name);
+                }
                 return modules[parent].views[name];
             }
         },
@@ -10481,9 +10611,15 @@ return jQuery;
                     if (show.indexOf(',') !== -1) {
                         var elements = show.split(',');
                         for (var i = 0; i < elements.length; i++) {
+                            if (debugMode) {
+                                console.info(labelLib + 'Show component: ' + elements[i]);
+                            }
                             $('#' + elements[i]).removeClass('hidden');
                         }
                     } else {
+                        if (debugMode) {
+                            console.info(labelLib + 'Show component: ' + show);
+                        }
                         $('#' + show).removeClass('hidden');
                     }
                 });
@@ -10496,15 +10632,24 @@ return jQuery;
                     if (hide.indexOf(',') !== -1) {
                         var elements = hide.split(',');
                         for (var i = 0; i < elements.length; i++) {
+                            if (debugMode) {
+                                console.info(labelLib + 'Hide component: ' + elements[i]);
+                            }
                             $('#' + elements[i]).addClass('hidden');
                         }
                     } else {
+                        if (debugMode) {
+                            console.info(labelLib + 'Hide component: ' + hide);
+                        }
                         $('#' + hide).addClass('hidden');
                     }
                 });
             });
         },
         createCookie: function(name, value, days) {
+            if (debugMode) {
+                console.info(labelLib + 'Create cookie name: ' + name + ' value: ' + JSON.stringify(value) + ' days: ' + days);
+            }
             var dateVal, expiresVal;
             if (days) {
                 dateVal = new Date();
@@ -10516,6 +10661,9 @@ return jQuery;
             document.cookie = name + "=" + value + expiresVal + "; path=/";
         },
         readCookie: function(name) {
+            if (debugMode) {
+                console.info(labelLib + 'Read cookie name: ' + name);
+            }
             var nameEQ = name + "=";
             var ca = document.cookie.split(';');
             var c = 0;
@@ -10531,24 +10679,38 @@ return jQuery;
             return null;
         },
         eraseCookie: function(name) {
+            if (debugMode) {
+                console.info(labelLib + 'Erase cookie name: ' + name);
+            }
             this.createCookie(name, "", -1);
         },
         /* MOONLIGHTUI - Lets GO */
-        reenergize: function(element) {
-
-            // Attach actions and clicks again.
+        deenergize: function(element) {
+            if (debugMode) {
+                console.info(labelLib + 'DE-ENERGIZE');
+            }
             $(element).find('[data-ml-action]').off();
-
+            $(element).find('[data-ml-model]').each(function(){
+                $(this).off();
+            });
+        },
+        reenergize: function(element) {
+            if (debugMode) {
+                console.info(labelLib + 'RE-ENERGIZE');
+            }
+            this.deenergize(element);
             $(element).energize(element);
-
         },
         energize: function(element) {
-
-            /* MOONLIGHT UI - Will activate all custom click */
+            if (debugMode) {
+                console.info(labelLib + 'ENERGIZE');
+            }
             $(element).find('[data-ml-action]').actions();
-
         },
         doGET: function(options, done, error){
+            if (debugMode) {
+                console.info(labelLib + 'doGET ' + JSON.stringify(options));
+            }
             $.ajax(options).done(function() {
                 done();
             }).fail(function() {
@@ -10556,12 +10718,21 @@ return jQuery;
             });
         },
         doPUT: function(options, done, error){
+            if (debugMode) {
+                console.info(labelLib + 'doPUT ' + JSON.stringify(options));
+            }
             this.doPOSTPUTDELETE('PUT', options, done, error);
         },
         doPOST: function(options, done, error){
+            if (debugMode) {
+                console.info(labelLib + 'doPOST ' + JSON.stringify(options));
+            }
             this.doPOSTPUTDELETE('POST', options, done, error);
         },
         doDELETE: function(options, done, error){
+            if (debugMode) {
+                console.info(labelLib + 'doDELETE ' + JSON.stringify(options));
+            }
             this.doPOSTPUTDELETE('DELETE', options, done, error);
         },
         doPOSTPUTDELETE: function(type, options, done, error) {
