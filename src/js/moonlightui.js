@@ -321,9 +321,9 @@
             var mdl = model(),
                 module = tempModule.slice(0);
 
-            function searchFor(param, property, defaultValue) {
-                var value = param[property];
-                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + property + '"]').each(function () {
+            function searchFor(param, key, defaultValue) {
+                var value = param[key];
+                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param.name + '.' + key + '"]').each(function () {
                     if ($(this).is(":checkbox")) {
                         if (value === 1) {
                             $(this).prop('checked', true);
@@ -335,9 +335,9 @@
                         $(this).is("textarea") ||
                         $(this).is("select") ||
                         $(this).is(":radio")) {
-                        $(this).val(param[property]);
+                        $(this).val(param[key]);
                     } else {
-                        $(this).html(param[property]);
+                        $(this).html(param[key]);
                     }
                 });
             }
