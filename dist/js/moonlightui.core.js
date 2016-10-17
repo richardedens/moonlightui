@@ -10304,7 +10304,7 @@ return jQuery;
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
                 modules[module].views[name].__container = $(modules[module].views[name].container);
-                modules[module].views[name].__container.html('<div class="moonlightui-preloader"><div class="moonlightui-speeding-wheel"></div></div>');
+                modules[module].views[name].__container.html('<div class="spinner-layer spinner-green"><div class="circle-clipper left"> <div class="circle"></div> </div> <div class="gap-patch"> <div class="circle"></div> </div> <div class="circle-clipper right"> <div class="circle"></div> </div> </div>');
                 modules[module].views[name].__cached = modules[module].views[name].__container.html();
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
