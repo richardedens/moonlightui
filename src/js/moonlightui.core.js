@@ -473,9 +473,9 @@
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model*="' + name + '."]').each(function(){
                     if ($(this).data('ml-model').indexOf('.') !== -1) {
                         var modelParameter = $(this).data('ml-model').split('.'),
-                            model = modelParameter[0],
+                            model = modelParameter[0];
                             modelParameter.shift();
-                            param = modelParameter.join('.');
+                        var param = modelParameter.join('.');
                         if ($(this).is( ":checkbox" )) {
                             if (modules[module].models[model][param] === true)
                             {
