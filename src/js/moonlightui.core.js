@@ -474,8 +474,8 @@
                     if ($(this).data('ml-model').indexOf('.') !== -1) {
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0],
-                            paramArr = modelParameter.shift();
-                            param = paramArr.join('.');
+                            modelParameter.shift();
+                            param = modelParameter.join('.');
                         if ($(this).is( ":checkbox" )) {
                             if (modules[module].models[model][param] === true)
                             {
