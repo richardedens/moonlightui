@@ -10398,9 +10398,9 @@ return jQuery;
             var mdl = model(),
                 module = tempModule.slice(0);
 
-            function searchFor(param, key, defaultValue) {
+            function searchFor(param, key, nameOfObject) {
                 var value = param[key];
-                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param.name + '.' + key + '"]').each(function () {
+                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + nameOfObject + '.' + key + '"]').each(function () {
                     if ($(this).is(":checkbox")) {
                         if (value === 1) {
                             $(this).prop('checked', true);
