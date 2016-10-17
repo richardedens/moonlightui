@@ -10526,14 +10526,27 @@ return jQuery;
                     console.info(labelLib + 'Broadcast: ' + module + ' model: ' + name);
                 }
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
+                    var modelParameter = [];
+                    if ($(this).data('ml-model').indexOf('.') !== -1) {
+                        modelParameter = $(param).split('.');
+                    }
                     if ($(this).is( ":checkbox" )) {
                         $(this).prop('checked', modules[module].models[model][param]);
+                        if (modelParameter.length > 1) {
+                            $(this).prop('checked', modules[module].models[model][modelParameter[1]][modelParameter[2]]);
+                        } else {
+                            $(this).prop('checked', modules[module].models[model][param]);
+                        }
                     }
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
                         $(this).is( "select" ) ||
                         $(this).is( ":radio" )) {
-                        $(this).val(modules[module].models[model][param]);
+                        if (modelParameter.length > 1) {
+                            modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                        } else {
+                            modules[module].models[model][param] = $(this).val();
+                        }
                     } else {
                         $(this).html(modules[module].models[model][param]);
                     }
@@ -10559,7 +10572,11 @@ return jQuery;
                                 $(this).prop('checked', false);
                             }
                             $(this).on('click', function () {
-                                modules[module].models[model][param] = $(this).prop('checked');
+                                if (modelParameter.length > 2) {
+                                    modules[module].models[model][modelParameter[1]][modelParameter[2]] =  $(this).prop('checked');
+                                } else {
+                                    modules[module].models[model][param] = $(this).prop('checked');
+                                }
                                 modules[module].models[model].__broadcast(model, param);
                             });
                         }
@@ -10572,7 +10589,11 @@ return jQuery;
                             }
                             $(this).on('click', function () {
                                 if ($(this).prop('checked')) {
-                                    modules[module].models[model][param] = $(this).val();
+                                    if (modelParameter.length > 2) {
+                                        modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                                    } else {
+                                        modules[module].models[model][param] = $(this).val();
+                                    }
                                     modules[module].models[model].__broadcast(model, param);
                                 }
                             });
@@ -10583,13 +10604,21 @@ return jQuery;
                             $(this).val(modules[module].models[model][param]);
                             if ($(this).is( "input" ) || $(this).is( "textarea" )) {
                                 $(this).on('keyup', function () {
-                                    modules[module].models[model][param] = $(this).val();
+                                    if (modelParameter.length > 2) {
+                                        modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                                    } else {
+                                        modules[module].models[model][param] = $(this).val();
+                                    }
                                     modules[module].models[model].__broadcast(model, param);
                                 });
                             }
                             if ($(this).is( "select" )) {
                                 $(this).on('change', function () {
-                                    modules[module].models[model][param] = $(this).val();
+                                    if (modelParameter.length > 2) {
+                                        modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                                    } else {
+                                        modules[module].models[model][param] = $(this).val();
+                                    }
                                     modules[module].models[model].__broadcast(model, param);
                                 });
                             }
