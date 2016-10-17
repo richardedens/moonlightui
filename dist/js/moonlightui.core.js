@@ -10527,8 +10527,8 @@ return jQuery;
                 }
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
                     var modelParameter = [];
-                    if ($(this).data('ml-model').indexOf('.') !== -1) {
-                        modelParameter = $(param).split('.');
+                    if (param.indexOf('.') !== -1) {
+                        modelParameter = param.split('.');
                     }
                     if ($(this).is( ":checkbox" )) {
                         $(this).prop('checked', modules[module].models[model][param]);
