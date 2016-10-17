@@ -323,9 +323,9 @@
             var mdl = model(),
                 module = tempModule.slice(0);
 
-            function searchFor(param, property, defaultValue) {
+            function searchFor(param, key, defaultValue) {
                 var value = param[property];
-                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + property + '"]').each(function () {
+                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param.name + '.' + key + '"]').each(function () {
                     if ($(this).is(":checkbox")) {
                         if (value === 1) {
                             $(this).prop('checked', true);
@@ -474,7 +474,8 @@
                     if ($(this).data('ml-model').indexOf('.') !== -1) {
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0],
-                            param = modelParameter[1];
+                            paramArr = modelParameter.shift();
+                            param = paramArr.join('.');
                         if ($(this).is( ":checkbox" )) {
                             if (modules[module].models[model][param] === true)
                             {
