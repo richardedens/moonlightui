@@ -63233,18 +63233,12 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             if (debugMode) {
                 console.info(labelLib + 'doGET ' + JSON.stringify(options));
             }
-            if (typeof options.data === 'undefined') {
-                options.data = {};
-            }
             if (typeof window.mlui_cfg.jwt_token !== 'undefined') {
                 $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
                     jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('Authorization', 'Bearer' + window.mlui_cfg.jwt_bearer);
                 });
-            }
-            if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
-                options.data._token = window.mlui_cfg.csrf_token;
             }
             $.ajax(options).done(function() {
                 done();
