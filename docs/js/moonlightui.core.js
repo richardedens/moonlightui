@@ -10551,7 +10551,9 @@ return jQuery;
                         $(this).html(modules[module].models[model][param]);
                     }
                 });
-                modules[module].models[model].__on(param);
+                if (typeof modules[module].models[model].__on !== 'undefined') {
+                    modules[module].models[model].__on(param);
+                }
             };
             mdl.__initTwoWayBinding = function(){
                 if (debugMode) {

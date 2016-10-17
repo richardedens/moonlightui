@@ -62568,19 +62568,34 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     console.info(labelLib + 'Broadcast: ' + module + ' model: ' + name);
                 }
                 $('[data-ml-module="' + module+ '"]').find('[data-ml-model="' + model + '.' + param + '"]').each(function() {
+                    var modelParameter = [];
+                    if (param.indexOf('.') !== -1) {
+                        modelParameter = param.split('.');
+                    }
                     if ($(this).is( ":checkbox" )) {
                         $(this).prop('checked', modules[module].models[model][param]);
+                        if (modelParameter.length > 1) {
+                            $(this).prop('checked', modules[module].models[model][modelParameter[1]][modelParameter[2]]);
+                        } else {
+                            $(this).prop('checked', modules[module].models[model][param]);
+                        }
                     }
                     if ($(this).is( "input" ) ||
                         $(this).is( "textarea" ) ||
                         $(this).is( "select" ) ||
                         $(this).is( ":radio" )) {
-                        $(this).val(modules[module].models[model][param]);
+                        if (modelParameter.length > 1) {
+                            modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                        } else {
+                            modules[module].models[model][param] = $(this).val();
+                        }
                     } else {
                         $(this).html(modules[module].models[model][param]);
                     }
                 });
-                modules[module].models[model].__on(param);
+                if (typeof modules[module].models[model].__on !== 'undefined') {
+                    modules[module].models[model].__on(param);
+                }
             };
             mdl.__initTwoWayBinding = function(){
                 if (debugMode) {
