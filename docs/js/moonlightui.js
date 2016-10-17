@@ -62131,6 +62131,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         debugMode = false,
         labelLib = 'MOONLIGHTUI - ',
         tempModule;
+
     $.fn.extend({
         /* MOONLIGHTUI - System */
         onready: function(cb) {
@@ -62439,6 +62440,26 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             var mdl = model(),
                 module = tempModule.slice(0);
 
+            function searchFor(param,property) {
+                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + property + '"]').each(function () {
+                    if ($(this).is(":checkbox")) {
+                        if (value === 1) {
+                            $(this).prop('checked', true);
+                        } else {
+                            $(this).prop('checked', false);
+                        }
+                    }
+                    if ($(this).is("input") ||
+                        $(this).is("textarea") ||
+                        $(this).is("select") ||
+                        $(this).is(":radio")) {
+                        $(this).val(param[property]);
+                    } else {
+                        $(this).html(param[property]);
+                    }
+                });
+            }
+
             // Attach new variables and new functions. Will override existing functions.
             mdl.__name = name;
             mdl.__error = '';
@@ -62506,25 +62527,33 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     console.info(labelLib + 'Set: ' + module + ' model: ' + name + ' value: ');
                     console.info(value);
                 }
-                mdl[param] = value;
-                $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function()
-                {
-                    if ($(this).is( ":checkbox" )) {
-                        if (value === 1) {
-                            $(this).prop('checked', true);
-                        } else {
-                            $(this).prop('checked', false);
+                if (typeof param === 'object') {
+                    for (var key in param) {
+                        if (param.hasOwnProperty(key)) {
+                            mdl[key] = param[key];
+                            searchFor(param, key);
                         }
                     }
-                    if ($(this).is( "input" ) ||
-                        $(this).is( "textarea" ) ||
-                        $(this).is( "select" ) ||
-                        $(this).is( ":radio" )) {
-                        $(this).val(value);
-                    } else {
-                        $(this).html(value);
-                    }
-                });
+                } else {
+                    mdl[param] = value;
+                    $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + param + '"]').each(function () {
+                        if ($(this).is(":checkbox")) {
+                            if (value === 1) {
+                                $(this).prop('checked', true);
+                            } else {
+                                $(this).prop('checked', false);
+                            }
+                        }
+                        if ($(this).is("input") ||
+                            $(this).is("textarea") ||
+                            $(this).is("select") ||
+                            $(this).is(":radio")) {
+                            $(this).val(value);
+                        } else {
+                            $(this).html(value);
+                        }
+                    });
+                }
             };
             mdl.__on = {};
             mdl.receive = function(cb) {
