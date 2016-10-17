@@ -10575,7 +10575,7 @@ return jQuery;
                             }
                             $(this).on('click', function () {
                                 if (modelParameter.length > 1) {
-                                    modules[module].models[model][modelParameter[1]][modelParameter[2]] =  $(this).prop('checked');
+                                    modules[module].models[model][modelParameter[0]][modelParameter[1]] =  $(this).prop('checked');
                                 } else {
                                     modules[module].models[model][param] = $(this).prop('checked');
                                 }
@@ -10592,7 +10592,7 @@ return jQuery;
                             $(this).on('click', function () {
                                 if ($(this).prop('checked')) {
                                     if (modelParameter.length > 1) {
-                                        modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                                        modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
                                     } else {
                                         modules[module].models[model][param] = $(this).val();
                                     }
@@ -10607,7 +10607,7 @@ return jQuery;
                             if ($(this).is( "input" ) || $(this).is( "textarea" )) {
                                 $(this).on('keyup', function () {
                                     if (modelParameter.length > 1) {
-                                        modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                                        modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
                                     } else {
                                         modules[module].models[model][param] = $(this).val();
                                     }
@@ -10617,7 +10617,7 @@ return jQuery;
                             if ($(this).is( "select" )) {
                                 $(this).on('change', function () {
                                     if (modelParameter.length > 1) {
-                                        modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                                        modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
                                     } else {
                                         modules[module].models[model][param] = $(this).val();
                                     }
