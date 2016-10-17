@@ -476,7 +476,7 @@
                         $(this).html(modules[module].models[model][param]);
                     }
                 });
-                if (typeof modules[module].models[model].__on !== 'undefined') {
+                if (typeof modules[module].models[model].__on !== 'undefined' && modules[module].models[model].__on !== {}) {
                     modules[module].models[model].__on(param);
                 }
             };
