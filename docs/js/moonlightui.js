@@ -62440,7 +62440,8 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             var mdl = model(),
                 module = tempModule.slice(0);
 
-            function searchFor(param,property) {
+            function searchFor(param, property, defaultValue) {
+                var value = param[property];
                 $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + property + '"]').each(function () {
                     if ($(this).is(":checkbox")) {
                         if (value === 1) {
@@ -62531,7 +62532,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     for (var key in param) {
                         if (param.hasOwnProperty(key)) {
                             mdl[key] = param[key];
-                            searchFor(param, key);
+                            searchFor(param, key, value);
                         }
                     }
                 } else {

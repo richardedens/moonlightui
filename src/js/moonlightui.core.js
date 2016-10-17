@@ -323,7 +323,8 @@
             var mdl = model(),
                 module = tempModule.slice(0);
 
-            function searchFor(param,property) {
+            function searchFor(param, property, defaultValue) {
+                var value = param[property];
                 $('[data-ml-module="' + mdl.__module + '"').find('[data-ml-model="' + mdl.__name + '.' + property + '"]').each(function () {
                     if ($(this).is(":checkbox")) {
                         if (value === 1) {
@@ -414,7 +415,7 @@
                     for (var key in param) {
                         if (param.hasOwnProperty(key)) {
                             mdl[key] = param[key];
-                            searchFor(param, key);
+                            searchFor(param, key, value);
                         }
                     }
                 } else {
