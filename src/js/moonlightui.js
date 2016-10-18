@@ -583,6 +583,48 @@
                     }
                 });
             };
+            mdl.strip = function(obj) {
+                for (var key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        switch (typeof obj[key]) {
+                            case "object":
+                                if (Array.isArray(obj[key])) {
+                                    obj[key] = [];
+                                } else {
+                                    if (Object.prototype.toString.call(obj[key]) === '[object Date]') {
+                                        obj[key] = new Date();
+                                    } else {
+                                        if (Object.prototype.toString.call(obj[key]) === '[object Boolean]') {
+                                            obj[key] = false;
+                                        } else {
+                                            if (Object.prototype.toString.call(obj[key]) === '[object Number]') {
+                                                obj[key] = 0;
+                                            } else {
+                                                if (Object.prototype.toString.call(obj[key]) === '[object String]') {
+                                                    obj[key] = '';
+                                                } else {
+                                                    if (Object.prototype.toString.call(obj[key]) === '[object Function]') {
+                                                        obj[key] = function() {};
+                                                    } else {
+                                                        obj[key] = {};
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            case "boolean":
+                                obj[key] = false;
+                                break;
+                            case "string":
+                                obj[key] = '';
+                                break;
+                        }
+                    }
+                }
+                return obj;
+            };
             mdl.init = function() {
                 mdl.__initTwoWayBinding();
             };
