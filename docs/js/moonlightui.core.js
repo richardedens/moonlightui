@@ -10565,7 +10565,7 @@ return jQuery;
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0];
                             modelParameter.shift();
-                        var param = modelParameter[1];
+                        var param = modelParameter[0];
                         if ($(this).is( ":checkbox" )) {
                             if (modelParameter.length > 1) {
                                 if (modules[module].models[model][modelParameter[0]][modelParameter[1]] === true)
