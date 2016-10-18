@@ -62320,6 +62320,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             vw.__models = false;
             vw.__initialized = false;
             vw.__cached = '';
+            vw.__usecached = false;
             vw.__render = function(html) {
                 return html;
             };
@@ -62340,7 +62341,10 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 }
                 modules[module].views[name].__container.html('');
             };
-            vw.render = function(cb, options) {
+            vw.useCache = function(value){
+                vw.__usecached = value;
+            };
+            vw.renderCached = function(cb) {
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
@@ -62349,8 +62353,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 modules[module].views[name].__cached = modules[module].views[name].__container.html();
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
-                    modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
-                    modules[module].views[name].__cached = modules[module].views[name].__container.html();
+                    modules[module].views[name].__container.html(modules[module].views[name].__cached);
                     if (modules[module].views[name].__initialized === true) {
                         engine.reenergize(modules[module].views[name].container);
                     } else {
@@ -62358,8 +62361,26 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     }
                 } else {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
+                    modules[module].views[name].__container.html(modules[module].views[name].__cached);
+                    if (modules[module].views[name].__initialized === true) {
+                        engine.reenergize(modules[module].views[name].container);
+                    } else {
+                        engine.energize(modules[module].views[name].container);
+                    }
+                    cb(modules[module].views[name].__template, modules[module].views[name].__container);
+                }
+            };
+            vw.render = function(cb, options) {
+                if (debugMode) {
+                    console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
+                }
+                if (vw.__usecached === true) {
+                    vw.renderCached(cb);
+                } else {
+                    modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html('<div class="preloader-wrapper small active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>');
-                    modules[module].views[name].__loadTemplate(function(){
+                    modules[module].views[name].__cached = modules[module].views[name].__container.html();
+                    if (typeof cb === "undefined") {
                         modules[module].views[name].__container = $(modules[module].views[name].container);
                         modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
                         modules[module].views[name].__cached = modules[module].views[name].__container.html();
@@ -62368,8 +62389,21 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         } else {
                             engine.energize(modules[module].views[name].container);
                         }
-                        cb(modules[module].views[name].__template, modules[module].views[name].__container);
-                    }, options);
+                    } else {
+                        modules[module].views[name].__container = $(modules[module].views[name].container);
+                        modules[module].views[name].__container.html('<div class="preloader-wrapper small active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>');
+                        modules[module].views[name].__loadTemplate(function () {
+                            modules[module].views[name].__container = $(modules[module].views[name].container);
+                            modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                            modules[module].views[name].__cached = modules[module].views[name].__container.html();
+                            if (modules[module].views[name].__initialized === true) {
+                                engine.reenergize(modules[module].views[name].container);
+                            } else {
+                                engine.energize(modules[module].views[name].container);
+                            }
+                            cb(modules[module].views[name].__template, modules[module].views[name].__container);
+                        }, options);
+                    }
                 }
             };
             vw.__loadTemplate = function(cb, options) {
