@@ -62374,7 +62374,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
-                if (vw.__usecached === true) {
+                if (vw.__usecached === true && modules[module].views[name].__cached !== '') {
                     vw.renderCached(cb);
                 } else {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
