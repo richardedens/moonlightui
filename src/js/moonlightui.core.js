@@ -798,7 +798,7 @@
                 $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
                     jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
-                    jqXHR.setRequestHeader('Authorization', 'Bearer' + window.mlui_cfg.jwt_bearer);
+                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + window.mlui_cfg.jwt_bearer);
                     options.async = true;
                 });
             }
@@ -834,12 +834,13 @@
                 $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
                     jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
-                    jqXHR.setRequestHeader('Authorization', 'Bearer' + window.mlui_cfg.jwt_bearer);
+                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + window.mlui_cfg.jwt_bearer);
                     options.async = true;
                 });
-            }
-            if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
-                options.data._token = window.mlui_cfg.csrf_token;
+            } else {
+                if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
+                    options.data._token = window.mlui_cfg.csrf_token;
+                }
             }
             options.method = type;
             options.data = JSON.stringify(options.data);
