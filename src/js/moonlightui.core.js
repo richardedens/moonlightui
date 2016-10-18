@@ -757,6 +757,7 @@
                     jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('Authorization', 'Bearer' + window.mlui_cfg.jwt_bearer);
+                    options.async = true;
                 });
             }
             $.ajax(options).done(function() {
@@ -792,6 +793,7 @@
                     jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
                     jqXHR.setRequestHeader('Authorization', 'Bearer' + window.mlui_cfg.jwt_bearer);
+                    options.async = true;
                 });
             }
             if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
