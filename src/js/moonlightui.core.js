@@ -235,7 +235,6 @@
                 }
                 modules[module].views[name].__container = $(modules[module].views[name].container);
                 modules[module].views[name].__container.html('<div class="preloader-wrapper small active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>');
-                modules[module].views[name].__cached = modules[module].views[name].__container.html();
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html(modules[module].views[name].__cached);
