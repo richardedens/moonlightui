@@ -439,7 +439,7 @@
                     });
                 }
             };
-            mdl.__on = {};
+            mdl.__on = false;
             mdl.receive = function(cb) {
                 if (debugMode) {
                     console.info(labelLib + 'Set receive module: ' + module + ' model: ' + name);
@@ -476,7 +476,7 @@
                         $(this).html(modules[module].models[model][param]);
                     }
                 });
-                if (typeof modules[module].models[model].__on !== 'undefined' && modules[module].models[model].__on !== {}) {
+                if (modules[module].models[model].__on !== false) {
                     modules[module].models[model].__on(param);
                 }
             };
@@ -490,38 +490,58 @@
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0];
                             modelParameter.shift();
-                        var param = modelParameter.join('.');
+                        var param = modelParameter[1];
                         if ($(this).is( ":checkbox" )) {
-                            if (modules[module].models[model][param] === true)
-                            {
-                                $(this).prop('checked', true);
+                            if (modelParameter.length > 1) {
+                                if (modules[module].models[model][modelParameter[0]][modelParameter[1]] === true)
+                                {
+                                    $(this).prop('checked', true);
+                                } else {
+                                    $(this).prop('checked', false);
+                                }
                             } else {
-                                $(this).prop('checked', false);
+                                if (modules[module].models[model][param] === true)
+                                {
+                                    $(this).prop('checked', true);
+                                } else {
+                                    $(this).prop('checked', false);
+                                }
                             }
                             $(this).on('click', function () {
                                 if (modelParameter.length > 1) {
                                     modules[module].models[model][modelParameter[0]][modelParameter[1]] =  $(this).prop('checked');
+                                    modules[module].models[model].__broadcast(model, modelParameter.join('.'));
                                 } else {
                                     modules[module].models[model][param] = $(this).prop('checked');
+                                    modules[module].models[model].__broadcast(model, param);
                                 }
-                                modules[module].models[model].__broadcast(model, param);
                             });
                         }
                         if ($(this).is( ":radio" )) {
-                            if (modules[module].models[model][param] === true)
-                            {
-                                $(this).prop('checked', true);
+                            if (modelParameter.length > 1) {
+                                if (modules[module].models[model][modelParameter[0]][modelParameter[1]] === true)
+                                {
+                                    $(this).prop('checked', true);
+                                } else {
+                                    $(this).prop('checked', false);
+                                }
                             } else {
-                                $(this).prop('checked', false);
+                                if (modules[module].models[model][param] === true)
+                                {
+                                    $(this).prop('checked', true);
+                                } else {
+                                    $(this).prop('checked', false);
+                                }
                             }
                             $(this).on('click', function () {
                                 if ($(this).prop('checked')) {
                                     if (modelParameter.length > 1) {
-                                        modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
+                                        modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).prop();
+                                        modules[module].models[model].__broadcast(model, modelParameter.join('.'));
                                     } else {
                                         modules[module].models[model][param] = $(this).val();
+                                        modules[module].models[model].__broadcast(model, param);
                                     }
-                                    modules[module].models[model].__broadcast(model, param);
                                 }
                             });
                         }
@@ -533,25 +553,31 @@
                                 $(this).on('keyup', function () {
                                     if (modelParameter.length > 1) {
                                         modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
+                                        modules[module].models[model].__broadcast(model, modelParameter.join('.'));
                                     } else {
                                         modules[module].models[model][param] = $(this).val();
+                                        modules[module].models[model].__broadcast(model, param);
                                     }
-                                    modules[module].models[model].__broadcast(model, param);
                                 });
                             }
                             if ($(this).is( "select" )) {
                                 $(this).on('change', function () {
                                     if (modelParameter.length > 1) {
                                         modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
+                                        modules[module].models[model].__broadcast(model, modelParameter.join('.'));
                                     } else {
                                         modules[module].models[model][param] = $(this).val();
+                                        modules[module].models[model].__broadcast(model, param);
                                     }
-                                    modules[module].models[model].__broadcast(model, param);
                                 });
                             }
 
                         } else {
-                            $(this).html(modules[module].models[model][param]);
+                            if (modelParameter.length > 1) {
+                                $(this).html(modules[module].models[model][modelParameter[0]][modelParameter[1]]);
+                            } else {
+                                $(this).html(modules[module].models[model][param]);
+                            }
                         }
                     } else {
                         console.warn(labelLib + 'You must specify a model and its parameter (example "modelName.param") in the ml-model attribute. I got: ' + $(this).data('ml-model') + ' in module "' + module + '"');
