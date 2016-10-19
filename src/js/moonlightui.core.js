@@ -213,8 +213,8 @@
                 engine = this,
                 module = tempModule.slice(0),
                 routeSet = false;
-            if (typeof vw.routeUrl !== '') {
-                for(var i = 0; i < routes.length; i++) {
+            if (typeof vw.routeUrl !== 'undefined' && vw.routeUrl !== '') {
+                for(var i = 0; i < routes.length; i++) { 
                     if (routes[i].url === vw.routeUrl) {
                         console.error(labelLib + 'Already have a route configured with: ' + routes[i].url + ' in module ' + routes[i].module + ' in view ' + routes[i].view);
                         routeSet = true;
