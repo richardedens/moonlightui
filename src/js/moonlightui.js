@@ -14,7 +14,6 @@
         labelLib = 'MOONLIGHTUI - ',
         tempModule,
         routerInit = false;
-    var me = this;
 
     $.fn.extend({
         /* MOONLIGHTUI - System */
@@ -24,7 +23,7 @@
                 console.log(labelLib + 'Found url: ' + url);
                 for (var i = 0; i < routes.length; i++) {
                     if (routes[i].url === url) {
-                        var view = me.getView(routes[i].module,routes[i].name);
+                        var view = $ml().getView(routes[i].module,routes[i].name);
                         if (typeof view.__cachedOptions !== 'undefined' && view.__cachedOptions !== false) {
                             view.render(function () {}, view.__cachedOptions);
                         } else {
