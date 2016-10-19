@@ -10499,6 +10499,10 @@ return jQuery;
                 }
                 return modules[module].models[name].__error;
             };
+            mdl.bind = function(param) {
+                var obj = mdl.get(param);
+                mdl.set(obj, param);
+            };
             mdl.get = function(param, defaultValue) {
                 if (debugMode) {
                     console.info(labelLib + 'Get: ' + module + ' model: ' + name + ' default value: ');
