@@ -63,7 +63,7 @@
                 routerInit = true;
             }
             $(document).ready(function() {
-                $('a[href^=#]').on('click', self.checkRoute);
+                $("a[href^=#]").on('click', self.checkRoute);
                 cb();
             });
         },
@@ -880,7 +880,7 @@
             $(element).find('[data-ml-model]').off();
 
             /* Detach all # */
-            $('a[href^=#]').off();
+            $("a[href^=#]").off();
         },
         reenergize: function(element) {
             if (debugMode) {
@@ -894,8 +894,8 @@
                 console.info(labelLib + 'ENERGIZE');
             }
             $(element).find('[data-ml-action]').actions();
-            $('a[href^=#]').on('click', this.checkRoute);
-        },
+            $("a[href^=#]").on('click', this.checkRoute);
+        }, 
         doGET: function(options, done, error){
             if (debugMode) {
                 console.info(labelLib + 'doGET ' + JSON.stringify(options));

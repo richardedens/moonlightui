@@ -62180,7 +62180,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 routerInit = true;
             }
             $(document).ready(function() {
-                $('a[href^=#]').on('click', self.checkRoute);
+                $("a[href^=#]").on('click', self.checkRoute);
             });
             jsPlumb.ready(cb);
         },
@@ -63402,7 +63402,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             $(element).find('[data-ml-model]').off();
 
             /* Detach all # */
-            $('a[href^=#]').off();
+            $("a[href^=#]").off();
         },
         reenergize: function(element) {
             if (debugMode) {
@@ -63466,7 +63466,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             $(element + ' .moonlightui').modals();
 
             /* MOONLIGHT UI - Check */
-            $('a[href^=#]').on('click', this.checkRoute);
+            $("a[href^=#]").on('click', this.checkRoute);
 
         },
         doGET: function(options, done, error){
