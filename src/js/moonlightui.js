@@ -356,7 +356,7 @@
             vw.__loadTemplate = function(cb, postParams, getParams) {
                 var queryString = false;
                 if (typeof getParams !== undefined) {
-                    queryString = $.param(getParams);
+                    queryString = $ml().param(getParams);
                 }
                 if (typeof modules[module].views[name].templateURL !== 'undefined') {
                     var ajaxOptions = {
