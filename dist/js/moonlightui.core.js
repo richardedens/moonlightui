@@ -10093,12 +10093,14 @@ return jQuery;
     $.fn.extend({
         /* MOONLIGHTUI - System */
         checkRoute: function() {
-            var url = window.location.hash.splice(1);
-            console.log(labelLib + 'Found url: ' + url);
-            for(var i = 0; i < routes.length; i++) {
-                if (routes[i].url === vw.routeUrl) {
-                    console.error(labelLib + 'We would not do a render on: ' + routes[i].url + ' in module ' + routes[i].module + ' in view ' + routes[i].view);
-                    break;
+            if (window.location.hash !== '') {
+                var url = window.location.hash.splice(1);
+                console.log(labelLib + 'Found url: ' + url);
+                for (var i = 0; i < routes.length; i++) {
+                    if (routes[i].url === vw.routeUrl) {
+                        console.error(labelLib + 'We would not do a render on: ' + routes[i].url + ' in module ' + routes[i].module + ' in view ' + routes[i].view);
+                        break;
+                    }
                 }
             }
         },
@@ -10289,7 +10291,7 @@ return jQuery;
                 module = tempModule.slice(0),
                 routeSet = false;
             if (typeof vw.routeUrl !== 'undefined' && vw.routeUrl !== '') {
-                for(var i = 0; i < routes.length; i++) { 
+                for(var i = 0; i < routes.length; i++) {
                     if (routes[i].url === vw.routeUrl) {
                         console.error(labelLib + 'Already have a route configured with: ' + routes[i].url + ' in module ' + routes[i].module + ' in view ' + routes[i].view);
                         routeSet = true;
