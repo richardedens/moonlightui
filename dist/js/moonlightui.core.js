@@ -10335,6 +10335,15 @@ return jQuery;
                     });
                 }
             }
+            function toQueryString(obj) {
+                var parts = [];
+                for (var i in obj) {
+                    if (obj.hasOwnProperty(i)) {
+                        parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
+                    }
+                }
+                return parts.join("&");
+            }
             vw.__name = name;
             vw.__error = '';
             vw.__module = module;
@@ -10434,7 +10443,7 @@ return jQuery;
             vw.__loadTemplate = function(cb, postParams, getParams) {
                 var queryString = false;
                 if (typeof getParams !== undefined) {
-                    queryString = $ml().param(getParams);
+                    queryString = toQueryString(getParams);
                 }
                 if (typeof modules[module].views[name].templateURL !== 'undefined') {
                     var ajaxOptions = {
