@@ -33,6 +33,7 @@
                 if (url.indexOf('?') !== -1) {
                     var query = url.split('?');
                     queryObject = parseQuerystring(query[1]);
+                    url = query[0];
                 }
                 console.log(labelLib + 'Found url: ' + url);
                 for (var i = 0; i < routes.length; i++) {
