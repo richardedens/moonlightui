@@ -10093,6 +10093,17 @@ return jQuery;
     $.fn.extend({
         /* MOONLIGHTUI - System */
         checkRoute: function() {
+            function querystring() {
+                var pairs = location.search.slice(1).split('&');
+
+                var result = {};
+                pairs.forEach(function(pair) {
+                    pair = pair.split('=');
+                    result[pair[0]] = decodeURIComponent(pair[1] || '');
+                });
+
+                return JSON.parse(JSON.stringify(result));
+            }
             if (window.location.hash !== '') {
                 var url = window.location.hash.replace('#!','').replace('#','');
                 console.log(labelLib + 'Found url: ' + url);
@@ -10102,9 +10113,9 @@ return jQuery;
                         if (typeof view !== 'undefined') {
                             $("a[href^=\\#\\!]").off();
                             if (typeof view.__cachedOptions !== 'undefined' && view.__cachedOptions !== false) {
-                                view.render(function () {}, view.__cachedOptions);
+                                view.render(function () {}, view.__cachedOptions, querystring());
                             } else {
-                                view.render(function () {});
+                                view.render(function () {}, { data: {} }, querystring());
                             }
                         }
                         break;
