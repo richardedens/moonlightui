@@ -364,7 +364,7 @@
             };
             vw.__loadTemplate = function(cb, postParams, getParams) {
                 var queryString = false;
-                if (typeof getParams !== undefined) {
+                if (typeof getParams !== 'undefined') {
                     queryString = toQueryString(getParams);
                 }
                 if (typeof modules[module].views[name].templateURL !== 'undefined') {
