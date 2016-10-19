@@ -62545,7 +62545,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             mdl.bind = function(param) {
                 var obj = mdl.get(param);
                 mdl.set(obj, param);
-            }; 
+            };
             mdl.get = function(param, defaultValue) {
                 if (debugMode) {
                     console.info(labelLib + 'Get: ' + module + ' model: ' + name + ' default value: ');
