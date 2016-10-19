@@ -59,7 +59,6 @@
                     }());
                 }
                 window.onhashchange = this.checkRoute();
-                $('body').on('hashchange', this.checkRoute);
                 routerInit = true;
             }
             jsPlumb.ready(cb);
