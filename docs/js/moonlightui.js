@@ -62154,32 +62154,34 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             }
         },
         onready: function(cb) {
+            var self = this;
             if (debugMode) {
                 console.info(labelLib + 'We are initializing the onready.');
             }
             if (routerInit === false) {
                 //let this snippet run before your hashchange event binding code
                 if(!window.HashChangeEvent) {
-                    (function () {
-                        var lastURL = document.URL;
-                        window.addEventListener("hashchange", function (event) {
-                            Object.defineProperty(event, "oldURL", {
-                                enumerable: true,
-                                configurable: true,
-                                value: lastURL
-                            });
-                            Object.defineProperty(event, "newURL", {
-                                enumerable: true,
-                                configurable: true,
-                                value: document.URL
-                            });
-                            lastURL = document.URL;
+                    var lastURL = document.URL;
+                    window.addEventListener("hashchange", function (event) {
+                        Object.defineProperty(event, "oldURL", {
+                            enumerable: true,
+                            configurable: true,
+                            value: lastURL
                         });
-                    }());
+                        Object.defineProperty(event, "newURL", {
+                            enumerable: true,
+                            configurable: true,
+                            value: document.URL
+                        });
+                        lastURL = document.URL;
+                    });
                 }
-                window.onhashchange = this.checkRoute();
+                window.onhashchange = self.checkRoute;
                 routerInit = true;
             }
+            $(document).ready(function() {
+                $('a[href^=#]').on('click', self.checkRoute);
+            });
             jsPlumb.ready(cb);
         },
         url: window.location,
@@ -63398,6 +63400,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
 
             /* Detach two-way databinding */
             $(element).find('[data-ml-model]').off();
+
+            /* Detach all # */
+            $('a[href^=#]').off();
         },
         reenergize: function(element) {
             if (debugMode) {
@@ -63459,6 +63464,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
 
             /* MOONLIGHT UI - Enable all modal dialogs */
             $(element + ' .moonlightui').modals();
+
+            /* MOONLIGHT UI - Check */
+            $('a[href^=#]').on('click', this.checkRoute);
 
         },
         doGET: function(options, done, error){

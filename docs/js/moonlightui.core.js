@@ -10110,6 +10110,7 @@ return jQuery;
             }
         },
         onready: function(cb) {
+            var self = this;
             if (debugMode) {
                 console.info(labelLib + 'We are initializing the onready.');
             }
@@ -10133,10 +10134,11 @@ return jQuery;
                         });
                     }());
                 }
-                window.onhashchange = this.checkRoute();
+                window.onhashchange = self.checkRoute;
                 routerInit = true;
             }
             $(document).ready(function() {
+                $('a[href^=#]').on('click', self.checkRoute);
                 cb();
             });
         },
@@ -10951,6 +10953,9 @@ return jQuery;
 
             /* Detach two-way databinding */
             $(element).find('[data-ml-model]').off();
+
+            /* Detach all # */
+            $('a[href^=#]').off();
         },
         reenergize: function(element) {
             if (debugMode) {
@@ -10964,6 +10969,7 @@ return jQuery;
                 console.info(labelLib + 'ENERGIZE');
             }
             $(element).find('[data-ml-action]').actions();
+            $('a[href^=#]').on('click', this.checkRoute);
         },
         doGET: function(options, done, error){
             if (debugMode) {
