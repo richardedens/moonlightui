@@ -19,7 +19,7 @@
         /* MOONLIGHTUI - System */
         checkRoute: function() {
             if (window.location.hash !== '') {
-                var url = window.location.hash.splice(1);
+                var url = window.location.hash.replace('#!','').replace('#','');
                 console.log(labelLib + 'Found url: ' + url);
                 for (var i = 0; i < routes.length; i++) {
                     if (routes[i].url === vw.routeUrl) {
