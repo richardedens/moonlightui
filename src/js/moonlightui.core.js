@@ -15,16 +15,17 @@
         tempModule,
         routerInit = false;
 
+    var me = this;
+    
     $.fn.extend({
         /* MOONLIGHTUI - System */
         checkRoute: function() {
-            var self = this;
             if (window.location.hash !== '') {
                 var url = window.location.hash.replace('#!','').replace('#','');
                 console.log(labelLib + 'Found url: ' + url);
                 for (var i = 0; i < routes.length; i++) {
                     if (routes[i].url === url) {
-                        var view = self.getView(routes[i].module,routes[i].name);
+                        var view = me.getView(routes[i].module,routes[i].name);
                         if (typeof view.__cachedOptions !== 'undefined' && view.__cachedOptions !== false) {
                             view.render(function () {}, view.__cachedOptions);
                         } else {
