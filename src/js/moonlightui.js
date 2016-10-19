@@ -369,7 +369,7 @@
                 }
                 if (typeof modules[module].views[name].templateURL !== 'undefined') {
                     var ajaxOptions = {
-                        url: modules[module].views[name].templateURL + (queryString !== false) ? '?' + queryString : '',
+                        url: modules[module].views[name].templateURL + ((queryString !== false) ? '?' + queryString : ''),
                         type: 'GET'
                     };
                     if (typeof postParams !== 'undefined' && typeof postParams.data !== 'undefined') {
