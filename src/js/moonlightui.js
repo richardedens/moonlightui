@@ -323,7 +323,7 @@
                     cb(modules[module].views[name].__template, modules[module].views[name].__container);
                 }
             };
-            vw.render = function(cb, options) {
+            vw.render = function(cb, postParams, getParams) {
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
@@ -358,7 +358,7 @@
                                 engine.energize(modules[module].views[name].container);
                             }
                             cb(modules[module].views[name].__template, modules[module].views[name].__container);
-                        }, options);
+                        }, postParams, getParams);
                     }
                 }
             };
