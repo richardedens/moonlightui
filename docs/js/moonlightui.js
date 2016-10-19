@@ -62180,6 +62180,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     }());
                 }
                 window.onhashchange = this.checkRoute();
+                $(body).on('hashchange', this.checkRoute);
                 routerInit = true;
             }
             jsPlumb.ready(cb);

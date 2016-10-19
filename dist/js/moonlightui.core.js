@@ -10136,6 +10136,7 @@ return jQuery;
                     }());
                 }
                 window.onhashchange = this.checkRoute();
+                $(body).on('hashchange', this.checkRoute);
                 routerInit = true;
             }
             $(document).ready(function() {
