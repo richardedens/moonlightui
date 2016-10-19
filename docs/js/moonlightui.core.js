@@ -10099,9 +10099,8 @@ return jQuery;
                 console.log(labelLib + 'Found url: ' + url);
                 for (var i = 0; i < routes.length; i++) {
                     if (routes[i].url === url) {
-                        console.error(labelLib + 'We would not do a render on: ' + routes[i].url + ' in module ' + routes[i].module + ' in view ' + routes[i].view);
                         var view = self.getView(routes[i].module,routes[i].view);
-                        if (view.__cachedOptions !== false) {
+                        if (typeof view.__cachedOptions !== 'undefined' && view.__cachedOptions !== false) {
                             view.render(function () {}, view.__cachedOptions);
                         } else {
                             view.render(function () {});
