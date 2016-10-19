@@ -18,24 +18,50 @@
     $.fn.extend({
         /* MOONLIGHTUI - System */
         checkRoute: function() {
+            var self = this;
             if (window.location.hash !== '') {
                 var url = window.location.hash.replace('#!','').replace('#','');
                 console.log(labelLib + 'Found url: ' + url);
                 for (var i = 0; i < routes.length; i++) {
-                    if (routes[i].url === vw.routeUrl) {
+                    if (routes[i].url === url) {
                         console.error(labelLib + 'We would not do a render on: ' + routes[i].url + ' in module ' + routes[i].module + ' in view ' + routes[i].view);
+                        var view = self.getView(routes[i].module,routes[i].view);
+                        if (view.__cachedOptions !== false) {
+                            view.render(function () {}, view.__cachedOptions);
+                        } else {
+                            view.render(function () {});
+                        }
                         break;
                     }
                 }
             }
         },
         onready: function(cb) {
-            if (routerInit === false) {
-                window.onhashchange = this.checkRoute();
-                routerInit = true;
-            }
             if (debugMode) {
                 console.info(labelLib + 'We are initializing the onready.');
+            }
+            if (routerInit === false) {
+                //let this snippet run before your hashchange event binding code
+                if(!window.HashChangeEvent){
+                    (function () {
+                        var lastURL = document.URL;
+                        window.addEventListener("hashchange", function (event) {
+                            Object.defineProperty(event, "oldURL", {
+                                enumerable: true,
+                                configurable: true,
+                                value: lastURL
+                            });
+                            Object.defineProperty(event, "newURL", {
+                                enumerable: true,
+                                configurable: true,
+                                value: document.URL
+                            });
+                            lastURL = document.URL;
+                        });
+                    }());
+                }
+                window.onhashchange = this.checkRoute();
+                routerInit = true;
             }
             $(document).ready(function() {
                 cb();
@@ -215,9 +241,9 @@
                 engine = this,
                 module = tempModule.slice(0),
                 routeSet = false;
-            if (typeof vw.routeUrl !== 'undefined' && vw.routeUrl !== '') {
+            if (typeof vw.routeURL !== 'undefined' && vw.routeURL !== '') {
                 for(var i = 0; i < routes.length; i++) {
-                    if (routes[i].url === vw.routeUrl) {
+                    if (routes[i].url === vw.routeURL) {
                         console.error(labelLib + 'Already have a route configured with: ' + routes[i].url + ' in module ' + routes[i].module + ' in view ' + routes[i].view);
                         routeSet = true;
                         break;
@@ -225,7 +251,7 @@
                 }
                 if (routeSet === false) {
                     routes.push({
-                        'url': vw.routeUrl,
+                        'url': vw.routeURL,
                         'module': module,
                         'name': name
                     });
@@ -240,7 +266,7 @@
             vw.__models = false;
             vw.__initialized = false;
             vw.__cached = '';
-            vw.__cachedOptions = {},
+            vw.__cachedOptions = false;
             vw.__usecached = false;
             vw.__render = function(html) {
                 return html;
@@ -291,11 +317,11 @@
                 }
             };
             vw.render = function(cb, options) {
-                if (typeof options !== 'undefined') {
-                    vw.__cachedOptions = options;
-                }
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
+                }
+                if (typeof options !== 'undefined') {
+                    vw.__cachedOptions = options;
                 }
                 if (vw.__usecached === true && modules[module].views[name].__cached !== '') {
                     vw.renderCached(cb);
