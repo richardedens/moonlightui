@@ -10394,7 +10394,7 @@ return jQuery;
                     cb(modules[module].views[name].__template, modules[module].views[name].__container);
                 }
             };
-            vw.render = function(cb, options) {
+            vw.render = function(cb, options, gets) {
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
@@ -10431,16 +10431,20 @@ return jQuery;
                     }
                 }
             };
-            vw.__loadTemplate = function(cb, options) {
+            vw.__loadTemplate = function(cb, postParams, getParams) {
+                var queryString = false;
+                if (typeof getParams !== undefined) {
+                    queryString = $.param(getParams);
+                } 
                 if (typeof modules[module].views[name].templateURL !== 'undefined') {
                     var ajaxOptions = {
-                        url: modules[module].views[name].templateURL,
+                        url: modules[module].views[name].templateURL + (queryString !== false) ? '?' + queryString : '',
                         type: 'GET'
                     };
-                    if (typeof options !== 'undefined' && typeof options.data !== 'undefined') {
+                    if (typeof postParams !== 'undefined' && typeof postParams.data !== 'undefined') {
                         ajaxOptions.type = 'POST';
                         ajaxOptions.data = {
-                            data: options.data
+                            data: postParams.data
                         };
                         if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
                             ajaxOptions.data._token = window.mlui_cfg.csrf_token;
