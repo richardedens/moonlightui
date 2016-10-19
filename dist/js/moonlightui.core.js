@@ -10099,10 +10099,13 @@ return jQuery;
                 for (var i = 0; i < routes.length; i++) {
                     if (routes[i].url === url) {
                         var view = $ml().getView(routes[i].module,routes[i].name);
-                        if (typeof view.__cachedOptions !== 'undefined' && view.__cachedOptions !== false) {
-                            view.render(function () {}, view.__cachedOptions);
-                        } else {
-                            view.render(function () {});
+                        if (typeof view !== 'undefined') {
+                            $("a[href^=\\#\\!]").off();
+                            if (typeof view.__cachedOptions !== 'undefined' && view.__cachedOptions !== false) {
+                                view.render(function () {}, view.__cachedOptions);
+                            } else {
+                                view.render(function () {});
+                            }
                         }
                         break;
                     }
@@ -10138,7 +10141,7 @@ return jQuery;
                 routerInit = true;
             }
             $(document).ready(function() {
-                $("a[href^=\\#]").on('click', self.checkRoute);
+                $("a[href^=\\#\\!]").on('click', self.checkRoute);
                 cb();
             });
         },
@@ -10955,7 +10958,7 @@ return jQuery;
             $(element).find('[data-ml-model]').off();
 
             /* Detach all # */
-            $("a[href^=\\#]").off();
+            $("a[href^=\\#\\!]").off();
         },
         reenergize: function(element) {
             if (debugMode) {
@@ -10969,7 +10972,7 @@ return jQuery;
                 console.info(labelLib + 'ENERGIZE');
             }
             $(element).find('[data-ml-action]').actions();
-            $("a[href^=\\#]").on('click', this.checkRoute);
+            $("a[href^=\\#\\!]").on('click', this.checkRoute);
         },
         doGET: function(options, done, error){
             if (debugMode) {
