@@ -11014,10 +11014,10 @@ return jQuery;
                     options.async = true;
                 });
             }
-            $.ajax(options).done(function() {
-                done();
-            }).fail(function() {
-                error();
+            $.ajax(options).done(function(data) {
+                done(data);
+            }).fail(function(data) {
+                error(data);
             });
         },
         doPUT: function(options, done, error){
@@ -11061,8 +11061,8 @@ return jQuery;
             options.async = false;
             $.ajax(options).done(function(data) {
                 done(data);
-            }).fail(function() {
-                error();
+            }).fail(function(data) {
+                error(data);
             });
         }
     });
