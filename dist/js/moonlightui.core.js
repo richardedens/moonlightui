@@ -10481,57 +10481,7 @@ return jQuery;
                 } else {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     if (typeof $(modules[module].views[name].__container).children('.ml-buffer.ml-buffer-hide')[0] === 'undefined') {
-                        $(modules[module].views[name].__container).html(
-                            '<div class="ml-buffer ml-buffer-one ml-buffer-show">' +
-                                '<div class="preloader-wrapper small active">'+
-                                    '<div class="spinner-layer spinner-blue">' +
-                                        '<div class="circle-clipper left">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                        '<div class="gap-patch">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                        '<div class="circle-clipper right">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="spinner-layer spinner-red">' +
-                                        '<div class="circle-clipper left">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                        '<div class="gap-patch">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                        '<div class="circle-clipper right">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="spinner-layer spinner-yellow">' +
-                                        '<div class="circle-clipper left">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                        '<div class="gap-patch">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                        '<div class="circle-clipper right">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="spinner-layer spinner-green">' +
-                                        '<div class="circle-clipper left">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                        '<div class="gap-patch">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                        '<div class="circle-clipper right">' +
-                                            '<div class="circle"></div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                            '<div class="ml-buffer ml-buffer-two ml-buffer-hide">' +
-                            '</div>');
+                        $(modules[module].views[name].__container).html('<div class="ml-buffer ml-buffer-one ml-buffer-show"></div><div class="ml-buffer ml-buffer-two ml-buffer-hide"></div>');
                     }
                     if (typeof cb === "undefined") {
                         modules[module].views[name].__container = $(modules[module].views[name].container);
@@ -10551,7 +10501,7 @@ return jQuery;
                             modules[module].views[name].__run();
                         }
                     } else {
-                        $(modules[module].views[name].__container).children('.ml-buffer-show').prepend('<div class="row progress-indicator"><div class="col s12 m12 l12"><div class="progress"> <div class="indeterminate"></div></div></div></div>');
+                        $(modules[module].views[name].__container).children('.ml-buffer-show').prepend('<div class="col s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
                         modules[module].views[name].__loadTemplate(function () {
                             modules[module].views[name].__container = $(modules[module].views[name].container);
                             $(modules[module].views[name].__container).children('.ml-buffer-hide').html(modules[module].views[name].__render(modules[module].views[name].__template));
