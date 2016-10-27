@@ -400,7 +400,7 @@
                 if (vw.__usecached === true && modules[module].views[name].__cached !== '') {
                     vw.renderCached(cb);
                 } else {
-                    modules[module].views[name].__container = $(modules[module].views[name].container); 
+                    modules[module].views[name].__container = $(modules[module].views[name].container);
                     if (typeof $(modules[module].views[name].__container).children('.ml-buffer.ml-buffer-hide')[0] === 'undefined') {
                         $(modules[module].views[name].__container).html(
                             '<div class="ml-buffer ml-buffer-one ml-buffer-show">' +
@@ -461,6 +461,8 @@
                         var bufferHide = $(modules[module].views[name].__container).children('.ml-buffer-hide');
                         $(bufferShow).removeClass('ml-buffer-show').addClass('ml-buffer-hide');
                         $(bufferHide).removeClass('ml-buffer-hide').addClass('ml-buffer-show');
+                        engine.deenergize(bufferShow);
+                        $(bufferShow).html('');
                         if (modules[module].views[name].__initialized === true) {
                             engine.reenergize(modules[module].views[name].container);
                         } else {
@@ -474,6 +476,8 @@
                             var bufferHide = $(modules[module].views[name].__container).children('.ml-buffer-hide');
                             $(bufferShow).removeClass('ml-buffer-show').addClass('ml-buffer-hide');
                             $(bufferHide).removeClass('ml-buffer-hide').addClass('ml-buffer-show');
+                            engine.deenergize(bufferShow);
+                            $(bufferShow).html('');
                             modules[module].views[name].__cached = modules[module].views[name].__container.html();
                             if (modules[module].views[name].__initialized === true) {
                                 engine.reenergize(modules[module].views[name].container);
