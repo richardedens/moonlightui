@@ -10370,6 +10370,7 @@ return jQuery;
             vw.__cached = '';
             vw.__cachedOptions = false;
             vw.__usecached = false;
+            vw.__run = false;
             vw.__render = function(html) {
                 return html;
             };
@@ -10465,6 +10466,9 @@ return jQuery;
                     cb(modules[module].views[name].__template, modules[module].views[name].__container);
                 }
             };
+            vw.run = function(cb) {
+                this.__run = cb;
+            },
             vw.render = function(cb, postParams, getParams) {
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
@@ -10543,6 +10547,9 @@ return jQuery;
                         } else {
                             engine.energize(modules[module].views[name].container);
                         }
+                        if (modules[module].views[name].__run !== false) {
+                            modules[module].views[name].__run();
+                        }
                     } else {
                         modules[module].views[name].__loadTemplate(function () {
                             modules[module].views[name].__container = $(modules[module].views[name].container);
@@ -10558,6 +10565,9 @@ return jQuery;
                                 engine.reenergize(modules[module].views[name].container);
                             } else {
                                 engine.energize(modules[module].views[name].container);
+                            }
+                            if (modules[module].views[name].__run !== false) {
+                                modules[module].views[name].__run();
                             }
                             cb(modules[module].views[name].__template, modules[module].views[name].__container);
                         }, postParams, getParams);
