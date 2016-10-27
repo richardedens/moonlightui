@@ -400,7 +400,7 @@
                 if (vw.__usecached === true && modules[module].views[name].__cached !== '') {
                     vw.renderCached(cb);
                 } else {
-                    modules[module].views[name].__container = $(modules[module].views[name].container);
+                    modules[module].views[name].__container = $(modules[module].views[name].container); 
                     if (typeof $(modules[module].views[name].__container).children('.ml-buffer.ml-buffer-hide')[0] === 'undefined') {
                         $(modules[module].views[name].__container).html(
                             '<div class="ml-buffer ml-buffer-one ml-buffer-show">' +
