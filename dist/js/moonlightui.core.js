@@ -10501,7 +10501,7 @@ return jQuery;
                             modules[module].views[name].__run();
                         }
                     } else {
-                        $('.ml-progress-indicator-container').children('.ml-buffer-show').append('<div class="col progress-indicator s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
+                        $('.ml-progress-indicator-container').append('<div class="col progress-indicator s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
                         $(modules[module].views[name].__container).children('.ml-buffer-show').append('<div class="ml-progress-overlap"></div>');
                         modules[module].views[name].__loadTemplate(function () {
                             modules[module].views[name].__container = $(modules[module].views[name].container);
@@ -10521,6 +10521,7 @@ return jQuery;
                             if (modules[module].views[name].__run !== false) {
                                 modules[module].views[name].__run();
                             }
+                            $('.progress-indicator').remove();
                             cb(modules[module].views[name].__template, modules[module].views[name].__container);
                         }, postParams, getParams);
                     }
