@@ -10501,7 +10501,9 @@ return jQuery;
                             modules[module].views[name].__run();
                         }
                     } else {
-                        $('.ml-progress-indicator-container').append('<div class="col progress-indicator s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
+                        if (typeof $('.ml-progress-indicator-container .ml-progress-indicator')[0] === 'undefined') {
+                            $('.ml-progress-indicator-container').append('<div class="col ml-progress-indicator progress-indicator s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
+                        }
                         $(modules[module].views[name].__container).children('.ml-buffer-show').append('<div class="ml-progress-overlap"></div>');
                         modules[module].views[name].__loadTemplate(function () {
                             modules[module].views[name].__container = $(modules[module].views[name].container);
