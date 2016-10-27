@@ -10475,7 +10475,7 @@ return jQuery;
                 if (vw.__usecached === true && modules[module].views[name].__cached !== '') {
                     vw.renderCached(cb);
                 } else {
-                    if ($(modules[module].views[name].__container).children('.ml-buffer.ml-buffer-hide') === []) {
+                    if (typeof $(modules[module].views[name].__container).children('.ml-buffer.ml-buffer-hide')[0] === 'undefined') {
                         modules[module].views[name].__container.html(
                             '<div class="ml-buffer ml-buffer-one ml-buffer-show">' +
                                 '<div class="preloader-wrapper small active">'+
