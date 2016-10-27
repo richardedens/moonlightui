@@ -401,7 +401,7 @@
                     vw.renderCached(cb);
                 } else {
                     if (typeof $(modules[module].views[name].__container).children('.ml-buffer.ml-buffer-hide')[0] === 'undefined') {
-                        modules[module].views[name].__container.html(
+                        $(modules[module].views[name].__container).html(
                             '<div class="ml-buffer ml-buffer-one ml-buffer-show">' +
                                 '<div class="preloader-wrapper small active">'+
                                     '<div class="spinner-layer spinner-blue">' +
