@@ -10398,7 +10398,54 @@ return jQuery;
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
                 modules[module].views[name].__container = $(modules[module].views[name].container);
-                modules[module].views[name].__container.html('<div class="preloader-wrapper small active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>');
+                modules[module].views[name].__container.html(
+                    '<div class="preloader-wrapper small active">'+
+                        '<div class="spinner-layer spinner-blue">' +
+                            '<div class="circle-clipper left">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                            '<div class="gap-patch">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                            '<div class="circle-clipper right">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="spinner-layer spinner-red">' +
+                            '<div class="circle-clipper left">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                            '<div class="gap-patch">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                            '<div class="circle-clipper right">' +
+                            '   <div class="circle"></div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="spinner-layer spinner-yellow">' +
+                            '<div class="circle-clipper left">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                            '<div class="gap-patch">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                            '<div class="circle-clipper right">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="spinner-layer spinner-green">' +
+                            '<div class="circle-clipper left">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                            '<div class="gap-patch">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                            '<div class="circle-clipper right">' +
+                                '<div class="circle"></div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>'
+                );
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html(modules[module].views[name].__cached);
@@ -10428,13 +10475,66 @@ return jQuery;
                 if (vw.__usecached === true && modules[module].views[name].__cached !== '') {
                     vw.renderCached(cb);
                 } else {
-                    modules[module].views[name].__container = $(modules[module].views[name].container);
-                    modules[module].views[name].__container.html('<div class="preloader-wrapper small active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>');
-                    modules[module].views[name].__cached = modules[module].views[name].__container.html();
+                    if (typeof $(modules[module].views[name].__container).children('.ml-buffer.ml-buffer-hide') === 'undefined') {
+                        modules[module].views[name].__container.html(
+                            '<div class="ml-buffer ml-buffer-one ml-buffer-show">' +
+                                '<div class="preloader-wrapper small active">'+
+                                    '<div class="spinner-layer spinner-blue">' +
+                                        '<div class="circle-clipper left">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                        '<div class="gap-patch">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                        '<div class="circle-clipper right">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="spinner-layer spinner-red">' +
+                                        '<div class="circle-clipper left">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                        '<div class="gap-patch">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                        '<div class="circle-clipper right">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="spinner-layer spinner-yellow">' +
+                                        '<div class="circle-clipper left">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                        '<div class="gap-patch">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                        '<div class="circle-clipper right">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="spinner-layer spinner-green">' +
+                                        '<div class="circle-clipper left">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                        '<div class="gap-patch">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                        '<div class="circle-clipper right">' +
+                                            '<div class="circle"></div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="ml-buffer ml-buffer-two ml-buffer-hide">' +
+                            '</div>');
+                    }
                     if (typeof cb === "undefined") {
                         modules[module].views[name].__container = $(modules[module].views[name].container);
-                        modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
-                        modules[module].views[name].__cached = modules[module].views[name].__container.html();
+                        $(modules[module].views[name].__container).children('.ml-buffer-hide').html(modules[module].views[name].__render(modules[module].views[name].__template));
+                        var bufferShow = $(modules[module].views[name].__container).children('.ml-buffer-show');
+                        var bufferHide = $(modules[module].views[name].__container).children('.ml-buffer-hide');
+                        $(bufferShow).removeClass('ml-buffer-show').addClass('ml-buffer-hide');
+                        $(bufferHide).removeClass('ml-buffer-hide').addClass('ml-buffer-show');
                         if (modules[module].views[name].__initialized === true) {
                             engine.reenergize(modules[module].views[name].container);
                         } else {
@@ -10443,7 +10543,11 @@ return jQuery;
                     } else {
                         modules[module].views[name].__loadTemplate(function () {
                             modules[module].views[name].__container = $(modules[module].views[name].container);
-                            modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                            $(modules[module].views[name].__container).children('.ml-buffer-hide').html(modules[module].views[name].__render(modules[module].views[name].__template));
+                            var bufferShow = $(modules[module].views[name].__container).children('.ml-buffer-show');
+                            var bufferHide = $(modules[module].views[name].__container).children('.ml-buffer-hide');
+                            $(bufferShow).removeClass('ml-buffer-show').addClass('ml-buffer-hide');
+                            $(bufferHide).removeClass('ml-buffer-hide').addClass('ml-buffer-show');
                             modules[module].views[name].__cached = modules[module].views[name].__container.html();
                             if (modules[module].views[name].__initialized === true) {
                                 engine.reenergize(modules[module].views[name].container);
