@@ -10551,6 +10551,7 @@ return jQuery;
                             modules[module].views[name].__run();
                         }
                     } else {
+                        $(modules[module].views[name].__container).children('.ml-buffer-show').prepend('<div class="row progress-indicator"><div class="col s12 m12 l12"><div class="progress"> <div class="indeterminate"></div></div></div></div>');
                         modules[module].views[name].__loadTemplate(function () {
                             modules[module].views[name].__container = $(modules[module].views[name].container);
                             $(modules[module].views[name].__container).children('.ml-buffer-hide').html(modules[module].views[name].__render(modules[module].views[name].__template));
