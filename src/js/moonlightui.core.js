@@ -665,7 +665,7 @@
                     if ($(this).is( ":checkbox" )) {
                         $(this).prop('checked', modules[module].models[model][param]);
                         if (modelParameter.length > 1) {
-                            $(this).prop('checked', modules[module].models[model][modelParameter[1]][modelParameter[2]]);
+                            $(this).prop('checked', modules[module].models[model][modelParameter[0]][modelParameter[1]]);
                         } else {
                             $(this).prop('checked', modules[module].models[model][param]);
                         }
@@ -675,7 +675,7 @@
                         $(this).is( "select" ) ||
                         $(this).is( ":radio" )) {
                         if (modelParameter.length > 1) {
-                            modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                            modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
                         } else {
                             modules[module].models[model][param] = $(this).val();
                         }

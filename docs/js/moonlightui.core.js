@@ -10501,7 +10501,7 @@ return jQuery;
                             modules[module].views[name].__run();
                         }
                     } else {
-                        if (typeof $('.ml-progress-indicator-container .ml-progress-indicator')[0] === 'undefined') { 
+                        if (typeof $('.ml-progress-indicator-container .ml-progress-indicator')[0] === 'undefined') {
                             $('.ml-progress-indicator-container').append('<div class="col ml-progress-indicator progress-indicator s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
                         }
                         $(modules[module].views[name].__container).children('.ml-buffer-show').append('<div class="ml-progress-overlap"></div>');
@@ -10740,7 +10740,7 @@ return jQuery;
                     if ($(this).is( ":checkbox" )) {
                         $(this).prop('checked', modules[module].models[model][param]);
                         if (modelParameter.length > 1) {
-                            $(this).prop('checked', modules[module].models[model][modelParameter[1]][modelParameter[2]]);
+                            $(this).prop('checked', modules[module].models[model][modelParameter[0]][modelParameter[1]]);
                         } else {
                             $(this).prop('checked', modules[module].models[model][param]);
                         }
@@ -10750,7 +10750,7 @@ return jQuery;
                         $(this).is( "select" ) ||
                         $(this).is( ":radio" )) {
                         if (modelParameter.length > 1) {
-                            modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
+                            modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
                         } else {
                             modules[module].models[model][param] = $(this).val();
                         }
