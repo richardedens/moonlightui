@@ -10399,54 +10399,7 @@ return jQuery;
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
                 modules[module].views[name].__container = $(modules[module].views[name].container);
-                modules[module].views[name].__container.html(
-                    '<div class="preloader-wrapper small active">'+
-                        '<div class="spinner-layer spinner-blue">' +
-                            '<div class="circle-clipper left">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                            '<div class="gap-patch">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                            '<div class="circle-clipper right">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="spinner-layer spinner-red">' +
-                            '<div class="circle-clipper left">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                            '<div class="gap-patch">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                            '<div class="circle-clipper right">' +
-                            '   <div class="circle"></div>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="spinner-layer spinner-yellow">' +
-                            '<div class="circle-clipper left">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                            '<div class="gap-patch">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                            '<div class="circle-clipper right">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="spinner-layer spinner-green">' +
-                            '<div class="circle-clipper left">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                            '<div class="gap-patch">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                            '<div class="circle-clipper right">' +
-                                '<div class="circle"></div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>'
-                );
+                modules[module].views[name].__container.html('<div class="col ml-progress-indicator progress-indicator s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html(modules[module].views[name].__cached);
@@ -10468,7 +10421,7 @@ return jQuery;
             };
             vw.run = function(cb) {
                 this.__run = cb;
-            },
+            };
             vw.render = function(cb, postParams, getParams) {
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
@@ -10736,9 +10689,8 @@ return jQuery;
                     var modelParameter = [];
                     if (param.indexOf('.') !== -1) {
                         modelParameter = param.split('.');
-                    }
+                    }  
                     if ($(this).is( ":checkbox" )) {
-                        $(this).prop('checked', modules[module].models[model][param]);
                         if (modelParameter.length > 1) {
                             $(this).prop('checked', modules[module].models[model][modelParameter[0]][modelParameter[1]]);
                         } else {
