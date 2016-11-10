@@ -10689,7 +10689,7 @@ return jQuery;
                     var modelParameter = [];
                     if (param.indexOf('.') !== -1) {
                         modelParameter = param.split('.');
-                    }  
+                    }
                     if ($(this).is( ":checkbox" )) {
                         if (modelParameter.length > 1) {
                             $(this).prop('checked', modules[module].models[model][modelParameter[0]][modelParameter[1]]);
