@@ -708,7 +708,7 @@
                                     $(this).is("select")) {
                                     $(this).val(modules[module].models[model][param]);
                                     if ($(this).is("input") || $(this).is("textarea")) {
-                                        $(this).on('change', function () {
+                                        $(this).on('change', function (evt) {
                                             if (modelParameter.length > 1) {
                                                 modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
                                                 modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
@@ -717,7 +717,7 @@
                                                 modules[module].models[model].__broadcast(model, param, evt);
                                             }
                                         });
-                                        $(this).on('keyup', function () {
+                                        $(this).on('keyup', function (evt) {
                                             if (modelParameter.length > 1) {
                                                 modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
                                                 modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
@@ -728,7 +728,7 @@
                                         });
                                     }
                                     if ($(this).is("select")) {
-                                        $(this).on('change', function () {
+                                        $(this).on('change', function (evt) {
                                             if (modelParameter.length > 1) {
                                                 modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
                                                 modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
