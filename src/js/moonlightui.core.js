@@ -501,6 +501,7 @@
             }
 
             // Attach new variables and new functions. Will override existing functions.
+            mdl.__fields = model();
             mdl.__name = name;
             mdl.__error = '';
             mdl.__module = module;
