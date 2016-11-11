@@ -606,7 +606,7 @@
                 }
                 mdl.__on = cb;
             };
-            mdl.__broadcast = function(model, param){
+            mdl.__broadcast = function(model, param, evt){
                 if (debugMode) {
                     console.info(labelLib + 'Broadcast: ' + module + ' model: ' + name);
                 }
@@ -637,7 +637,7 @@
                     }
                 });
                 if (modules[module].models[model].__on !== false) {
-                    modules[module].models[model].__on(param);
+                    modules[module].models[model].__on(param, evt);
                 }
             };
             mdl.__initTwoWayBinding = function(){
@@ -667,13 +667,13 @@
                                     $(this).prop('checked', false);
                                 }
                             }
-                            $(this).on('click', function () {
+                            $(this).on('click', function (evt) {
                                 if (modelParameter.length > 1) {
                                     modules[module].models[model][modelParameter[0]][modelParameter[1]] =  $(this).prop('checked');
-                                    modules[module].models[model].__broadcast(model, modelParameter.join('.'));
+                                    modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
                                 } else {
                                     modules[module].models[model][param] = $(this).prop('checked');
-                                    modules[module].models[model].__broadcast(model, param);
+                                    modules[module].models[model].__broadcast(model, param, evt);
                                 }
                             });
                         } else {
@@ -695,10 +695,10 @@
                                     if ($(this).prop('checked')) {
                                         if (modelParameter.length > 1) {
                                             modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).prop();
-                                            modules[module].models[model].__broadcast(model, modelParameter.join('.'));
+                                            modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
                                         } else {
                                             modules[module].models[model][param] = $(this).val();
-                                            modules[module].models[model].__broadcast(model, param);
+                                            modules[module].models[model].__broadcast(model, param, evt);
                                         }
                                     }
                                 });
@@ -708,13 +708,22 @@
                                     $(this).is("select")) {
                                     $(this).val(modules[module].models[model][param]);
                                     if ($(this).is("input") || $(this).is("textarea")) {
+                                        $(this).on('change', function () {
+                                            if (modelParameter.length > 1) {
+                                                modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
+                                                modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
+                                            } else {
+                                                modules[module].models[model][param] = $(this).val();
+                                                modules[module].models[model].__broadcast(model, param, evt);
+                                            }
+                                        });
                                         $(this).on('keyup', function () {
                                             if (modelParameter.length > 1) {
                                                 modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
-                                                modules[module].models[model].__broadcast(model, modelParameter.join('.'));
+                                                modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
                                             } else {
                                                 modules[module].models[model][param] = $(this).val();
-                                                modules[module].models[model].__broadcast(model, param);
+                                                modules[module].models[model].__broadcast(model, param, evt);
                                             }
                                         });
                                     }
@@ -722,10 +731,10 @@
                                         $(this).on('change', function () {
                                             if (modelParameter.length > 1) {
                                                 modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
-                                                modules[module].models[model].__broadcast(model, modelParameter.join('.'));
+                                                modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
                                             } else {
                                                 modules[module].models[model][param] = $(this).val();
-                                                modules[module].models[model].__broadcast(model, param);
+                                                modules[module].models[model].__broadcast(model, param, evt);
                                             }
                                         });
                                     }
