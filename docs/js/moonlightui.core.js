@@ -10439,7 +10439,7 @@ return jQuery;
             };
             vw.render = function(cb, postParams, getParams) {
                 lastView = name;
-                viewHistory.push(name); 
+                viewHistory.push(name);
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
