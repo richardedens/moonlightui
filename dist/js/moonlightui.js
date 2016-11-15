@@ -62483,8 +62483,8 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 this.__run = cb;
             };
             vw.render = function(cb, postParams, getParams) {
-                lastView = vw.name;
-                viewHistory.push(vw.name);
+                lastView = name;
+                viewHistory.push(name);
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
