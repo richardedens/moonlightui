@@ -13,7 +13,9 @@
         debugMode = false,
         labelLib = 'MOONLIGHTUI - ',
         tempModule,
-        routerInit = false;
+        routerInit = false,
+        viewHistory = [],
+        lastView = '';
 
     $.fn.extend({
         /* MOONLIGHTUI - System */
@@ -230,6 +232,19 @@
             });
         },
         /* MOONLIGHTUI - MVC mechanism */
+        mlsettings: function() {
+            return {
+                callbacks: callbacks,
+                modules: modules,
+                actions: actions,
+                routes: routes,
+                debugMode: debugMode,
+                tempModule: tempModule,
+                routerInit: routerInit,
+                viewHistory: viewHistory,
+                lastView: lastView
+            }; 
+        },
         module: function(name) {
             tempModule = name;
             if (typeof modules[name] === 'undefined') {
@@ -348,6 +363,8 @@
                 this.__run = cb;
             };
             vw.render = function(cb, postParams, getParams) {
+                engine.lastView = vw.name;
+                engine.viewHistory.push(vw.name);
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
@@ -955,6 +972,14 @@
                 console.info(labelLib + 'RE-ENERGIZE');
             }
             this.deenergize(element);
+
+            /* Attach model two way databinding */
+            for (var module in modules) {
+                for (var model in modules[module].models) {
+                    modules[module].models[model].__initTwoWayBinding();
+                }
+            }
+
             $(element).energize(element);
         },
         energize: function(element) {

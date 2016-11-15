@@ -62132,7 +62132,9 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         debugMode = false,
         labelLib = 'MOONLIGHTUI - ',
         tempModule,
-        routerInit = false;
+        routerInit = false,
+        viewHistory = [],
+        lastView = '';
 
     $.fn.extend({
         /* MOONLIGHTUI - System */
@@ -62178,21 +62180,23 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             }
             if (routerInit === false) {
                 //let this snippet run before your hashchange event binding code
-                if(!window.HashChangeEvent) {
-                    var lastURL = document.URL;
-                    window.addEventListener("hashchange", function (event) {
-                        Object.defineProperty(event, "oldURL", {
-                            enumerable: true,
-                            configurable: true,
-                            value: lastURL
+                if(!window.HashChangeEvent){
+                    (function () {
+                        var lastURL = document.URL;
+                        window.addEventListener("hashchange", function (event) {
+                            Object.defineProperty(event, "oldURL", {
+                                enumerable: true,
+                                configurable: true,
+                                value: lastURL
+                            });
+                            Object.defineProperty(event, "newURL", {
+                                enumerable: true,
+                                configurable: true,
+                                value: document.URL
+                            });
+                            lastURL = document.URL;
                         });
-                        Object.defineProperty(event, "newURL", {
-                            enumerable: true,
-                            configurable: true,
-                            value: document.URL
-                        });
-                        lastURL = document.URL;
-                    });
+                    }());
                 }
                 window.onhashchange = self.checkRoute;
                 routerInit = true;
@@ -62340,11 +62344,26 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         } else {
                             modules[module].controllers[controller][tabAction](this, event);
                         }
+                    } else {
+                        console.warn(labelLib + error);
                     }
                 });
             });
         },
         /* MOONLIGHTUI - MVC mechanism */
+        mlsettings: function() {
+            return {
+                callbacks: callbacks,
+                modules: modules,
+                actions: actions,
+                routes: routes,
+                debugMode: debugMode,
+                tempModule: tempModule,
+                routerInit: routerInit,
+                viewHistory: viewHistory,
+                lastView: lastView
+            };
+        },
         module: function(name) {
             tempModule = name;
             if (typeof modules[name] === 'undefined') {
@@ -62363,6 +62382,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             var ctrl = controller(),
                 module = tempModule.slice(0);
             ctrl.__module = module;
+            modules[tempModule].controllers[name] = ctrl;
             if (debugMode) {
                 console.info(labelLib + 'Created controller: ' + name);
             }
@@ -62372,7 +62392,8 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
         view: function(name, view, render) {
             var vw = view(),
                 engine = this,
-                module = tempModule.slice(0);
+                module = tempModule.slice(0),
+                routeSet = false;
             if (typeof vw.routeURL !== 'undefined' && vw.routeURL !== '') {
                 for(var i = 0; i < routes.length; i++) {
                     if (routes[i].url === vw.routeURL) {
@@ -62409,6 +62430,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             vw.__cached = '';
             vw.__cachedOptions = false;
             vw.__usecached = false;
+            vw.__run = false;
             vw.__render = function(html) {
                 return html;
             };
@@ -62437,7 +62459,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
                 modules[module].views[name].__container = $(modules[module].views[name].container);
-                modules[module].views[name].__container.html('<div class="preloader-wrapper small active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>');
+                modules[module].views[name].__container.html('<div class="col ml-progress-indicator progress-indicator s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
                 if (typeof cb === "undefined") {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
                     modules[module].views[name].__container.html(modules[module].views[name].__cached);
@@ -62457,7 +62479,12 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     cb(modules[module].views[name].__template, modules[module].views[name].__container);
                 }
             };
+            vw.run = function(cb) {
+                this.__run = cb;
+            };
             vw.render = function(cb, postParams, getParams) {
+                engine.lastView = vw.name;
+                engine.viewHistory.push(vw.name);
                 if (debugMode) {
                     console.info(labelLib + 'Render module: ' + module + ' view: ' + name);
                 }
@@ -62468,29 +62495,50 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     vw.renderCached(cb);
                 } else {
                     modules[module].views[name].__container = $(modules[module].views[name].container);
-                    modules[module].views[name].__container.html('<div class="preloader-wrapper small active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>');
-                    modules[module].views[name].__cached = modules[module].views[name].__container.html();
+                    if (typeof $(modules[module].views[name].__container).children('.ml-buffer.ml-buffer-hide')[0] === 'undefined') {
+                        $(modules[module].views[name].__container).html('<div class="ml-buffer ml-buffer-one ml-buffer-show"></div><div class="ml-buffer ml-buffer-two ml-buffer-hide"></div>');
+                    }
                     if (typeof cb === "undefined") {
                         modules[module].views[name].__container = $(modules[module].views[name].container);
-                        modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
-                        modules[module].views[name].__cached = modules[module].views[name].__container.html();
+                        $(modules[module].views[name].__container).children('.ml-buffer-hide').html(modules[module].views[name].__render(modules[module].views[name].__template));
+                        var bufferShow = $(modules[module].views[name].__container).children('.ml-buffer-show');
+                        var bufferHide = $(modules[module].views[name].__container).children('.ml-buffer-hide');
+                        $(bufferShow).removeClass('ml-buffer-show').addClass('ml-buffer-hide');
+                        $(bufferHide).removeClass('ml-buffer-hide').addClass('ml-buffer-show');
+                        engine.deenergize(bufferShow);
+                        $(bufferShow).html('');
                         if (modules[module].views[name].__initialized === true) {
                             engine.reenergize(modules[module].views[name].container);
                         } else {
                             engine.energize(modules[module].views[name].container);
                         }
+                        if (modules[module].views[name].__run !== false) {
+                            modules[module].views[name].__run();
+                        }
                     } else {
-                        modules[module].views[name].__container = $(modules[module].views[name].container);
-                        modules[module].views[name].__container.html('<div class="preloader-wrapper small active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>');
+                        if (typeof $('.ml-progress-indicator-container .ml-progress-indicator')[0] === 'undefined') {
+                            $('.ml-progress-indicator-container').append('<div class="col ml-progress-indicator progress-indicator s12 m12 l12"><div class="progress"><div class="indeterminate"></div></div></div>');
+                        }
+                        $(modules[module].views[name].__container).children('.ml-buffer-show').append('<div class="ml-progress-overlap"></div>');
                         modules[module].views[name].__loadTemplate(function () {
                             modules[module].views[name].__container = $(modules[module].views[name].container);
-                            modules[module].views[name].__container.html(modules[module].views[name].__render(modules[module].views[name].__template));
+                            $(modules[module].views[name].__container).children('.ml-buffer-hide').html(modules[module].views[name].__render(modules[module].views[name].__template));
+                            var bufferShow = $(modules[module].views[name].__container).children('.ml-buffer-show');
+                            var bufferHide = $(modules[module].views[name].__container).children('.ml-buffer-hide');
+                            $(bufferShow).removeClass('ml-buffer-show').addClass('ml-buffer-hide');
+                            $(bufferHide).removeClass('ml-buffer-hide').addClass('ml-buffer-show');
+                            engine.deenergize(bufferShow);
+                            $(bufferShow).html('');
                             modules[module].views[name].__cached = modules[module].views[name].__container.html();
                             if (modules[module].views[name].__initialized === true) {
                                 engine.reenergize(modules[module].views[name].container);
                             } else {
                                 engine.energize(modules[module].views[name].container);
                             }
+                            if (modules[module].views[name].__run !== false) {
+                                modules[module].views[name].__run();
+                            }
+                            $('.progress-indicator').remove();
                             cb(modules[module].views[name].__template, modules[module].views[name].__container);
                         }, postParams, getParams);
                     }
@@ -62548,11 +62596,11 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 return this.__template;
             };
             vw.__loadModels = function(cb) {
-                if (debugMode) {
-                    console.info(labelLib + 'Load models on view: ' + module + ' view: ' + name + ' models: ');
-                    console.info(this.models);
-                }
                 if (typeof this.models !== 'undefined') {
+                    if (debugMode) {
+                        console.info(labelLib + 'Load models on view: ' + module + ' view: ' + name + ' models: ');
+                        console.info(this.models);
+                    }
                     modules[module].views[name].__models = this.models;
                 }
                 cb();
@@ -62563,7 +62611,6 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             }
             return this;
         },
-
         model: function(name, model) {
             // Instantiate new model
             var mdl = model(),
@@ -62591,6 +62638,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             }
 
             // Attach new variables and new functions. Will override existing functions.
+            mdl.__fields = model();
             mdl.__name = name;
             mdl.__error = '';
             mdl.__module = module;
@@ -62696,7 +62744,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                 }
                 mdl.__on = cb;
             };
-            mdl.__broadcast = function(model, param){
+            mdl.__broadcast = function(model, param, evt){
                 if (debugMode) {
                     console.info(labelLib + 'Broadcast: ' + module + ' model: ' + name);
                 }
@@ -62706,28 +62754,28 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                         modelParameter = param.split('.');
                     }
                     if ($(this).is( ":checkbox" )) {
-                        $(this).prop('checked', modules[module].models[model][param]);
                         if (modelParameter.length > 1) {
-                            $(this).prop('checked', modules[module].models[model][modelParameter[1]][modelParameter[2]]);
+                            $(this).prop('checked', modules[module].models[model][modelParameter[0]][modelParameter[1]]);
                         } else {
                             $(this).prop('checked', modules[module].models[model][param]);
                         }
-                    }
-                    if ($(this).is( "input" ) ||
-                        $(this).is( "textarea" ) ||
-                        $(this).is( "select" ) ||
-                        $(this).is( ":radio" )) {
-                        if (modelParameter.length > 1) {
-                            modules[module].models[model][modelParameter[1]][modelParameter[2]] = $(this).val();
-                        } else {
-                            modules[module].models[model][param] = $(this).val();
-                        }
                     } else {
-                        $(this).html(modules[module].models[model][param]);
+                        if ($(this).is("input") ||
+                            $(this).is("textarea") ||
+                            $(this).is("select") ||
+                            $(this).is(":radio")) {
+                            if (modelParameter.length > 1) {
+                                modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
+                            } else {
+                                modules[module].models[model][param] = $(this).val();
+                            }
+                        } else {
+                            $(this).html(modules[module].models[model][param]);
+                        }
                     }
                 });
                 if (modules[module].models[model].__on !== false) {
-                    modules[module].models[model].__on(param);
+                    modules[module].models[model].__on(param, evt);
                 }
             };
             mdl.__initTwoWayBinding = function(){
@@ -62739,7 +62787,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     if ($(this).data('ml-model').indexOf('.') !== -1) {
                         var modelParameter = $(this).data('ml-model').split('.'),
                             model = modelParameter[0];
-                        modelParameter.shift();
+                            modelParameter.shift();
                         var param = modelParameter[0];
                         if ($(this).is( ":checkbox" )) {
                             if (modelParameter.length > 1) {
@@ -62757,76 +62805,85 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                                     $(this).prop('checked', false);
                                 }
                             }
-                            $(this).on('click', function () {
+                            $(this).on('click', function (evt) {
                                 if (modelParameter.length > 1) {
                                     modules[module].models[model][modelParameter[0]][modelParameter[1]] =  $(this).prop('checked');
-                                    modules[module].models[model].__broadcast(model, modelParameter.join('.'));
+                                    modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
                                 } else {
                                     modules[module].models[model][param] = $(this).prop('checked');
-                                    modules[module].models[model].__broadcast(model, param);
+                                    modules[module].models[model].__broadcast(model, param, evt);
                                 }
                             });
-                        }
-                        if ($(this).is( ":radio" )) {
-                            if (modelParameter.length > 1) {
-                                if (modules[module].models[model][modelParameter[0]][modelParameter[1]] === true)
-                                {
-                                    $(this).prop('checked', true);
-                                } else {
-                                    $(this).prop('checked', false);
-                                }
-                            } else {
-                                if (modules[module].models[model][param] === true)
-                                {
-                                    $(this).prop('checked', true);
-                                } else {
-                                    $(this).prop('checked', false);
-                                }
-                            }
-                            $(this).on('click', function () {
-                                if ($(this).prop('checked')) {
-                                    if (modelParameter.length > 1) {
-                                        modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).prop();
-                                        modules[module].models[model].__broadcast(model, modelParameter.join('.'));
-                                    } else {
-                                        modules[module].models[model][param] = $(this).val();
-                                        modules[module].models[model].__broadcast(model, param);
-                                    }
-                                }
-                            });
-                        }
-                        if ($(this).is( "input" ) ||
-                            $(this).is( "textarea" ) ||
-                            $(this).is( "select" ) ) {
-                            $(this).val(modules[module].models[model][param]);
-                            if ($(this).is( "input" ) || $(this).is( "textarea" )) {
-                                $(this).on('keyup', function () {
-                                    if (modelParameter.length > 1) {
-                                        modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
-                                        modules[module].models[model].__broadcast(model, modelParameter.join('.'));
-                                    } else {
-                                        modules[module].models[model][param] = $(this).val();
-                                        modules[module].models[model].__broadcast(model, param);
-                                    }
-                                });
-                            }
-                            if ($(this).is( "select" )) {
-                                $(this).on('change', function () {
-                                    if (modelParameter.length > 1) {
-                                        modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
-                                        modules[module].models[model].__broadcast(model, modelParameter.join('.'));
-                                    } else {
-                                        modules[module].models[model][param] = $(this).val();
-                                        modules[module].models[model].__broadcast(model, param);
-                                    }
-                                });
-                            }
-
                         } else {
-                            if (modelParameter.length > 1) {
-                                $(this).html(modules[module].models[model][modelParameter[0]][modelParameter[1]]);
+                            if ($(this).is(":radio")) {
+                                if (modelParameter.length > 1) {
+                                    if (modules[module].models[model][modelParameter[0]][modelParameter[1]] === true) {
+                                        $(this).prop('checked', true);
+                                    } else {
+                                        $(this).prop('checked', false);
+                                    }
+                                } else {
+                                    if (modules[module].models[model][param] === true) {
+                                        $(this).prop('checked', true);
+                                    } else {
+                                        $(this).prop('checked', false);
+                                    }
+                                }
+                                $(this).on('click', function () {
+                                    if ($(this).prop('checked')) {
+                                        if (modelParameter.length > 1) {
+                                            modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).prop();
+                                            modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
+                                        } else {
+                                            modules[module].models[model][param] = $(this).val();
+                                            modules[module].models[model].__broadcast(model, param, evt);
+                                        }
+                                    }
+                                });
                             } else {
-                                $(this).html(modules[module].models[model][param]);
+                                if ($(this).is("input") ||
+                                    $(this).is("textarea") ||
+                                    $(this).is("select")) {
+                                    $(this).val(modules[module].models[model][param]);
+                                    if ($(this).is("input") || $(this).is("textarea")) {
+                                        $(this).on('change', function (evt) {
+                                            if (modelParameter.length > 1) {
+                                                modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
+                                                modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
+                                            } else {
+                                                modules[module].models[model][param] = $(this).val();
+                                                modules[module].models[model].__broadcast(model, param, evt);
+                                            }
+                                        });
+                                        $(this).on('keyup', function (evt) {
+                                            if (modelParameter.length > 1) {
+                                                modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
+                                                modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
+                                            } else {
+                                                modules[module].models[model][param] = $(this).val();
+                                                modules[module].models[model].__broadcast(model, param, evt);
+                                            }
+                                        });
+                                    }
+                                    if ($(this).is("select")) {
+                                        $(this).on('change', function (evt) {
+                                            if (modelParameter.length > 1) {
+                                                modules[module].models[model][modelParameter[0]][modelParameter[1]] = $(this).val();
+                                                modules[module].models[model].__broadcast(model, modelParameter.join('.'), evt);
+                                            } else {
+                                                modules[module].models[model][param] = $(this).val();
+                                                modules[module].models[model].__broadcast(model, param, evt);
+                                            }
+                                        });
+                                    }
+
+                                } else {
+                                    if (modelParameter.length > 1) {
+                                        $(this).html(modules[module].models[model][modelParameter[0]][modelParameter[1]]);
+                                    } else {
+                                        $(this).html(modules[module].models[model][param]);
+                                    }
+                                }
                             }
                         }
                     } else {
@@ -63559,8 +63616,8 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             options.async = false;
             $.ajax(options).done(function(data) {
                 done(data);
-            }).fail(function() {
-                error();
+            }).fail(function(data) {
+                error(data);
             });
         }
     });
