@@ -10073,6 +10073,10 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
+/* Polyfil string */
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
 /* Extend it with moonlight ui functions */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -10090,7 +10094,8 @@ return jQuery;
         tempModule,
         routerInit = false,
         viewHistory = [],
-        lastView = '';
+        lastView = '',
+        config = {};
 
     $.fn.extend({
         /* MOONLIGHTUI - System */
@@ -10306,7 +10311,19 @@ return jQuery;
                 });
             });
         },
-        /* MOONLIGHTUI - MVC mechanism */
+        /* MOONLIGHTUI - Configuration */
+        config: function(cfg) {
+            if (typeof cfg === 'undefined') {
+                return config;
+            } else {
+                config = cfg;
+            }
+            return this;
+        },
+        getConfig: function(name) {
+            return config[name];
+        },
+        /* MOONLIGHTUI - State */
         setState: function(name, value) {
             switch(name) {
                 case "callbacks":
@@ -10345,6 +10362,7 @@ return jQuery;
                     lastView = value;
                     break;
             }
+            return this;
         },
         mlsettings: function () {
            return this.state();
@@ -10359,9 +10377,55 @@ return jQuery;
                 tempModule: tempModule,
                 routerInit: routerInit,
                 viewHistory: viewHistory,
-                lastView: lastView
+                lastView: lastView,
+                config: config
             };
         },
+        /* MOONLIGHTUI - Services */
+        getService: function(parent, name)
+        {
+            if (typeof modules[parent].services[name] !== 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Get controller: ' + name);
+                }
+                return modules[parent].controllers[name];
+            }
+        },
+        service: function(name, service) {
+            if (typeof modules[name] === 'undefined') {
+                if (debugMode) {
+                    console.info(labelLib + 'Created service: ' + name);
+                }
+                var sv = service(), svs = {};
+                svs.__original = sv;
+                svs.__attached = {};
+                svs.__history = [];
+                svs.get = function(name) {
+                    return this[name];
+                };
+                svs.set = function(name, value) {
+                    this.__history.push({ name: value });
+                    this[name] = value;
+                    this.emit('on' + name.capitalize() + 'Change', value);
+                };
+                svs.attach = function(name, cb) {
+                    if (typeof this.__attached[name] === 'undefined') {
+                        this.__attached[name] = [];
+                        this.__attached[name].push(cb);
+                    }
+                };
+                svs.emit = function(name, obj) {
+                    if (typeof this.__attached[name] !== 'undefined') {
+                        for (var i = 0; i < this.__attached[name].length; i++) {
+                            this.__attached[name][i](obj);
+                        }
+                    }
+                };
+                modules[tempModule].services[name] = sv;
+            }
+            return this;
+        },
+        /* MOONLIGHTUI - MVC mechanism */
         module: function(name) {
             tempModule = name;
             if (typeof modules[name] === 'undefined') {
@@ -10371,14 +10435,14 @@ return jQuery;
                 modules[name] = {
                     controllers: {},
                     models: {},
-                    views: {}
+                    views: {},
+                    services: {}
                 };
             }
             return this;
         },
         controller: function(name, controller) {
-            var ctrl = controller(),
-                module = tempModule.slice(0);
+            var ctrl = controller();
             ctrl.__module = module;
             modules[tempModule].controllers[name] = ctrl;
             if (debugMode) {
@@ -10556,8 +10620,8 @@ return jQuery;
                         ajaxOptions.data = {
                             data: postParams.data
                         };
-                        if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
-                            ajaxOptions.data._token = window.mlui_cfg.csrf_token;
+                        if (typeof config.csrf_token !== 'undefined') {
+                            ajaxOptions.data._token = config.csrf_token;
                         }
                     }
                     $.ajax(ajaxOptions).done(function(data){
@@ -11110,11 +11174,11 @@ return jQuery;
             if (debugMode) {
                 console.info(labelLib + 'doGET ' + JSON.stringify(options));
             }
-            if (typeof window.mlui_cfg.jwt_token !== 'undefined') {
+            if (typeof config.jwt_token !== 'undefined') {
                 $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-                    jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
-                    jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
-                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + window.mlui_cfg.jwt_bearer);
+                    jqXHR.setRequestHeader('X-CSRF-Token', config.jwt_token);
+                    jqXHR.setRequestHeader('X-XSRF-TOKEN', config.jwt_token);
+                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + config.jwt_bearer);
                     options.async = true;
                 });
             }
@@ -11146,16 +11210,16 @@ return jQuery;
             if (typeof options.data === 'undefined') {
                 options.data = {};
             }
-            if (typeof window.mlui_cfg.jwt_token !== 'undefined') {
+            if (typeof config.jwt_token !== 'undefined') {
                 $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-                    jqXHR.setRequestHeader('X-CSRF-Token', window.mlui_cfg.jwt_token);
-                    jqXHR.setRequestHeader('X-XSRF-TOKEN', window.mlui_cfg.jwt_token);
-                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + window.mlui_cfg.jwt_bearer);
+                    jqXHR.setRequestHeader('X-CSRF-Token', config.jwt_token);
+                    jqXHR.setRequestHeader('X-XSRF-TOKEN', config.jwt_token);
+                    jqXHR.setRequestHeader('Authorization', 'Bearer ' + config.jwt_bearer);
                     options.async = true;
                 });
             } else {
-                if (typeof window.mlui_cfg.csrf_token !== 'undefined') {
-                    options.data._token = window.mlui_cfg.csrf_token;
+                if (typeof config.csrf_token !== 'undefined') {
+                    options.data._token = config.csrf_token;
                 }
             }
             options.method = type;

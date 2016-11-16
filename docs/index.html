@@ -271,6 +271,15 @@
 moonlightui().onready(function() {
 
     /* MOONLIGHT UI - Start using moonlightui. */
+    moonlightui().config({
+        urlPrefix: '{{ url }}',
+        csrf_token: '{{ csrf_token() }}',
+        jwt_token: '{{ jwt_token }}',
+        jwt_bearer: '{{ jwt_bearer }}',
+        comm: '{{ comm }}'
+    });
+
+    /* MOONLIGHT UI - Start using moonlightui. */
     moonlightui().energize('.moonlightui');
 
 });</code></pre>
