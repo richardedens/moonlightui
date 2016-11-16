@@ -62117,10 +62117,6 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
   }
 }.call(this));
 
-/* Polyfil string */
-String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-};
 /* Extend it with moonlight ui functions */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -62432,33 +62428,36 @@ String.prototype.capitalize = function() {
                 if (debugMode) {
                     console.info(labelLib + 'Get controller: ' + name);
                 }
-                return modules[parent].controllers[name];
+                return modules[parent].services[name];
             }
         },
         service: function(name, service) {
-            if (typeof modules[name] === 'undefined') {
+            var module = tempModule.slice(0);
+            if (typeof modules[module].services[name] === 'undefined') {
                 if (debugMode) {
                     console.info(labelLib + 'Created service: ' + name);
                 }
-                var sv = service(), svs = {};
-                svs.__original = sv;
-                svs.__attached = {};
-                svs.__history = [];
-                svs.get = function(name) {
+                var sv = service();
+                sv.__module = module;
+                sv.__original = service();
+                sv.__attached = {};
+                sv.__history = [];
+                sv.get = function(name) {
                     return this[name];
                 };
-                svs.set = function(name, value) {
+                sv.set = function(name, value) {
                     this.__history.push({ name: value });
                     this[name] = value;
-                    this.emit('on' + name.capitalize() + 'Change', value);
+                    var capitalizeName = name.charAt(0).toUpperCase() + name.slice(1);
+                    this.emit('on' + capitalizeName + 'Change', value);
                 };
-                svs.attach = function(name, cb) {
+                sv.attach = function(name, cb) {
                     if (typeof this.__attached[name] === 'undefined') {
                         this.__attached[name] = [];
                         this.__attached[name].push(cb);
                     }
                 };
-                svs.emit = function(name, obj) {
+                sv.emit = function(name, obj) {
                     if (typeof this.__attached[name] !== 'undefined') {
                         for (var i = 0; i < this.__attached[name].length; i++) {
                             this.__attached[name][i](obj);
@@ -62486,7 +62485,8 @@ String.prototype.capitalize = function() {
             return this;
         },
         controller: function(name, controller) {
-            var ctrl = controller();
+            var ctrl = controller(),
+                module = tempModule.slice(0);
             ctrl.__module = module;
             modules[tempModule].controllers[name] = ctrl;
             if (debugMode) {

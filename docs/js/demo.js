@@ -92,4 +92,108 @@ moonlightui('document').ready(function() {
         return demoController;
 
     });
+
+    /* Lets create a model for our service. */
+    moonlightui().module('demo').model('demoServiceModel', function(){
+
+        return {
+
+            numberOfPeople: 0
+
+        };
+
+    });
+
+    /* Lets create a service. */
+    moonlightui().module('demo').service('demoService', function(){
+
+        return {
+
+            // Public properties
+            numberOfPeople: 0,
+
+            // Public functions
+            init: function() {
+
+                // Initialize the model and two way data binding on the service model.
+                var model = moonlightui().getModel('demo','demoServiceModel');
+                model.init();
+
+            }
+
+        };
+
+    });
+
+    /* Lets create a new controller */
+    moonlightui().module('demo').controller('demoController1', function(){
+
+        var demoController1 = {
+
+            init: function() {
+
+                var service = moonlightui().getService('demo', 'demoService');
+                service.init();
+
+                var self = this;
+                service.attach('onNumberOfPeopleChange', function(value) {
+
+                    var model = moonlightui().getModel('demo','demoServiceModel');
+                    model.set('numberOfPeople', value);
+
+                });
+            },
+
+            increasePeople: function() {
+
+                var service = moonlightui().getService('demo', 'demoService'),
+                    number = service.get('numberOfPeople') || 0;
+
+                number++;
+
+                service.set('numberOfPeople', number);
+
+            }
+
+        };
+        demoController1.init();
+
+        return demoController1;
+
+    });
+
+    /* Lets create a service. */
+    moonlightui().module('demo').controller('demoController2', function(){
+
+        var demoController2 = {
+
+            init: function() {
+                var service = moonlightui().getService('demo', 'demoService');
+                var self = this;
+                service.attach('onNumberOfPeopleChange', function(value) {
+
+                    var model = moonlightui().getModel('demo','demoServiceModel');
+                    model.set('numberOfPeople', value);
+
+                });
+            },
+
+            decreasePeople: function() {
+
+                var service = moonlightui().getService('demo', 'demoService'),
+                    number = service.get('numberOfPeople') || 0;
+
+                number--;
+
+                service.set('numberOfPeople', number);
+
+            }
+
+        };
+        demoController2.init();
+
+        return demoController2;
+
+    });
+
 });

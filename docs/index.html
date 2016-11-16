@@ -378,11 +378,10 @@ moonlightui().module('demo').model('demoModel', function(){
     /*
      * The model is extended with functions so you can set and get properties and receive UI changes.
      */
-    var model = {
+    return {
         greeting : '';
     }
 
-    return model;
 });
 
 moonlightui().module('demo').controller('demoController', function(){
@@ -451,12 +450,10 @@ moonlightui().module('demo').controller('demoController', function(){
 /* Action on the global scope  */
 moonlightui().module('demo').view('mainView', function(){
 
-    var mainView = {
+    return {
         container: 'theView',
         templateURL: '...url to template...'
     };
-
-    return mainView;
 
 });
 
@@ -492,7 +489,147 @@ moonlightui().module('demo').controller('demoController', function(){
 </code></pre>
             </section>
 
-            <!-- Laravel -->
+            <section class="demo-main-section half-size align-left text-align-right" style="height: 2850px">
+                <div class="text-align-left demo-text-section">
+                    <h2>Services</h2>
+                    <p>You are able to create services. Services are great for sharing code, values and states in- between controllers.</p>
+                    <p>They can also hold state before its truly processed to models.
+                    On the right you see a good small example how two controllers can both use the service state and state change to alter the model.
+                    In this example we have setup a model, service and two controllers.</p>
+            </section>
+            <section class="demo-main-section half-size align-right" style="height: 2850px">
+                <div class="demo-show-model-example">
+                    <div class="moonlightui-modal-header">
+                        <div class="moonlightui-modal-close moonlightui-modal-disable"></div>
+                        <div class="moonlightui-modal-min moonlightui-modal-disable"></div>
+                        <div class="moonlightui-modal-max moonlightui-modal-disable"></div>
+                    </div>
+                    <div class="moonlightui-modal-body" data-ml-module="demo" data-ml-controller="demoController">
+                        <h4>The following example will show the sharing capabilities of a service and two controllers.</h4>
+                        <div id="demoView" data-ml-model="demoServiceModel.numberOfPeople" style="font-size: 45px"></div>
+                        <p>The increase function is inside the first controller.</p>
+                        <p>While the second controller has the decrease function.</p>
+                        <p>And we use the model for two-way databinding for the actual value.</p>
+                        <div class="moonlightui-modal-body-btn-bottom-fixed">
+                            <div class="moonlightui-btn" data-ml-controller="demoController1" data-ml-action="increasePeople" style="font-size: 11px;">
+                                <div class="moonlightui-btn-inner">
+                                    increase
+                                </div>
+                            </div>
+                            <div class="moonlightui-btn" data-ml-controller="demoController2" data-ml-action="decreasePeople" style="font-size: 11px;">
+                                <div class="moonlightui-btn-inner">
+                                    decrease
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<pre><code class="language-javascript">
+    /* Lets create a model for our service. */
+    moonlightui().module('demo').model('demoServiceModel', function(){
+
+        return {
+
+            numberOfPeople: 0
+
+        };
+
+    });
+
+    /* Lets create a service. */
+    moonlightui().module('demo').service('demoService', function(){
+
+        return {
+
+            // Public properties
+            numberOfPeople: 0,
+
+            // Public functions
+            init: function() {
+
+                // Initialize the model and two way data binding on the service model.
+                var model = moonlightui().getModel('demo','demoServiceModel');
+                model.init();
+
+            }
+
+        };
+
+    });
+
+    /* Lets create a new controller */
+    moonlightui().module('demo').controller('demoController1', function(){
+
+        var demoController1 = {
+
+            init: function() {
+
+                var service = moonlightui().getService('demo', 'demoService');
+                service.init();
+
+                var self = this;
+                service.attach('onNumberOfPeopleChange', function(value) {
+
+                    var model = moonlightui().getModel('demo','demoServiceModel');
+                    model.set('numberOfPeople', value);
+
+                });
+            },
+
+            increasePeople: function() {
+
+                var service = moonlightui().getService('demo', 'demoService'),
+                    number = service.get('numberOfPeople') || 0;
+
+                number++;
+
+                service.set('numberOfPeople', number);
+
+            }
+
+        };
+        demoController1.init();
+
+        return demoController1;
+
+    });
+
+    /* Lets create a second controller. */
+    moonlightui().module('demo').controller('demoController2', function(){
+
+        var demoController2 = {
+
+            init: function() {
+                var service = moonlightui().getService('demo', 'demoService');
+                var self = this;
+                service.attach('onNumberOfPeopleChange', function(value) {
+
+                    var model = moonlightui().getModel('demo','demoServiceModel');
+                    model.set('numberOfPeople', value);
+
+                });
+            },
+
+            decreasePeople: function() {
+
+                var service = moonlightui().getService('demo', 'demoService'),
+                    number = service.get('numberOfPeople') || 0;
+
+                number--;
+
+                service.set('numberOfPeople', number);
+
+            }
+
+        };
+        demoController2.init();
+
+        return demoController2;
+
+    });
+</code></pre>
+            </section>
+
             <section class="demo-main-section half-size align-left text-align-right" style="height: 1500px">
                 <div class="text-align-left demo-text-section">
                     <h2>Integrating with laravel</h2>
