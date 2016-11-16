@@ -10307,7 +10307,49 @@ return jQuery;
             });
         },
         /* MOONLIGHTUI - MVC mechanism */
-        mlsettings: function() {
+        setState: function(name, value) {
+            switch(name) {
+                case "callbacks":
+                    callbacks = value;
+                    break;
+                case "modules":
+                    for (var cm in modules) {
+                        if (modules.hasOwnProperty(cm)) {
+                            for (var m in value) {
+                                if (value.hasOwnProperty(m) && cm === m) {
+                                    modules[m] = value[m];
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "actions":
+                    actions = value;
+                    break;
+                case "routes":
+                    actions = value;
+                    break;
+                case "debugMode":
+                    debugMode = value;
+                    break;
+                case "tempModule":
+                    tempModule = value;
+                    break;
+                case "routerInit":
+                    routerInit = value;
+                    break;
+                case "viewHistory":
+                    viewHistory = value;
+                    break;
+                case "lastView":
+                    lastView = value;
+                    break;
+            }
+        },
+        mlsettings: function () {
+           return this.state();
+        },
+        state: function() {
             return {
                 callbacks: callbacks,
                 modules: modules,
