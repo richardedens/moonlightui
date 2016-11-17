@@ -638,6 +638,14 @@
             mdl.__error = '';
             mdl.__module = module;
             mdl.__mapTo = false;
+            mdl.__parseQuery = function(url, obj) {
+                for (var p in this.__fields) {
+                    if (this.__fields.hasOwnProperty(p)) {
+                        url.split('{' + p + '}').join(this[p]);
+                    }
+                }
+                return url;
+            };
             mdl.__toObj = function() {
                 var obj = {};
                 for (var p in this.__fields) {
@@ -661,7 +669,7 @@
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doDELETE({
-                        'url' : url + self.__settings.delete,
+                        'url' : url + self.__parseQuery(self.__settings.delete, obj),
                         'data' : obj
                     }, function(data){
                         resolve(data);
@@ -680,7 +688,7 @@
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doPUT({
-                        'url' : url + self.__settings.put,
+                        'url' : url + self.__parseQuery(self.__settings.put, obj),
                         'data' : obj
                     }, function(data){
                         resolve(data);
@@ -699,7 +707,7 @@
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doPOST({
-                        'url' : url + self.__settings.post,
+                        'url' : url + self.__parseQuery(self.__settings.post, obj),
                         'data' : obj
                     }, function(data){
                         resolve(data);
@@ -715,7 +723,7 @@
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doGET({
-                        'url' : url + self.__settings.get,
+                        'url' : url + self.__parseQuery(self.__settings.get, obj),
                         'data' : obj
                     }, function(data){
                         // Do two-way databinding when load is complete.
