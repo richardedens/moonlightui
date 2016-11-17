@@ -647,8 +647,9 @@
                 }
                 return obj;
             };
-            mdl.setMapTo = function(mapTo) {
+            mdl.mapTo = function(mapTo) {
                 this.__mapTo = mapTo;
+                return this;
             };
             mdl.delete = function() {
                 var obj = this.__toObj(),
