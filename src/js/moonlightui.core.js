@@ -662,7 +662,7 @@
                     });
                 });
             };
-            mdl.save = function() {
+            mdl.put = function() {
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
@@ -678,7 +678,7 @@
                     });
                 });
             };
-            mdl.create = function() {
+            mdl.post = function() {
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';

@@ -10737,7 +10737,7 @@ return jQuery;
                     });
                 });
             };
-            mdl.save = function() {
+            mdl.put = function() {
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
@@ -10753,7 +10753,7 @@ return jQuery;
                     });
                 });
             };
-            mdl.create = function() {
+            mdl.post = function() {
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';

@@ -235,7 +235,7 @@ moonlightui('document').ready(function() {
 
             },
 
-            create: function() {
+            post: function() {
 
                 var model = moonlightui().getModel('demo', 'demoAdvancedModel');
                 model.create().then(function(){
@@ -246,7 +246,7 @@ moonlightui('document').ready(function() {
 
             },
 
-            save: function() {
+            put: function() {
 
                 var model = moonlightui().getModel('demo', 'demoAdvancedModel');
                 model.save().then(function(){

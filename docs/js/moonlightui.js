@@ -62781,7 +62781,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     });
                 });
             };
-            mdl.save = function() {
+            mdl.put = function() {
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
@@ -62797,7 +62797,7 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
                     });
                 });
             };
-            mdl.create = function() {
+            mdl.post = function() {
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
