@@ -254,6 +254,8 @@
 &lt;/html&gt;
                 </code></pre>
             </section>
+
+            <!-- How to use -->
             <section class="demo-main-section half-size align-left text-align-right" style="height: 700px">
                 <div class="text-align-left demo-text-section">
                     <h2>How to use?</h2>
@@ -284,6 +286,8 @@ moonlightui().onready(function() {
 
 });</code></pre>
             </section>
+
+            <!-- External Libraries included -->
             <section class="demo-main-section half-size align-left text-align-right" style="height: 400px">
                 <div class="text-align-left demo-text-section">
                     <h2>External libraries</h2>
@@ -309,6 +313,8 @@ moonlightui().async.waterfall([
    console.log('Done with the async waterfall method.');
 });</code></pre>
             </section>
+
+            <!-- Modules, Controllers and Actions -->
             <section class="demo-main-section half-size align-left text-align-right" style="height: 500px">
                 <div class="text-align-left demo-text-section">
                     <h2>Modules, Controllers and Actions</h2>
@@ -339,6 +345,8 @@ moonlightui().module('core').controller('mainController', function(){
 });
 </code></pre>
             </section>
+
+            <!-- Models -->
             <section class="demo-main-section half-size align-left text-align-right" style="height: 1650px;">
                 <div class="text-align-left demo-text-section">
                     <h2>Models</h2>
@@ -413,6 +421,138 @@ moonlightui().module('demo').controller('demoController', function(){
 });
 </code></pre>
             </section>
+
+            <!-- Advanced Models -->
+            <section class="demo-main-section half-size align-left text-align-right" style="height: 2500px;">
+                <div class="text-align-left demo-text-section">
+                    <h2>Advanced Models</h2>
+                    <p>MoonlightUI now has the ability to truly follow the MVC design pattern.
+                    Models are your gathering point of data and connection to the backend.
+                    Each model has ".save()" ".update()" ".load()" ".delete()" functionality if you provide the settings where to get, post, put, delete the model to.</p>
+                </div>
+            </section>
+            <section class="demo-main-section half-size align-right" style="height: 2500px;">
+                <div class="demo-show-model-example">
+                    <div class="moonlightui-modal-header">
+                        <div class="moonlightui-modal-close moonlightui-modal-disable"></div>
+                        <div class="moonlightui-modal-min moonlightui-modal-disable"></div>
+                        <div class="moonlightui-modal-max moonlightui-modal-disable"></div>
+                    </div>
+                    <div class="moonlightui-modal-body" data-ml-module="demo" data-ml-controller="demoController">
+                        <h4>The following example will show two-way databinding in action when loading the model from an url with the ".load()" function on the model.</h4>
+                        <h1 data-ml-model="demoAdvancedModel.loadedFromFile"></h1>
+                        <div class="moonlightui-modal-body-btn-bottom-fixed">
+                            <div class="moonlightui-btn" data-ml-controller="demoAdvancedModelController" data-ml-action="load" style="font-size: 11px;">
+                                <div class="moonlightui-btn-inner">
+                                    load
+                                </div>
+                            </div>
+                            <div class="moonlightui-btn" data-ml-controller="demoAdvancedModelController" data-ml-action="create" style="font-size: 11px;">
+                                <div class="moonlightui-btn-inner">
+                                    create
+                                </div>
+                            </div>
+                            <div class="moonlightui-btn" data-ml-controller="demoAdvancedModelController" data-ml-action="save" style="font-size: 11px;">
+                                <div class="moonlightui-btn-inner">
+                                    save
+                                </div>
+                            </div>
+                            <div class="moonlightui-btn" data-ml-controller="demoAdvancedModelController" data-ml-action="delete" style="font-size: 11px;">
+                                <div class="moonlightui-btn-inner">
+                                    delete
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <pre><code class="language-html">&lt;div data-ml-module="demo" data-ml-controller="demoController"&gt;
+    &lt;div&gt;
+        &lt;input type="text" data-ml-model="demoModel.greeting" value=""&gt;
+        &lt;span data-ml-model="demoModel.greeting"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <pre><code class="language-javascript">
+    /* Lets create a model for our service. */
+    moonlightui().module('demo').model('demoAdvancedModel', function(){
+
+        return [{
+            get: 'js/demoAdvancedModel.json',
+            post: 'js/demoAdvancedModel.json',
+            put: 'js/demoAdvancedModel.json',
+            delete: 'js/demoAdvancedModel.json',
+        }, {
+
+            loadedFromFile: false
+
+        }];
+
+    });
+
+    /* Lets create a model for our service. */
+    moonlightui().module('demo').controller('demoAdvancedModelController', function() {
+
+        var demoAdvancedModelController = {
+
+            init: function() {
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                // Advanced models always automaticly load there settings from serverside with the init function.
+                // You have to provide "false" to disable this functionality.
+                model.init(false);
+            },
+
+            load: function() {
+
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                model.load().then(function(){
+                    console.log('Loaded model demoAdvancedModel from a JSON file.');
+                }, function() {
+                    console.log('Could not load model demoAdvancedModel.');
+                });
+
+            },
+
+            create: function() {
+
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                model.create().then(function(){
+                    console.log('Created model demoAdvancedModel from a JSON file.');
+                }, function() {
+                    console.log('Could not create model demoAdvancedModel.');
+                });
+
+            },
+
+            save: function() {
+
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                model.save().then(function(){
+                    console.log('Updated model demoAdvancedModel from a JSON file.');
+                }, function() {
+                    console.log('Could not update model demoAdvancedModel.');
+                });
+
+            },
+
+            delete: function() {
+
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                model.delete().then(function(){
+                    console.log('Delete model demoAdvancedModel.');
+                }, function() {
+                    console.log('Could not delete model demoAdvancedModel.');
+                });
+
+            }
+
+        };
+        demoAdvancedModelController.init();
+
+        return demoAdvancedModelController;
+
+    });
+</code></pre>
+            </section>
+
             <section class="demo-main-section half-size align-left text-align-right" style="height: 1500px">
                 <div class="text-align-left demo-text-section">
                     <h2>Views</h2>

@@ -196,4 +196,83 @@ moonlightui('document').ready(function() {
 
     });
 
+    /* Lets create a model for our service. */
+    moonlightui().module('demo').model('demoAdvancedModel', function(){
+
+        return [{
+            get: 'js/demoAdvancedModel.json',
+            post: 'js/demoAdvancedModel.json',
+            put: 'js/demoAdvancedModel.json',
+            delete: 'js/demoAdvancedModel.json',
+        }, {
+
+            loadedFromFile: "no"
+
+        }];
+
+    });
+
+    /* Lets create a model for our service. */
+    moonlightui().module('demo').controller('demoAdvancedModelController', function() {
+
+        var demoAdvancedModelController = {
+
+            init: function() {
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                // Advanced models always automaticly load there settings from serverside with the init function.
+                // You have to provide "false" to disable this functionality.
+                model.init(false);
+            },
+
+            load: function() {
+
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                model.load().then(function(){
+                    console.log('Loaded model demoAdvancedModel from a JSON file.');
+                }, function() {
+                    console.log('Could not load model demoAdvancedModel.');
+                });
+
+            },
+
+            create: function() {
+
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                model.create().then(function(){
+                    console.log('Created model demoAdvancedModel from a JSON file.');
+                }, function() {
+                    console.log('Could not create model demoAdvancedModel.');
+                });
+
+            },
+
+            save: function() {
+
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                model.save().then(function(){
+                    console.log('Updated model demoAdvancedModel from a JSON file.');
+                }, function() {
+                    console.log('Could not update model demoAdvancedModel.');
+                });
+
+            },
+
+            delete: function() {
+
+                var model = moonlightui().getModel('demo', 'demoAdvancedModel');
+                model.delete().then(function(){
+                    console.log('Delete model demoAdvancedModel.');
+                }, function() {
+                    console.log('Could not delete model demoAdvancedModel.');
+                });
+
+            }
+
+        };
+        demoAdvancedModelController.init();
+
+        return demoAdvancedModelController;
+
+    });
+
 });

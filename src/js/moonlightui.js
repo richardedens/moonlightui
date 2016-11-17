@@ -600,6 +600,7 @@
         model: function(name, model) {
             // Instantiate new model
             var mdl = model(),
+                engine = this,
                 module = tempModule.slice(0);
 
             function searchFor(param, key, nameOfObject) {
@@ -623,11 +624,105 @@
                 });
             }
 
+            // We get the model not the settings.
+            if (model() instanceof Array)
+            {
+                mdl = model()[1];
+            }
+
             // Attach new variables and new functions. Will override existing functions.
-            mdl.__fields = model();
+            mdl.__settings = (model() instanceof Array) ? model()[0] : false;
+            mdl.__fields = (model() instanceof Array) ? model()[1] : model();
             mdl.__name = name;
+            mdl.__engine = engine;
             mdl.__error = '';
             mdl.__module = module;
+            mdl.__toObj = function() {
+                var obj = {};
+                for (var p in this.__fields) {
+                    if (this.__fields.hasOwnProperty(p)) {
+                        obj[p] = this[p];
+                    }
+                }
+                return obj;
+            };
+            mdl.delete = function() {
+                var obj = this.__toObj(),
+                    self = this,
+                    url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                return new Promise(function(resolve, reject) {
+                    // do a thing, possibly async, then…
+                    engine.doDELETE({
+                        'url' : url + self.__settings.delete,
+                        'data' : obj
+                    }, function(data){
+                        resolve(data);
+                    }, function(data){
+                        reject(data);
+                    });
+                });
+            };
+            mdl.save = function() {
+                var obj = this.__toObj(),
+                    self = this,
+                    url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                return new Promise(function(resolve, reject) {
+                    // do a thing, possibly async, then…
+                    engine.doPUT({
+                        'url' : url + self.__settings.put,
+                        'data' : obj
+                    }, function(data){
+                        resolve(data);
+                    }, function(data){
+                        reject(data);
+                    });
+                });
+            };
+            mdl.create = function() {
+                var obj = this.__toObj(),
+                    self = this,
+                    url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                return new Promise(function(resolve, reject) {
+                    // do a thing, possibly async, then…
+                    engine.doPOST({
+                        'url' : url + self.__settings.post,
+                        'data' : obj
+                    }, function(data){
+                        resolve(data);
+                    }, function(data){
+                        reject(data);
+                    });
+                });
+            };
+            mdl.load = function(isInit) {
+                var obj = this.__toObj(),
+                    self = this,
+                    url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                return new Promise(function(resolve, reject) {
+                    // do a thing, possibly async, then…
+                    engine.doGET({
+                        'url' : url + self.__settings.get,
+                        'data' : obj
+                    }, function(data){
+                        // Do two-way databinding when load is complete.
+                        for (var pr in data) {
+                            for (var p in self.__fields) {
+                                if (self.__fields.hasOwnProperty(p)) {
+                                    if (p === pr) {
+                                        self[p] = data[pr];
+                                        if (typeof isInit === 'undefined') {
+                                            self.__broadcast(self.__name, pr, null);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        resolve(data);
+                    }, function(data){
+                        reject(data);
+                    });
+                });
+            };
             mdl.removeError = function() {
                 if (debugMode) {
                     console.info(labelLib + 'Remove error: ' + module + ' model: ' + name);
@@ -919,8 +1014,18 @@
                 }
                 return obj;
             };
-            mdl.init = function() {
-                mdl.__initTwoWayBinding();
+            mdl.init = function(doNotLoadFromUrl) {
+                var self = this;
+                // We want to automaticly load the model at init. But also being able to disable this functionality.
+                if (this.__settings !== false && typeof doNotLoadFromUrl === 'undefined'){
+                    this.load(true).then(function(data){
+                        self.__initTwoWayBinding();
+                    }, function(data){
+                        self.__initTwoWayBinding();
+                    });
+                } else {
+                    mdl.__initTwoWayBinding();
+                }
             };
 
             // Save model into the module.
