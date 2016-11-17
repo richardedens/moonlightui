@@ -62758,8 +62758,8 @@ Prism.languages.scss['atrule'].inside.rest = Prism.util.clone(Prism.languages.sc
             mdl.__module = module;
             mdl.__mapTo = false;
             mdl.__parseQuery = function(url, obj) {
-                 for (var p in obj) {
-                    if (this.__fields.hasOwnProperty(p)) {
+                for (var p in obj) {
+                    if (obj.hasOwnProperty(p)) {
                         url.split('{' + p + '}').join(this[p]);
                     }
                 }

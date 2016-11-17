@@ -640,7 +640,7 @@
             mdl.__mapTo = false;
             mdl.__parseQuery = function(url, obj) {
                 for (var p in obj) {
-                    if (this.__fields.hasOwnProperty(p)) {
+                    if (obj.hasOwnProperty(p)) {
                         url.split('{' + p + '}').join(this[p]);
                     }
                 }
