@@ -646,10 +646,16 @@
                 }
                 return obj;
             };
+            mdl.setMapTo = function(mapTo) {
+                this.__mapTo = mapTo;
+            };
             mdl.delete = function() {
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                if (this.__mapTo !== false){
+                    obj = this.__mapTo(obj);
+                }
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doDELETE({
@@ -666,6 +672,9 @@
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                if (this.__mapTo !== false){
+                    obj = this.__mapTo(obj);
+                }
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doPUT({
@@ -682,6 +691,9 @@
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                if (this.__mapTo !== false){
+                    obj = this.__mapTo(obj);
+                }
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doPOST({

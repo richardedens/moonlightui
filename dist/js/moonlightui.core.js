@@ -10712,6 +10712,7 @@ return jQuery;
             mdl.__engine = engine;
             mdl.__error = '';
             mdl.__module = module;
+            mdl.__mapTo = false;
             mdl.__toObj = function() {
                 var obj = {};
                 for (var p in this.__fields) {
@@ -10721,10 +10722,16 @@ return jQuery;
                 }
                 return obj;
             };
+            mdl.setMapTo = function(mapTo) {
+                this.__mapTo = mapTo;
+            };
             mdl.delete = function() {
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                if (this.__mapTo !== false){
+                    obj = this.__mapTo(obj);
+                }
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doDELETE({
@@ -10741,6 +10748,9 @@ return jQuery;
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                if (this.__mapTo !== false){
+                    obj = this.__mapTo(obj);
+                }
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doPUT({
@@ -10757,6 +10767,9 @@ return jQuery;
                 var obj = this.__toObj(),
                     self = this,
                     url = (typeof config.urlPrefix  !== 'undefined') ? config.urlPrefix : '';
+                if (this.__mapTo !== false){
+                    obj = this.__mapTo(obj);
+                }
                 return new Promise(function(resolve, reject) {
                     // do a thing, possibly async, then…
                     engine.doPOST({
