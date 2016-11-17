@@ -10716,7 +10716,7 @@ return jQuery;
             mdl.__parseQuery = function(url, obj) {
                 for (var p in obj) {
                     if (obj.hasOwnProperty(p)) {
-                        url.split('{' + p + '}').join(this[p]);
+                        url = url.split('{' + p + '}').join(this[p]);
                     }
                 }
                 return url;
