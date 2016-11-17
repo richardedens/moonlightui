@@ -639,7 +639,7 @@
             mdl.__module = module;
             mdl.__mapTo = false;
             mdl.__parseQuery = function(url, obj) {
-                for (var p in this.__fields) {
+                for (var p in obj) {
                     if (this.__fields.hasOwnProperty(p)) {
                         url.split('{' + p + '}').join(this[p]);
                     }
