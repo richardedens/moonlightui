@@ -16,7 +16,8 @@
         routerInit = false,
         viewHistory = [],
         lastView = '',
-        config = {};
+        config = {},
+        errorHandlers = [];
 
     $.fn.extend({
         /* MOONLIGHTUI - System */
@@ -349,6 +350,18 @@
             }
             return this;
         },
+        /* MOONLIGHTUI - Error handlers to handle each error from moonlight UI. */
+        __activateErrorHandlers: function(err) {
+            for(var p in errorHandlers) {
+                if (errorHandlers.hasOwnProperty(p)) {
+                    errorHandlers[p](err);
+                }
+            }
+        },
+        error: function(cb) {
+            errorHandlers.push(cb);
+            return this;
+        },
         /* MOONLIGHTUI - MVC mechanism */
         module: function(name) {
             tempModule = name;
@@ -559,8 +572,9 @@
                         } else {
                             return data;
                         }
-                    }).fail(function(){
+                    }).fail(function(data){
                         console.warn(labelLib + 'We cant load template with url: ' + this.templateURL);
+                        engine.__activateErrorHandlers(data);
                         if (typeof cb !== "undefined") {
                             cb("");
                         } else {
@@ -1451,75 +1465,6 @@
         /* MOONLIGHTUI - External Libraries */
         async: async,
         jsPlumb: jsPlumb,
-        /* MOONLIGHTUI - Laravel API automation */
-        laravel: {
-            http: {
-                get: function (url, data, cb, fail) {
-                    if (debugMode) {
-                        console.info(labelLib + 'laravel - http - get - url: ' + url + ' data: ' + JSON.stringify(data));
-                    }
-                    $.ajax({
-                        url: url,
-                        method: 'GET',
-                        data: data,
-                        context: document.body
-                    }).done(function (data) {
-                        cb(data);
-                    }).fail(function (data) {
-                        fail(data);
-                    });
-                },
-                post: function (url, data, cb, fail) {
-                    if (debugMode) {
-                        console.info(labelLib + 'laravel - http - post - url: ' + url + ' data: ' + JSON.stringify(data));
-                    }
-                    var settings = $().getModel('moonlightui', 'settings');
-                    data._token = settings.get('csrfToken');
-                    $.ajax({
-                        url: url,
-                        method: 'POST',
-                        data: data,
-                        context: document.body
-                    }).done(function (data) {
-                        cb(data);
-                    }).fail(function (data) {
-                        fail(data);
-                    });
-                },
-                put: function (url, data, cb, fail) {
-                    if (debugMode) {
-                        console.info(labelLib + 'laravel - http - put - url: ' + url + ' data: ' + JSON.stringify(data));
-                    }
-                    data._token = window.csrfToken;
-                    $.ajax({
-                        url: url,
-                        method: 'PUT',
-                        data: data,
-                        context: document.body
-                    }).done(function (data) {
-                        cb(data);
-                    }).fail(function (data) {
-                        fail(data);
-                    });
-                },
-                delete: function (url, data, cb, fail) {
-                    if (debugMode) {
-                        console.info(labelLib + 'laravel - http - delete - url: ' + url + ' data: ' + JSON.stringify(data));
-                    }
-                    data._token = window.csrfToken;
-                    $.ajax({
-                        url: url,
-                        method: 'DELETE',
-                        data: data,
-                        context: document.body
-                    }).done(function (data) {
-                        cb(data);
-                    }).fail(function (data) {
-                        fail(data);
-                    });
-                }
-            }
-        },
         createCookie: function(name, value, days) {
             if (debugMode) {
                 console.info(labelLib + 'Create cookie name: ' + name + ' value: ' + JSON.stringify(value) + ' days: ' + days);
@@ -1619,7 +1564,6 @@
             }
 
             $(element).energize(element);
-
         },
         energize: function(element) {
             if (debugMode) {
@@ -1671,6 +1615,7 @@
 
         },
         doGET: function(options, done, error){
+            var engine = this;
             if (debugMode) {
                 console.info(labelLib + 'doGET ' + JSON.stringify(options));
             }
@@ -1685,6 +1630,7 @@
             $.ajax(options).done(function(data) {
                 done(data);
             }).fail(function(data) {
+                engine.__activateErrorHandlers(data);
                 error(data);
             });
         },
@@ -1707,6 +1653,7 @@
             this.doPOSTPUTDELETE('DELETE', options, done, error);
         },
         doPOSTPUTDELETE: function(type, options, done, error) {
+            var engine = this;
             if (typeof options.data === 'undefined') {
                 options.data = {};
             }
@@ -1730,6 +1677,7 @@
             $.ajax(options).done(function(data) {
                 done(data);
             }).fail(function(data) {
+                engine.__activateErrorHandlers(data);
                 error(data);
             });
         }

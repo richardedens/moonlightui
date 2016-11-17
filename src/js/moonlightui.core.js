@@ -16,7 +16,8 @@
         routerInit = false,
         viewHistory = [],
         lastView = '',
-        config = {};
+        config = {},
+        errorHandlers = [];
 
     $.fn.extend({
         /* MOONLIGHTUI - System */
@@ -349,6 +350,18 @@
             }
             return this;
         },
+        /* MOONLIGHTUI - Error handlers to handle each error from moonlight UI. */
+        __activateErrorHandlers: function(err) {
+            for(var p in errorHandlers) {
+                if (errorHandlers.hasOwnProperty(p)) {
+                    errorHandlers[p](err);
+                }
+            }
+        },
+        error: function(cb) {
+            errorHandlers.push(cb);
+            return this;
+        },
         /* MOONLIGHTUI - MVC mechanism */
         module: function(name) {
             tempModule = name;
@@ -559,8 +572,9 @@
                         } else {
                             return data;
                         }
-                    }).fail(function(){
+                    }).fail(function(data){
                         console.warn(labelLib + 'We cant load template with url: ' + this.templateURL);
+                        engine.__activateErrorHandlers(data);
                         if (typeof cb !== "undefined") {
                             cb("");
                         } else {
@@ -1223,6 +1237,7 @@
             $("a[href^=\\#\\!]").on('click', this.checkRoute);
         },
         doGET: function(options, done, error){
+            var engine = this;
             if (debugMode) {
                 console.info(labelLib + 'doGET ' + JSON.stringify(options));
             }
@@ -1237,6 +1252,7 @@
             $.ajax(options).done(function(data) {
                 done(data);
             }).fail(function(data) {
+                engine.__activateErrorHandlers(data);
                 error(data);
             });
         },
@@ -1259,6 +1275,7 @@
             this.doPOSTPUTDELETE('DELETE', options, done, error);
         },
         doPOSTPUTDELETE: function(type, options, done, error) {
+            var engine = this;
             if (typeof options.data === 'undefined') {
                 options.data = {};
             }
@@ -1282,6 +1299,7 @@
             $.ajax(options).done(function(data) {
                 done(data);
             }).fail(function(data) {
+                engine.__activateErrorHandlers(data);
                 error(data);
             });
         }
