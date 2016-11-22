@@ -433,6 +433,10 @@
             vw.__render = function(html) {
                 return html;
             };
+            vw.setContainer = function(id) {
+                modules[module].views[name].container = id;
+                modules[module].views[name].__container = $(modules[module].views[name].container);
+            };
             vw.refresh = function() {
                 if (debugMode) {
                     console.info(labelLib + 'Refreshing module: ' + module + ' view: ' + name);
